@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { cropStore, editableImagesStore, selectedImageStore } from '$lib/stores';
+	import { editableImagesStore, selectedImageStore } from '$lib/stores';
 </script>
 
-<div class="absolute bottom-0 left-0 flex flex-row gap-5 bg-black p-5">
+<div class="absolute bottom-0 right-0 flex flex-row gap-5 bg-black p-5">
 	<div>
 		{#each $editableImagesStore as img}
 			<div>
@@ -20,10 +20,10 @@
 	<!--Crop store-->
 	<div>
 		<div>Crop store</div>
-		<div>Width: {$cropStore.width}</div>
-		<div>Height: {$cropStore.height}</div>
-		<div>X: {$cropStore.x}</div>
-		<div>Y: {$cropStore.y}</div>
+		<div>Width: {$selectedImageStore.crop.width}</div>
+		<div>Height: {$selectedImageStore.crop.height}</div>
+		<div>X: {$selectedImageStore.crop.x}</div>
+		<div>Y: {$selectedImageStore.crop.y}</div>
 	</div>
 	<div>
 		<div>Selected image index</div>

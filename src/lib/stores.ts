@@ -16,17 +16,3 @@ editableImagesStore.subscribe((images) => {
 
 	selectedImageStore.set(images[0]);
 });
-
-export const cropStore: Writable<{
-	x: number;
-	y: number;
-	width: number;
-	height: number;
-	zoom: number;
-}> = writable({
-	x: 0,
-	y: 0,
-	width: 0,
-	height: 0,
-	zoom: 100
-});

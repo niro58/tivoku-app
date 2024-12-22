@@ -1,4 +1,4 @@
-import { createImageId } from "$lib/utils";
+import { createImageId } from '$lib/utils';
 
 export class EditableImage {
 	id = $state(createImageId());
@@ -6,7 +6,7 @@ export class EditableImage {
 	alt = $state('');
 	width = $state(0);
 	height = $state(0);
-
+	crop = $state({ x: 0, y: 0, width: 0, height: 0, zoom: 100 });
 	constructor(file: File) {
 		this.alt = file.name;
 		this.loadFileData(file);
@@ -17,6 +17,13 @@ export class EditableImage {
 		this.src = fileData.src;
 		this.width = fileData.width;
 		this.height = fileData.height;
+		this.crop = {
+			x: 0,
+			y: 0,
+			width: fileData.width,
+			height: fileData.height,
+			zoom: 100
+		};
 	}
 
 	private getFileData(file: File): Promise<{ width: number; height: number; src: string }> {
