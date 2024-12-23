@@ -30,7 +30,6 @@
 	{onclick}
 	ondragover={ondragenter}
 	ondrop={(e) => {
-		console.log('yo');
 		e.preventDefault();
 		e.stopPropagation();
 

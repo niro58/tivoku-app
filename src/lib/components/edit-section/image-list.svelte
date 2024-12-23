@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { EditableImage } from '$lib/models/image.svelte';
-	import { editableImagesStore, selectedImageStore } from '$lib/stores';
 	import FileDropper from '../file-dropper.svelte';
 
 	import { Button } from '../ui/button';

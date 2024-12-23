@@ -1,12 +1,12 @@
 import { createImageId } from '$lib/utils';
-
+import type { ImageSettings } from './imageSettings';
 export class EditableImage {
 	id = $state(createImageId());
 	src = $state('');
 	alt = $state('');
+	format = $state('');
 	width = $state(0);
 	height = $state(0);
-	crop = $state({ x: 0, y: 0, width: 0, height: 0, zoom: 100 });
 	constructor(file: File) {
 		this.alt = file.name;
 		this.loadFileData(file);
@@ -15,15 +15,9 @@ export class EditableImage {
 	private async loadFileData(file: File) {
 		const fileData = await this.getFileData(file);
 		this.src = fileData.src;
+		this.format = file.type;
 		this.width = fileData.width;
 		this.height = fileData.height;
-		this.crop = {
-			x: 0,
-			y: 0,
-			width: fileData.width,
-			height: fileData.height,
-			zoom: 100
-		};
 	}
 
 	private getFileData(file: File): Promise<{ width: number; height: number; src: string }> {
@@ -43,4 +37,5 @@ export class EditableImage {
 			reader.readAsDataURL(file);
 		});
 	}
+	export(settings: ImageSettings) {}
 }
