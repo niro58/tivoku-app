@@ -13,6 +13,7 @@ export enum ImageExportFormats {
 	JPEG = 'jpeg',
 	WEBP = 'webp'
 }
+
 export function aspectRatioToKey(aspectRatio: Vector2) {
 	return `${aspectRatio.x}:${aspectRatio.y}`;
 }
