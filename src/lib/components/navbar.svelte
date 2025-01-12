@@ -1,35 +1,49 @@
-<script module>
-	const navItems = [{ name: 'Background Fill', href: '/background-fill' }];
-</script>
-
 <script lang="ts">
 	import { page } from '$app/stores';
 
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Sheet from '$lib/components/ui/sheet';
 	import { cn } from '$lib/utils';
-	import { Menu } from 'lucide-svelte';
+	import { Home, Menu } from 'lucide-svelte';
+	import ThemeToggle from './theme-toggle.svelte';
+	import { pageTools } from '../../data/pages';
 
 	let isOpen = $state(false);
 </script>
 
+{#snippet pageLinks()}
+	{#each pageTools as item}
+		{#each item.items as tool}
+			{#if tool.link != ''}
+				<a
+					href={tool.link}
+					class={cn(
+						'inline-flex items-center px-1 pt-1 text-sm font-medium text-foreground hover:text-primary',
+						$page.url.pathname === tool.link && 'text-primary'
+					)}
+				>
+					{tool.short}
+				</a>
+			{/if}
+		{/each}
+	{/each}
+{/snippet}
 <nav
 	class="sticky top-0 z-40 w-full border-b border-border/40 bg-background backdrop-blur supports-[backdrop-filter]:bg-background/60"
 >
 	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="flex h-16 justify-center">
-			<div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-				{#each navItems as item}
-					<a
-						href={item.href}
-						class={cn(
-							'inline-flex items-center px-1 pt-1 text-sm font-medium text-foreground hover:text-primary',
-							$page.url.pathname === item.href && 'text-primary'
-						)}
-					>
-						{item.name}
-					</a>
-				{/each}
+			<div class="relative hidden w-full items-center justify-center sm:flex">
+				<div class="absolute left-0">
+					<Button variant="outline" size="icon" href="/">
+						<Home class="h-[1.2rem] w-[1.2rem]" />
+					</Button>
+				</div>
+				{@render pageLinks()}
+
+				<div class="absolute right-0">
+					<ThemeToggle />
+				</div>
 			</div>
 			<div class="flex items-center sm:hidden">
 				<Sheet.Root open={isOpen} onOpenChange={(e) => (isOpen = e)}>
@@ -43,15 +57,7 @@
 					</Sheet.Trigger>
 					<Sheet.Content side="right" class="flex items-center">
 						<div class="flex flex-col space-y-4">
-							{#each navItems as item}
-								<a
-									href={item.href}
-									class="text-base font-medium text-foreground hover:text-primary"
-									onclick={() => (isOpen = false)}
-								>
-									{item.name}
-								</a>
-							{/each}
+							{@render pageLinks()}
 						</div>
 					</Sheet.Content>
 				</Sheet.Root>
