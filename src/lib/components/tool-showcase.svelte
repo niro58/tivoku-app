@@ -1,8 +1,8 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card/index.js';
-	import { ArrowRight, Clock, Loader } from 'lucide-svelte';
+	import { ArrowRight, Clock } from 'lucide-svelte';
 	import { Button } from './ui/button';
-	import { pageTools } from '../../data/pages';
+	import { pageTools } from '$assets/data/pages';
 	let activeIndex = $state(0);
 </script>
 

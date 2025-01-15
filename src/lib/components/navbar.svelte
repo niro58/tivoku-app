@@ -6,7 +6,7 @@
 	import { cn } from '$lib/utils';
 	import { Home, Menu } from 'lucide-svelte';
 	import ThemeToggle from './theme-toggle.svelte';
-	import { pageTools } from '../../data/pages';
+	import { pageTools } from '$assets/data/pages';
 
 	let isOpen = $state(false);
 </script>
