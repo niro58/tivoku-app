@@ -19,7 +19,7 @@
 		twitter?: Record<string, string>;
 		openGraph?: Record<string, any>;
 		facebook?: { appId: string };
-		jsonLd?: Record<string, string>;
+		jsonLd?: Record<string, any>;
 		children?: Snippet;
 	};
 	let {

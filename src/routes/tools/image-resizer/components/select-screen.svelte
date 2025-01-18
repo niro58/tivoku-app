@@ -13,11 +13,12 @@
 <div class="mb-8 flex flex-col items-center space-y-4 text-center">
 	<div class="space-y-2">
 		<h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-			Simply Resize
+			Online Image Resizer & Background Filler - Free Tool
 		</h1>
 		<p class="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-			Transform your images to any size while maintaining quality. Free, fast, and no sign-up
-			required.
+			Resize images or fill backgrounds online with our free tool. Supports PNG, JPG, and WebP
+			formats up to 10MB, no sign-ups required, and maintains high-quality output. Fast, easy, and
+			privacy-first!
 		</p>
 	</div>
 </div>
@@ -56,14 +57,14 @@
 
 	<div class="space-y-8">
 		<div class="space-y-4">
-			<h2 class="text-2xl font-bold">How It Works</h2>
+			<h2 class="text-2xl font-bold">How to Resize Images Online with Tivoku</h2>
 			<div class="grid gap-4">
 				<div class="flex items-start space-x-4">
 					<div class="rounded-full bg-primary/10 p-2">
 						<Upload class="h-4 w-4 text-primary" />
 					</div>
 					<div>
-						<h3 class="font-semibold">1. Upload Your Image</h3>
+						<h3 class="font-semibold">1. Upload Your Image (PNG, JPG, WebP)</h3>
 						<p class="text-sm text-muted-foreground">
 							Drag and drop your image or click to select from your device.
 						</p>
@@ -75,9 +76,7 @@
 					</div>
 					<div>
 						<h3 class="font-semibold">2. Choose Your Settings</h3>
-						<p class="text-sm text-muted-foreground">
-							Select your desired format, aspect ratio, and quality settings.
-						</p>
+						<p class="text-sm text-muted-foreground">Select your desired format, aspect ratio.</p>
 					</div>
 				</div>
 				<div class="flex items-start space-x-4">
@@ -94,15 +93,15 @@
 			</div>
 		</div>
 
-		<div class="grid grid-cols-1 space-y-4 lg:grid-cols-2">
-			<h2 class="text-2xl font-bold lg:col-span-2">Features</h2>
-			<ul class="grid gap-4 text-sm text-muted-foreground">
-				<li>✓ Multiple output formats (PNG, JPG, WebP)</li>
-				<li>✓ Preserve aspect ratio or customize dimensions</li>
-				<li>✓ Adjust quality settings</li>
-				<li>✓ No registration required</li>
-				<li>✓ Process images up to 10MB</li>
-				<li>✓ Instant download</li>
+		<div class="grid grid-cols-1 space-y-4 lg:grid-cols-3">
+			<h2 class="text-2xl font-bold lg:col-span-3">Features</h2>
+			<ul class="grid gap-4 text-sm text-muted-foreground lg:col-span-2">
+				<li>✓ Multiple output formats: PNG, JPG, and WebP</li>
+				<li>✓ Preserve aspect ratio or set custom dimensions for resizing</li>
+				<li>✓ Adjust quality settings for smaller file sizes or higher clarity</li>
+				<li>✓ No registration or sign-up required</li>
+				<li>✓ Process large images up to 10MB with fast results</li>
+				<li>✓ Instant download and privacy-first processing</li>
 			</ul>
 			<div class="flex items-end">
 				<div class="rounded-lg bg-muted p-4">

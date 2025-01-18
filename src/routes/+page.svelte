@@ -4,7 +4,13 @@
 	import ToolShowcase from '$lib/components/tool-showcase.svelte';
 </script>
 
-<Seo title="Main Page - Tivoku" />
+<Seo
+	title="Free Online Toolkit - All-in-One Tools for Daily Productivity"
+	description="Discover a collection of free online tools designed to streamline daily tasks, from image editing to developer utilities. Accessible, no sign-ups, and constantly expanding!"
+	keywords="free online toolkit, all-in-one tools, daily productivity tools, accessible online tools, developer utilities, practical tools, no sign-ups required, easy-to-use tools"
+	canonical="https://www.tivoku.com"
+	themeColor="#D21E48"
+/>
 <div class="flex min-h-screen flex-col">
 	<main class="flex-grow">
 		<section class="bg-gradient-to-b from-background to-card py-16 md:py-24 lg:py-32">
@@ -41,14 +47,16 @@
 						<h1
 							class="text-3xl font-bold tracking-tighter text-primary sm:text-4xl md:text-5xl lg:text-6xl/none"
 						>
-							My Personal Toolkit
+							Free Online Toolkit - All-in-One Tools for Daily Productivity
 						</h1>
+
 						<p class="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-							I got tired of constantly searching for the right tool, juggling countless tabs, and
-							running into websites with limitations—whether it was requiring a card or restricting
-							usage. So, I decided to create my own: a collection of tools, all in one place, that
-							I’ll keep expanding over time. If there’s something specific you’re looking for, <span
-								class="text-primary">feel free to reach out via Discord or email.</span
+							Welcome to my free online toolkit! I was tired of searching for tools scattered across
+							countless tabs and running into limitations like sign-ups and usage restrictions. So,
+							I built this ever-expanding collection of practical tools to streamline daily
+							tasks—from image editing to developer utilities. If you're looking for something
+							specific, <span class="text-primary"
+								>feel free to reach out via Discord or email.</span
 							>
 						</p>
 					</div>
@@ -60,27 +68,28 @@
 			<div class="container px-4 md:px-6">
 				<div class="grid gap-6 lg:grid-cols-3">
 					<div class="space-y-2">
-						<h2 class="text-2xl font-bold text-primary">Diverse Tools</h2>
+						<h2 class="text-2xl font-bold text-primary">Diverse Tools for Productivity</h2>
 						<p class="text-muted-foreground">
-							From image editing to text processing, developer utilities, and practical everyday
-							tools, this toolkit is designed to handle a wide range of tasks.
+							This free online toolkit includes a variety of tools for all your needs—image editing,
+							text processing, developer utilities, and practical everyday solutions. Whatever your
+							task, this toolkit has you covered.
 						</p>
 					</div>
 					<div class="space-y-2">
-						<h2 class="text-2xl font-bold text-primary">Simple & Accessible</h2>
+						<h2 class="text-2xl font-bold text-primary">Simple, Accessible, and Free</h2>
 						<p class="text-muted-foreground">
-							No sign-ups, no complications—just tools that work. Everything is free to use and
-							built to be intuitive and fast.
+							With no sign-ups or hidden fees, this free toolkit offers intuitive and fast tools
+							that work seamlessly for everyone. Simplicity and accessibility are at the core of
+							this collection.
 						</p>
 					</div>
 					<div class="space-y-2">
-						<h2 class="text-2xl font-bold text-primary">Tools for Everyday Use</h2>
+						<h2 class="text-2xl font-bold text-primary">Tools to Simplify Everyday Tasks</h2>
 						<p class="text-muted-foreground">
-							From my experience, it’s crucial to optimize those small, annoying tasks that pop up
-							daily—making them as quick and efficient as possible so they don’t slow you down.
-							That’s exactly what I’m aiming for with this toolkit. It’s a collection of practical
-							tools designed to streamline everyday processes, with more features being added over
-							time to keep improving the experience.
+							Streamline your daily routine with tools designed to handle small but time-consuming
+							tasks. Whether it’s quick fixes or comprehensive solutions, this toolkit is built to
+							save time and make your day more productive. New tools and features are continually
+							added to enhance the experience.
 						</p>
 					</div>
 				</div>

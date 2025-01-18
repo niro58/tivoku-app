@@ -11,13 +11,13 @@ export const pageTools = [
 				link: '/tools/image-resizer'
 			},
 			{
-				name: 'Background Remover',
-				description: 'Remove image backgrounds in seconds',
+				name: 'Video Type Changer',
+				description: 'Change the type of your video file to another type',
 				link: ''
 			},
 			{
-				name: 'Image Compressor',
-				description: 'Compress images without losing quality',
+				name: 'Video Trimmer',
+				description: 'Trim your video file to a specific length',
 				link: ''
 			}
 		]
