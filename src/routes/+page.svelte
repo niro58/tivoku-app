@@ -1,8 +1,10 @@
 <script>
 	import Footer from '$lib/components/footer.svelte';
+	import Seo from '$lib/components/seo.svelte';
 	import ToolShowcase from '$lib/components/tool-showcase.svelte';
 </script>
 
+<Seo title="Main Page - Tivoku" />
 <div class="flex min-h-screen flex-col">
 	<main class="flex-grow">
 		<section class="bg-gradient-to-b from-background to-card py-16 md:py-24 lg:py-32">

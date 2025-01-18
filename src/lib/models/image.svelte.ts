@@ -1,6 +1,6 @@
 import { browser } from '$app/environment';
+import type { ImageSettings, Vector2 } from '$lib/modules/image-editor.svelte';
 import { createImageId, hexToRgb } from '$lib/utils';
-import type { ImageSettings, Vector2 } from './imageSettings';
 export class EditableImage {
 	id = $state(createImageId());
 	src = $state('');
@@ -63,7 +63,7 @@ export class EditableImage {
 		let cSize = this.getCanvasSize(aspectRatio);
 		canvas.width = cSize.x;
 		canvas.height = cSize.y;
-
+		
 		const rgb = hexToRgb(backgroundColor);
 		if (!rgb) return;
 

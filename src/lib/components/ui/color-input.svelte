@@ -1,5 +1,15 @@
 <script lang="ts">
-	let { backgroundColor = $bindable(), opacity = $bindable() } = $props();
+	import type { Snippet } from 'svelte';
+
+	let {
+		backgroundColor = $bindable(),
+		opacity = $bindable(),
+		children
+	}: {
+		backgroundColor?: string;
+		opacity?: number;
+		children?: Snippet;
+	} = $props();
 	let colorRef: HTMLInputElement | null = $state(null);
 </script>
 
@@ -40,7 +50,16 @@
 		</svg>
 		<div
 			class="absolute inset-0 rounded-lg border border-white/40"
-			style="pointer-events: none; background-color: {backgroundColor}; opacity: {opacity};"
+			style="pointer-events: none; background-color: {backgroundColor === ''
+				? '#ffffff'
+				: backgroundColor}; opacity: {opacity};"
 		></div>
+		{#if children}
+			<div class="flex items-center justify-center">
+				<div class="absolute">
+					{@render children()}
+				</div>
+			</div>
+		{/if}
 	</button>
 </div>
