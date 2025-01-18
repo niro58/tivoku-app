@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import type { ImageSettings, Vector2 } from '$lib/modules/image-editor.svelte';
+import { type CropType, type ImageSettings, type Vector2 } from '$lib/modules/image-editor.svelte';
 import { createImageId, hexToRgb } from '$lib/utils';
 export class EditableImage {
 	id = $state(createImageId());
@@ -10,7 +10,7 @@ export class EditableImage {
 	height = $state(0);
 
 	constructor(file: File) {
-		this.filename = file.name;
+		this.filename = file.name.split('.').slice(0, -1).join('.');
 		this.loadFileData(file);
 	}
 
@@ -39,15 +39,23 @@ export class EditableImage {
 			reader.readAsDataURL(file);
 		});
 	}
-	getCanvasSize(aspectRatio: Vector2): Vector2 {
+	getCanvasSize(aspectRatio: Vector2, cropType: CropType): Vector2 {
 		let cSize: Vector2 = {
 			x: this.width,
 			y: this.height
 		};
-		if (aspectRatio.x > aspectRatio.y) {
-			cSize.x = Math.round((cSize.y / aspectRatio.y) * aspectRatio.x);
-		} else if (aspectRatio.x < aspectRatio.y) {
-			cSize.y = Math.round((cSize.x / aspectRatio.x) * aspectRatio.y);
+		if (cropType === 'inside') {
+			if (aspectRatio.x > aspectRatio.y) {
+				cSize.y = Math.round((cSize.x / aspectRatio.x) * aspectRatio.y);
+			} else if (aspectRatio.x < aspectRatio.y) {
+				cSize.x = Math.round((cSize.y / aspectRatio.y) * aspectRatio.x);
+			}
+		} else if (cropType === 'outside') {
+			if (aspectRatio.x > aspectRatio.y) {
+				cSize.x = Math.round((cSize.y / aspectRatio.y) * aspectRatio.x);
+			} else if (aspectRatio.x < aspectRatio.y) {
+				cSize.y = Math.round((cSize.x / aspectRatio.x) * aspectRatio.y);
+			}
 		}
 		return cSize;
 	}
@@ -60,32 +68,35 @@ export class EditableImage {
 
 		const { aspectRatio, backgroundColor, opacity, format } = settings;
 
-		let cSize = this.getCanvasSize(aspectRatio);
+		let cSize = this.getCanvasSize(aspectRatio, settings.cropType);
 		canvas.width = cSize.x;
 		canvas.height = cSize.y;
-		
+
 		const rgb = hexToRgb(backgroundColor);
 		if (!rgb) return;
 
 		ctx.fillStyle = `rgba(${rgb.r},${rgb.g},${rgb.b},${opacity})`;
-		console.log(ctx.fillStyle);
 		ctx.fillRect(0, 0, cSize.x, cSize.y);
 
 		const img = new Image();
 		img.onload = () => {
-			const offset: Vector2 = {
-				x: canvas.width !== this.width ? (canvas.width - this.width) / 2 : 0,
-				y: canvas.height !== this.height ? (canvas.height - this.height) / 2 : 0
-			};
-			console.log(offset);
-			console.log('canvas', canvas);
-			console.log('this', this.width, this.height);
+			const offset: Vector2 =
+				settings.cropType === 'inside'
+					? {
+							x: canvas.width !== this.width ? (canvas.width - this.width) / 2 : 0,
+							y: canvas.height !== this.height ? (canvas.height - this.height) / 2 : 0
+						}
+					: {
+							x: canvas.width !== this.width ? (canvas.width - this.width) / 2 : 0,
+							y: canvas.height !== this.height ? (canvas.height - this.height) / 2 : 0
+						};
 
 			ctx.drawImage(img, offset.x, offset.y, this.width, this.height);
-			const dataUrl = canvas.toDataURL(`image/${format}`);
+			const dataUrl = canvas.toDataURL(`image/format`);
 			const a = document.createElement('a');
 			a.href = dataUrl;
 			a.download = `${this.filename}.${format}`;
+			console.log(a.download);
 			a.click();
 		};
 		img.src = this.src;

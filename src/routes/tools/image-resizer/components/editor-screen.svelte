@@ -42,29 +42,22 @@
 	import { EditableImage } from '$lib/models/image.svelte';
 
 	let fileDropperRef: HTMLInputElement | null = $state(null);
-	let isDragging = $state(false);
 
 	const imageEditor = getImageEditor();
 </script>
 
 <div class="grid h-full grid-rows-1 gap-8 md:grid-cols-2 lg:gap-12">
 	<FileDropper
-		class="h-full w-full cursor-default"
-		bind:ref={fileDropperRef}
+		class="h-[75vh] cursor-default bg-card lg:h-full"
+		bind:fileInputRef={fileDropperRef}
 		accept="image/*"
-		ondragenter={() => {
-			isDragging = true;
-		}}
-		ondragleave={() => {
-			isDragging = false;
-		}}
 		onfileaccept={(files) => {
 			const editableImages = Array.from(files).map((file) => new EditableImage(file));
 			imageEditor.images = [...imageEditor.images, ...editableImages];
 		}}
 	>
-		<Card.Root class="grid grid-cols-1 grid-rows-8 border-2 border-muted">
-			<Card.Content class="row-span-7 p-6">
+		<Card.Root class="grid h-full grid-cols-1 grid-rows-8 bg-transparent">
+			<Card.Content class="relative row-span-7 p-6">
 				<ScrollArea class="h-full rounded-md border p-4">
 					<Table.Root>
 						<Table.Header>
@@ -77,7 +70,10 @@
 						</Table.Header>
 						<Table.Body>
 							{#each imageEditor.images as image, index}
-								{@const size = image.getCanvasSize(imageEditor.settings.aspectRatio)}
+								{@const size = image.getCanvasSize(
+									imageEditor.settings.aspectRatio,
+									imageEditor.settings.cropType
+								)}
 								<Table.Row>
 									<Table.Cell>
 										<img
@@ -106,10 +102,17 @@
 						</Table.Body>
 					</Table.Root>
 				</ScrollArea>
-				<Button class="mt-5 h-16 w-full text-xl" onclick={() => fileDropperRef?.click()}
-					><Plus /></Button
-				>
 			</Card.Content>
+			<Card.Footer>
+				<div class="flex w-full flex-col">
+					<Button class="mt-5 h-12 w-full text-xl" onclick={() => fileDropperRef?.click()}>
+						<Plus />
+					</Button>
+					<div class="py-2 text-start text-muted-foreground">
+						* Images can also be dragged into the current square
+					</div>
+				</div>
+			</Card.Footer>
 		</Card.Root>
 	</FileDropper>
 	<Card.Root class="mx-auto w-full max-w-3xl">
@@ -133,7 +136,7 @@
 						<RadioGroup.Item value="inside" id="inside" class="peer sr-only" />
 						<Label
 							for="inside"
-							class="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+							class="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
 						>
 							<span>Crop Inside</span>
 						</Label>
@@ -142,7 +145,7 @@
 						<RadioGroup.Item value="outside" id="outside" class="peer sr-only" />
 						<Label
 							for="outside"
-							class="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+							class="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
 						>
 							<span>Crop Out</span>
 						</Label>

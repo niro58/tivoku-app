@@ -5,9 +5,9 @@
 	import { getImageEditor } from '$lib/modules/image-editor.svelte';
 	import { ArrowRight, ImageIcon, Upload } from 'lucide-svelte';
 	let fileDropperRef: HTMLInputElement | null = $state(null);
+	import { toast } from 'svelte-sonner';
 
 	const imageEditor = getImageEditor();
-	let isDragging = $state(false);
 </script>
 
 <div class="mb-8 flex flex-col items-center space-y-4 text-center">
@@ -26,15 +26,11 @@
 	<Card.Root class="grid grid-cols-1 grid-rows-1 border-2 border-dashed border-muted">
 		<Card.Content class="p-6">
 			<FileDropper
-				class="h-full w-full"
-				bind:ref={fileDropperRef}
+				class="rounded-lg border-2 border-dashed border-muted-foreground/25 transition-colors hover:border-primary/50 hover:bg-primary/10"
+				bind:fileInputRef={fileDropperRef}
 				accept="image/*"
-				ondragenter={() => {
-					isDragging = true;
-				}}
-				ondragleave={() => {
-					isDragging = false;
-				}}
+				startsWith="image/"
+				maxSize={10 * 1024 * 1024}
 				onfileaccept={(files) => {
 					const editableImages = Array.from(files).map((file) => new EditableImage(file));
 					imageEditor.images = [...imageEditor.images, ...editableImages];
@@ -43,19 +39,15 @@
 					fileDropperRef?.click();
 				}}
 			>
-				<div
-					class="h-full w-full rounded-lg border-2 border-dashed border-muted-foreground/25 transition-colors hover:border-primary/50 hover:bg-primary/10"
-				>
-					<div class="flex h-full flex-col items-center justify-center space-y-4 p-8">
-						<div class="rounded-full bg-primary/10 p-4">
-							<Upload class="h-8 w-8 text-primary" />
-						</div>
-						<div class="space-y-2 text-center">
-							<h3 class="text-lg font-semibold">Drag and drop your image here</h3>
-							<p class="text-sm text-muted-foreground">
-								Supports PNG, JPG, and WebP formats up to 10MB
-							</p>
-						</div>
+				<div class="flex h-full flex-col items-center justify-center space-y-4 p-8">
+					<div class="rounded-full bg-primary/10 p-4">
+						<Upload class="h-8 w-8 text-primary" />
+					</div>
+					<div class="space-y-2 text-center">
+						<h3 class="text-lg font-semibold">Drag and drop your image here</h3>
+						<p class="text-sm text-muted-foreground">
+							Supports PNG, JPG, and WebP formats up to 10MB
+						</p>
 					</div>
 				</div>
 			</FileDropper>

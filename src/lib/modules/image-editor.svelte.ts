@@ -7,12 +7,13 @@ export type Vector2 = {
 	x: number;
 	y: number;
 };
+export type CropType = 'inside' | 'outside';
 export type ImageSettings = {
 	aspectRatio: Vector2;
 	backgroundColor: string;
 	opacity: number;
 	format: ImageExportFormats;
-	cropType: 'inside' | 'outside';
+	cropType: CropType;
 };
 export enum ImageExportFormats {
 	PNG = 'png',

@@ -1,50 +1,89 @@
 <script lang="ts">
+	import { cn } from '$lib/utils';
+	import type { WithElementRef } from 'bits-ui';
 	import type { Snippet } from 'svelte';
+	import { toast } from 'svelte-sonner';
+	import type { HTMLButtonAttributes } from 'svelte/elements';
 
 	type FileDropProps = {
-		ref?: HTMLInputElement | null;
+		fileInputRef?: HTMLInputElement | null;
 		children: Snippet;
-		class?: string;
 		accept?: string;
-		ondragenter?: (e: DragEvent) => void;
-		ondragleave?: (e: DragEvent) => void;
+		startsWith?: string;
+		maxSize?: number;
 		onfileaccept: (files: FileList) => void;
-		onclick?: (e: MouseEvent) => void;
-	};
+	} & WithElementRef<HTMLButtonAttributes>;
 	let {
-		ref = $bindable(null),
-		children,
+		fileInputRef = $bindable(null),
 		class: className,
-		accept: acceptFiles,
-		ondragenter,
-		ondragleave,
 		onfileaccept,
-		onclick
+		children,
+		accept,
+		startsWith = 'image/',
+		maxSize = 10 * 1024 * 1024,
+		...restProps
 	}: FileDropProps = $props();
+
+	let isDragging = $state(false);
+	function onError(message: string) {
+		toast.warning(message);
+	}
 </script>
 
 <button
-	class={className}
-	{ondragenter}
-	{ondragleave}
-	{onclick}
-	ondragover={ondragenter}
+	class={cn(
+		'h-full w-full',
+		className,
+		isDragging ? 'border-primary/50 bg-primary/10 transition-colors' : ''
+	)}
 	ondrop={(e) => {
 		e.preventDefault();
-		e.stopPropagation();
+		isDragging = false;
 
 		const dt = e.dataTransfer;
-		if (dt?.files) {
-			onfileaccept(dt.files);
+		if (dt) {
+			const files = dt.files;
+			if (files.length > 10) {
+				onError('Maximum 10 files allowed');
+				return;
+			}
+			for (let i = 0; i < dt.files.length; i++) {
+				const file = dt.files.item(i);
+				if (!file || file === null) {
+					onError('Invalid file');
+					return;
+				}
+				if (!file.type.startsWith(startsWith)) {
+					onError('Invalid file type');
+					return;
+				}
+				if (file.size > maxSize) {
+					onError('File size exceeds the limit');
+					return;
+				}
+			}
+
+			onfileaccept(files);
 		}
 	}}
+	ondragover={(e) => {
+		e.preventDefault();
+		isDragging = true;
+	}}
+	ondragenter={() => {
+		isDragging = true;
+	}}
+	ondragleave={() => {
+		isDragging = false;
+	}}
+	{...restProps}
 >
 	{@render children()}
 	<input
 		type="file"
-		accept={acceptFiles || ''}
+		accept={accept || ''}
 		class="hidden"
-		bind:this={ref}
+		bind:this={fileInputRef}
 		multiple
 		onchange={(e) => {
 			const target = e.target;
