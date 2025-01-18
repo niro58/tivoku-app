@@ -16,7 +16,7 @@
 />
 <div class="min-h-screen bg-gradient-to-b from-background to-background/80 pb-16">
 	<section class="py-12 md:py-16 lg:py-20">
-		<div class="container h-[75vh] px-4 md:px-6">
+		<div class="container px-4 md:px-6 lg:h-[75vh]">
 			{#if imageEditor.images.length === 0}
 				<SelectScreen />
 			{:else}

@@ -3,9 +3,19 @@
 		key: string;
 		title: string;
 	}[] = [
-		{ key: aspectRatioToKey({ x: 1, y: 1 }), title: '1 : 1 - Square' },
-		{ key: aspectRatioToKey({ x: 16, y: 9 }), title: '16 : 9 - Best for XY' },
-		{ key: aspectRatioToKey({ x: 4, y: 3 }), title: '4 : 3 - Best for XY' }
+		{ key: aspectRatioToKey({ x: 1, y: 1 }), title: '1 : 1 - Square (Versatile for Posts)' },
+		{
+			key: aspectRatioToKey({ x: 16, y: 9 }),
+			title: '16 : 9 - Widescreen'
+		},
+		{
+			key: aspectRatioToKey({ x: 4, y: 5 }),
+			title: '4 : 5 - Portrait (Instagram Posts)'
+		},
+		{
+			key: aspectRatioToKey({ x: 9, y: 16 }),
+			title: '9 : 16 - Vertical (Stories and Reels)'
+		}
 	];
 	const colorPrefabs = [
 		{
@@ -40,6 +50,7 @@
 	import * as RadioGroup from '$lib/components/ui/radio-group/index.js';
 	import FileDropper from '$lib/components/file-dropper.svelte';
 	import { EditableImage } from '$lib/models/image.svelte';
+	import { blur } from 'svelte/transition';
 
 	let fileDropperRef: HTMLInputElement | null = $state(null);
 
@@ -62,7 +73,7 @@
 					<Table.Root>
 						<Table.Header>
 							<Table.Row>
-								<Table.Head>Image</Table.Head>
+								<Table.Head class="w-24">Image</Table.Head>
 								<Table.Head>Filename</Table.Head>
 								<Table.Head class="w-32">Width</Table.Head>
 								<Table.Head class="w-32">Height</Table.Head>

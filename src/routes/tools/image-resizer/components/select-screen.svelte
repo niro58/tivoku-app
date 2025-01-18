@@ -6,6 +6,7 @@
 	import { ArrowRight, ImageIcon, Upload } from 'lucide-svelte';
 	let fileDropperRef: HTMLInputElement | null = $state(null);
 	import { toast } from 'svelte-sonner';
+	import { blur } from 'svelte/transition';
 
 	const imageEditor = getImageEditor();
 </script>

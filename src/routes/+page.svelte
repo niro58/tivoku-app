@@ -47,7 +47,8 @@
 						<h1
 							class="text-3xl font-bold tracking-tighter text-primary sm:text-4xl md:text-5xl lg:text-6xl/none"
 						>
-							Free Online Toolkit - All-in-One Tools for Daily Productivity
+							<span>Free Online Toolkit</span><br />
+							<span>All-in-One Tools for Daily Productivity</span>
 						</h1>
 
 						<p class="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
