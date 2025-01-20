@@ -6,26 +6,23 @@
 	import { cn } from '$lib/utils';
 	import { Home, Menu } from 'lucide-svelte';
 	import ThemeToggle from './theme-toggle.svelte';
-	import { pageTools } from '$assets/data/pages';
-
+	import { PAGES } from '$data/pages';
 	let isOpen = $state(false);
 </script>
 
 {#snippet pageLinks()}
-	{#each pageTools as item}
-		{#each item.items as tool}
-			{#if tool.link != ''}
-				<a
-					href={tool.link}
-					class={cn(
-						'inline-flex items-center px-1 pt-1 text-sm font-medium text-foreground hover:text-primary',
-						$page.url.pathname === tool.link && 'text-primary'
-					)}
-				>
-					{tool.short}
-				</a>
-			{/if}
-		{/each}
+	{#each Object.values(PAGES) as item}
+		{#if item.link != '/'}
+			<a
+				href={item.link}
+				class={cn(
+					'inline-flex items-center px-1 pt-1 text-sm font-medium text-foreground hover:text-primary',
+					$page.url.pathname === item.link && 'text-primary'
+				)}
+			>
+				{item.title}
+			</a>
+		{/if}
 	{/each}
 {/snippet}
 <nav

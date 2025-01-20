@@ -1,21 +1,42 @@
+<script module>
+	const pageTools = [
+		{
+			id: 'image-tools',
+			title: 'Image Tools',
+			items: [
+				{
+					name: PAGES.IMAGE_RESIZER.title,
+					description:
+						'Resize images for your social media or any other needs and fill the background with a solid color',
+					link: PAGES.IMAGE_RESIZER.link
+				},
+				{
+					name: 'Video Type Changer',
+					description: 'Change the type of your video file to another type',
+					link: ''
+				},
+				{
+					name: 'Video Trimmer',
+					description: 'Trim your video file to a specific length',
+					link: ''
+				}
+			]
+		}
+	];
+</script>
+
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card/index.js';
 	import { ArrowRight, Clock } from 'lucide-svelte';
 	import { Button } from './ui/button';
-	import { pageTools } from '$assets/data/pages';
-	let activeIndex = $state(0);
+	import { PAGES } from '../../data/pages';
 </script>
 
 <section class="py-16">
 	<div class="container px-4 md:px-6">
 		<div class="space-y-16">
-			{#each pageTools as category, index}
-				<div
-					id={category.id}
-					class={`transition-opacity duration-500 ${
-						index === activeIndex ? 'opacity-100' : 'hidden opacity-0'
-					}`}
-				>
+			{#each pageTools as category}
+				<div id={category.id} class={'opacity-100 transition-opacity duration-500'}>
 					<div class="relative">
 						<div class="absolute inset-0 flex items-center" aria-hidden="true">
 							<div class="w-full border-t border-border"></div>

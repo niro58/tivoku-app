@@ -1,3 +1,5 @@
+import { PAGES } from '$data/pages';
+
 export async function GET() {
 	return new Response(
 		`
@@ -10,16 +12,16 @@ export async function GET() {
 			xmlns:image="https://www.google.com/schemas/sitemap-image/1.1"
 			xmlns:video="https://www.google.com/schemas/sitemap-video/1.1"
 		>
-            <url>
-				<loc>https://www.tivoku.com/</loc>
-				<priority>1.0</priority>
-				<changefreq>daily</changefreq>
-			</url>
-            <url>
-				<loc>https://www.tivoku.com/tools/resize-image</loc>
-				<priority>1.0</priority>
-				<changefreq>daily</changefreq>
-			</url>
+			${Object.values(PAGES).map(
+				(page) => `
+				<url>
+					<loc>https://www.tivoku.com${page.link}</loc>
+					<priority>1.0</priority>
+					<changefreq>daily</changefreq>
+				</url>
+				`
+			)}
+          
 		</urlset>`.trim(),
 		{
 			headers: {

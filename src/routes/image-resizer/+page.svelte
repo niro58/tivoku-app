@@ -4,6 +4,7 @@
 	import { getImageEditor } from '$lib/modules/image-editor.svelte';
 	import Seo from '$lib/components/seo.svelte';
 	import { Images } from 'lucide-svelte';
+	import { PAGES } from '$data/pages';
 
 	const imageEditor = getImageEditor();
 	let editorMode = $state(false);
@@ -18,7 +19,7 @@
 	title="Resize Image Online – Free Image Resizer Tool Without Losing Quality"
 	description="Easily resize images online for free with our intuitive image resizer tool. Resize PNGs, photos, and images without losing quality. No sign-ups required."
 	keywords="resize image, resize image online, resize photo, image resize, resize picture, resize png, resize images without losing quality, how to resize an image, pic resize, resize image on iPhone"
-	canonical="https://www.tivoku.com/tools/resize-image"
+	canonical={`https://www.tivoku.com${PAGES.IMAGE_RESIZER.link}`}
 	themeColor="#D21E48"
 	jsonLd={{
 		'@context': 'https://schema.org',
@@ -26,7 +27,7 @@
 		name: 'Resize Image Online – Free Image Resizer Tool Without Losing Quality',
 		description:
 			'Easily resize images online for free with our intuitive image resizer tool. Resize PNGs, photos, and images without losing quality. No sign-ups required.',
-		url: 'https://www.tivoku.com/resize-image'
+		url: `https://www.tivoku.com${PAGES.IMAGE_RESIZER.link}`
 	}}
 />
 <div class="min-h-screen bg-gradient-to-b from-background to-background/80 pb-16">
