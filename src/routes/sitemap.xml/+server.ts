@@ -11,12 +11,12 @@ export async function GET() {
 			xmlns:video="https://www.google.com/schemas/sitemap-video/1.1"
 		>
             <url>
-				<loc>https://www.lucky-auto.cz/</loc>
+				<loc>https://www.tivoku.com/</loc>
 				<priority>1.0</priority>
 				<changefreq>daily</changefreq>
 			</url>
             <url>
-				<loc>https://www.lucky-auto.cz/tools/image-resizer</loc>
+				<loc>https://www.tivoku.com/tools/image-resizer</loc>
 				<priority>1.0</priority>
 				<changefreq>daily</changefreq>
 			</url>

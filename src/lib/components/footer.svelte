@@ -8,8 +8,9 @@
 			<div class="space-y-4">
 				<h3 class="text-lg font-semibold text-primary">About Tivoku</h3>
 				<p class="text-sm text-muted-foreground">
-					Created by Niro58, this toolkit is here for anyone who finds it useful. If you have
-					feedback or suggestions, let me know—your input helps improve it.
+					Tivoku is a free online toolkit created by Niro58, designed for developers, creators, and
+					anyone in need of practical tools. Your feedback and suggestions help make it even
+					better—feel free to share your ideas!
 				</p>
 				<p class="text-sm text-muted-foreground">
 					© {new Date().getFullYear()} Tivoku. All rights reserved.
