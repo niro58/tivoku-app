@@ -29,8 +29,8 @@
 			logo: {
 				'@type': 'ImageObject',
 				url: 'https://www.tivoku.com/logo.png',
-				width: 250,
-				height: 250
+				width: 500,
+				height: 281
 			}
 		},
 		mainEntity: [

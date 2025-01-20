@@ -16,7 +16,7 @@ export async function GET() {
 				<changefreq>daily</changefreq>
 			</url>
             <url>
-				<loc>https://www.tivoku.com/tools/image-resizer</loc>
+				<loc>https://www.tivoku.com/tools/resize-image</loc>
 				<priority>1.0</priority>
 				<changefreq>daily</changefreq>
 			</url>

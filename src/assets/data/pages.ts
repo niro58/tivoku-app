@@ -8,7 +8,7 @@ export const pageTools = [
 				short: 'Image Resizer',
 				description:
 					'Resize images for your social media or any other needs and fill the background with a solid color',
-				link: '/tools/image-resizer'
+				link: '/tools/resize-image'
 			},
 			{
 				name: 'Video Type Changer',

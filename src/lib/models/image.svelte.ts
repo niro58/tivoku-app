@@ -1,5 +1,11 @@
 import { browser } from '$app/environment';
-import { type CropType, type ImageSettings, type Vector2 } from '$lib/modules/image-editor.svelte';
+import {
+	ImageExportFormats,
+	ResultExportFormats,
+	type CropType,
+	type ImageSettings,
+	type Vector2
+} from '$lib/modules/image-editor.svelte';
 import { createImageId, hexToRgb } from '$lib/utils';
 export class EditableImage {
 	id = $state(createImageId());
@@ -59,7 +65,7 @@ export class EditableImage {
 		}
 		return cSize;
 	}
-	async export(settings: ImageSettings) {
+	async export(settings: ImageSettings): Promise<{ name: string; dataUrl: string } | undefined> {
 		if (!browser) return;
 
 		const canvas = document.createElement('canvas');
@@ -79,26 +85,28 @@ export class EditableImage {
 		ctx.fillRect(0, 0, cSize.x, cSize.y);
 
 		const img = new Image();
-		img.onload = () => {
-			const offset: Vector2 =
-				settings.cropType === 'inside'
-					? {
-							x: canvas.width !== this.width ? (canvas.width - this.width) / 2 : 0,
-							y: canvas.height !== this.height ? (canvas.height - this.height) / 2 : 0
-						}
-					: {
-							x: canvas.width !== this.width ? (canvas.width - this.width) / 2 : 0,
-							y: canvas.height !== this.height ? (canvas.height - this.height) / 2 : 0
-						};
+		return new Promise((resolve, reject) => {
+			img.onload = () => {
+				const offset: Vector2 =
+					settings.cropType === 'inside'
+						? {
+								x: canvas.width !== this.width ? (canvas.width - this.width) / 2 : 0,
+								y: canvas.height !== this.height ? (canvas.height - this.height) / 2 : 0
+							}
+						: {
+								x: canvas.width !== this.width ? (canvas.width - this.width) / 2 : 0,
+								y: canvas.height !== this.height ? (canvas.height - this.height) / 2 : 0
+							};
 
-			ctx.drawImage(img, offset.x, offset.y, this.width, this.height);
-			const dataUrl = canvas.toDataURL(`image/format`);
-			const a = document.createElement('a');
-			a.href = dataUrl;
-			a.download = `${this.filename}.${format}`;
-			console.log(a.download);
-			a.click();
-		};
-		img.src = this.src;
+				ctx.drawImage(img, offset.x, offset.y, this.width, this.height);
+				const dataUrl = canvas.toDataURL(`image/${format}`);
+				resolve({
+					name: `${this.filename}.${format}`,
+					dataUrl
+				});
+			};
+			img.onerror = reject;
+			img.src = this.src;
+		});
 	}
 }

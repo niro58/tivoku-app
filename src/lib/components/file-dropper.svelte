@@ -20,7 +20,7 @@
 		children,
 		accept,
 		startsWith = 'image/',
-		maxSize = 10 * 1024 * 1024,
+		maxSize = 50 * 1024 * 1024,
 		...restProps
 	}: FileDropProps = $props();
 
@@ -43,8 +43,8 @@
 		const dt = e.dataTransfer;
 		if (dt) {
 			const files = dt.files;
-			if (files.length > 10) {
-				onError('Maximum 10 files allowed');
+			if (files.length > 50) {
+				onError('Maximum 50 files allowed');
 				return;
 			}
 			for (let i = 0; i < dt.files.length; i++) {

@@ -43,23 +43,25 @@
 		aspectRatioToKey,
 		getImageEditor,
 		ImageExportFormats,
-		keyToAspectRatio
+		keyToAspectRatio,
+		ResultExportFormats
 	} from '$lib/modules/image-editor.svelte';
-	import { Check, Pencil, Plus, X } from 'lucide-svelte';
+	import { Check, Loader, Pencil, Plus, Trash2, X } from 'lucide-svelte';
 
 	import * as RadioGroup from '$lib/components/ui/radio-group/index.js';
 	import FileDropper from '$lib/components/file-dropper.svelte';
 	import { EditableImage } from '$lib/models/image.svelte';
-	import { blur } from 'svelte/transition';
+	import { Checkbox } from '$lib/components/ui/checkbox';
 
 	let fileDropperRef: HTMLInputElement | null = $state(null);
 
 	const imageEditor = getImageEditor();
+	let exportState = $state(false);
 </script>
 
 <div class="grid h-full grid-rows-1 gap-8 md:grid-cols-2 lg:gap-12">
 	<FileDropper
-		class="h-[75vh] cursor-default bg-card lg:h-full"
+		class="max-h-[75vh] cursor-default bg-card lg:h-full"
 		bind:fileInputRef={fileDropperRef}
 		accept="image/*"
 		onfileaccept={(files) => {
@@ -87,11 +89,17 @@
 								)}
 								<Table.Row>
 									<Table.Cell>
-										<img
-											src={image.src}
-											class="flex aspect-square h-16 w-16 items-center justify-center rounded-xl border-2 object-contain p-1"
-											alt={'User image ' + index}
-										/>
+										{#if image.src}
+											<img
+												src={image.src}
+												class="flex aspect-square h-16 w-16 items-center justify-center rounded-xl border-2 object-contain p-1"
+												alt={'User image ' + index}
+											/>
+										{:else}
+											<div class="flex h-16 w-16 items-center justify-center">
+												<Loader class="mx-auto h-8 w-8 animate-spin text-muted-foreground" />
+											</div>
+										{/if}
 									</Table.Cell>
 									<Table.Cell>
 										<Input bind:value={image.filename} />
@@ -116,27 +124,32 @@
 			</Card.Content>
 			<Card.Footer>
 				<div class="flex w-full flex-col">
-					<Button class="mt-5 h-12 w-full text-xl" onclick={() => fileDropperRef?.click()}>
-						<Plus />
-					</Button>
-					<div class="py-2 text-start text-muted-foreground">
-						* Images can also be dragged into the current square
+					<div class="flex flex-row gap-5">
+						<Button class="mt-5 h-12 w-full text-xl" onclick={() => fileDropperRef?.click()}>
+							<Plus />
+						</Button>
+						<Button
+							class="mt-5 h-12 w-12 text-xl"
+							disabled={imageEditor.images.length === 0}
+							onclick={() => (imageEditor.images = [])}
+						>
+							<Trash2 />
+						</Button>
 					</div>
-				</div>
-			</Card.Footer>
+				</div></Card.Footer
+			>
 		</Card.Root>
 	</FileDropper>
-	<Card.Root class="mx-auto w-full max-w-3xl">
-		<Card.Header>
+	<Card.Root class="mx-auto grid max-h-[75vh] w-full max-w-3xl grid-rows-12">
+		<Card.Header class="row-span-1">
 			<Card.Title class="text-2xl font-bold">Image Editor</Card.Title>
 		</Card.Header>
-		<Card.Content class="grid gap-6">
+		<Card.Content class="row-span-9 flex flex-col gap-6">
 			<div class="space-y-2">
 				<Label>Resizing Type</Label>
 				<RadioGroup.Root
 					bind:value={() => imageEditor.settings.cropType,
 					(v) => {
-						console.log(v);
 						if (v === 'inside' || v === 'outside') {
 							imageEditor.settings.cropType = v;
 						}
@@ -262,13 +275,53 @@
 				</div>
 			</div>
 		</Card.Content>
-		<Card.Footer>
+		<Card.Footer class="row-span-2 flex flex-col items-start justify-end gap-5">
+			<div class="flex items-center gap-2 space-x-2">
+				<div class="space-x-1">
+					<Checkbox
+						id="zip-export"
+						aria-labelledby="zip-export"
+						bind:checked={() => imageEditor.settings.exportType === ResultExportFormats.ZIP,
+						() => (imageEditor.settings.exportType = ResultExportFormats.ZIP)}
+					/>
+					<Label
+						id="zip-export"
+						for="zip-export"
+						class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+					>
+						ZIP
+					</Label>
+				</div>
+				<div class="space-x-1">
+					<Checkbox
+						id="single-files-export"
+						aria-labelledby="single-files-export"
+						bind:checked={() => imageEditor.settings.exportType === ResultExportFormats.SINGLE,
+						() => (imageEditor.settings.exportType = ResultExportFormats.SINGLE)}
+					/>
+					<Label
+						id="single-files-export"
+						for="single-files-export"
+						class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+					>
+						Single Files
+					</Label>
+				</div>
+			</div>
 			<Button
-				class="w-full"
-				onclick={() => {
-					imageEditor.exportImages();
-				}}>Export</Button
+				class="h-12 w-full"
+				disabled={imageEditor.images.length === 0 || exportState}
+				onclick={async () => {
+					exportState = true;
+					await imageEditor.exportImages();
+					exportState = false;
+				}}
 			>
+				Export
+			</Button>
 		</Card.Footer>
 	</Card.Root>
+</div>
+<div class="text-start text-muted-foreground">
+	* Images can also be dragged into the image square
 </div>
