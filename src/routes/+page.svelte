@@ -1,5 +1,4 @@
 <script>
-	import Footer from '$lib/components/footer.svelte';
 	import Seo from '$lib/components/seo.svelte';
 	import ToolShowcase from '$lib/components/tool-showcase.svelte';
 	import * as Accordion from '$lib/components/ui/accordion';

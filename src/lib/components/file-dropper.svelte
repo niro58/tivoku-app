@@ -28,6 +28,32 @@
 	function onError(message: string) {
 		toast.warning(message);
 	}
+	function handleDrop(files: FileList) {
+		if (files.length > 50) {
+			onError('Maximum 50 files allowed');
+			return;
+		}
+		for (let i = 0; i < files.length; i++) {
+			const file = files.item(i);
+			if (!file || file === null) {
+				onError('Invalid file');
+				return;
+			}
+			if (!file.type.startsWith(startsWith)) {
+				onError('Invalid file type');
+				return;
+			}
+			if (file.size > maxSize) {
+				onError('File size exceeds the limit');
+				return;
+			}
+			if (!file.type.startsWith(startsWith)) {
+				onError(`Invalid file type ${file.type} ${startsWith}`);
+				return;
+			}
+		}
+		onfileaccept(files);
+	}
 </script>
 
 <button
@@ -41,30 +67,9 @@
 		isDragging = false;
 
 		const dt = e.dataTransfer;
-		if (dt) {
-			const files = dt.files;
-			if (files.length > 50) {
-				onError('Maximum 50 files allowed');
-				return;
-			}
-			for (let i = 0; i < dt.files.length; i++) {
-				const file = dt.files.item(i);
-				if (!file || file === null) {
-					onError('Invalid file');
-					return;
-				}
-				if (!file.type.startsWith(startsWith)) {
-					onError('Invalid file type');
-					return;
-				}
-				if (file.size > maxSize) {
-					onError('File size exceeds the limit');
-					return;
-				}
-			}
-
-			onfileaccept(files);
-		}
+		if (!dt) return;
+		const files = dt.files;
+		handleDrop(files);
 	}}
 	ondragover={(e) => {
 		e.preventDefault();
@@ -89,7 +94,7 @@
 			const target = e.target;
 			if (target instanceof HTMLInputElement && target.files) {
 				const files = target.files;
-				onfileaccept(files);
+				handleDrop(files);
 			}
 		}}
 	/>

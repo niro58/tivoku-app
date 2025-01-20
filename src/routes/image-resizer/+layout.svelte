@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { setImageEditor } from '$lib/modules/image-editor.svelte';
+	import { setImageEditor } from '$lib/models/image-editor.svelte';
 
 	let { children } = $props();
 	setImageEditor();

@@ -1,31 +1,25 @@
 import { browser } from '$app/environment';
-import {
-	ImageExportFormats,
-	ResultExportFormats,
-	type CropType,
-	type ImageSettings,
-	type Vector2
-} from '$lib/modules/image-editor.svelte';
-import { createImageId, hexToRgb } from '$lib/utils';
+import type { ImageSettingsCrop, ImageSettings, Vector2 } from '$lib/models';
+import { randomString, hexToRgb } from '$lib/utils';
 export class EditableImage {
-	id = $state(createImageId());
+	id = $state(randomString());
 	src = $state('');
 	filename = $state('');
 	format = $state('');
 	width = $state(0);
 	height = $state(0);
-
 	constructor(file: File) {
-		this.filename = file.name.split('.').slice(0, -1).join('.');
 		this.loadFileData(file);
 	}
-
-	private async loadFileData(file: File) {
-		const fileData = await this.getFileData(file);
-		this.src = fileData.src;
-		this.format = file.type;
-		this.width = fileData.width;
-		this.height = fileData.height;
+	public async loadFileData(file: File) {
+		this.filename = file.name.split('.').slice(0, -1).join('.');
+		try {
+			const fileData = await this.getFileData(file);
+			this.src = fileData.src;
+			this.format = file.type;
+			this.width = fileData.width;
+			this.height = fileData.height;
+		} catch (e) {}
 	}
 
 	private getFileData(file: File): Promise<{ width: number; height: number; src: string }> {
@@ -40,12 +34,14 @@ export class EditableImage {
 						src: e.target?.result as string
 					});
 				};
+				img.onerror = reject;
 				img.src = e.target?.result as string;
 			};
+			reader.onerror = reject;
 			reader.readAsDataURL(file);
 		});
 	}
-	getCanvasSize(aspectRatio: Vector2, cropType: CropType): Vector2 {
+	getCanvasSize(aspectRatio: Vector2, cropType: ImageSettingsCrop): Vector2 {
 		let cSize: Vector2 = {
 			x: this.width,
 			y: this.height

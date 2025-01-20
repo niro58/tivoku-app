@@ -39,19 +39,16 @@
 	import ScrollArea from '$lib/components/ui/scroll-area/scroll-area.svelte';
 	import * as Select from '$lib/components/ui/select';
 	import * as Table from '$lib/components/ui/table/index.js';
-	import {
-		aspectRatioToKey,
-		getImageEditor,
-		ImageExportFormats,
-		keyToAspectRatio,
-		ResultExportFormats
-	} from '$lib/modules/image-editor.svelte';
+	import { getImageEditor } from '$lib/models/image-editor.svelte';
 	import { Check, Loader, Pencil, Plus, Trash2, X } from 'lucide-svelte';
 
 	import * as RadioGroup from '$lib/components/ui/radio-group/index.js';
 	import FileDropper from '$lib/components/file-dropper.svelte';
-	import { EditableImage } from '$lib/models/image.svelte';
 	import { Checkbox } from '$lib/components/ui/checkbox';
+	import { aspectRatioToKey, keyToAspectRatio } from '$lib/utils';
+	import { ImageExportFormats, ResultExportFormats } from '$lib/models';
+	import { CONSTANTS } from '$data/constants';
+	import { EditableImage } from '$lib/models/editable-image.svelte';
 
 	let fileDropperRef: HTMLInputElement | null = $state(null);
 
@@ -64,9 +61,11 @@
 		class="max-h-[75vh] cursor-default bg-card lg:h-full"
 		bind:fileInputRef={fileDropperRef}
 		accept="image/*"
+		startsWith="image/"
+		maxSize={CONSTANTS.MAX_IMAGE_SIZE}
 		onfileaccept={(files) => {
 			const editableImages = Array.from(files).map((file) => new EditableImage(file));
-			imageEditor.images = [...imageEditor.images, ...editableImages];
+			imageEditor.images.push(...editableImages);
 		}}
 	>
 		<Card.Root class="grid h-full grid-cols-1 grid-rows-8 bg-transparent">
@@ -313,7 +312,7 @@
 				disabled={imageEditor.images.length === 0 || exportState}
 				onclick={async () => {
 					exportState = true;
-					await imageEditor.exportImages();
+					await imageEditor.export();
 					exportState = false;
 				}}
 			>
