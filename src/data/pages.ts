@@ -6,7 +6,11 @@ export const PAGES = Object.freeze({
 	IMAGE_RESIZER: {
 		title: 'Image Resizer',
 		link: '/image-resizer'
-	}
+	},
+	// VIDEO_TRIMMER: {
+	// 	title: 'Video Trimmer',
+	// 	link: '/video-trimmer'
+	// }
 } as const);
 
 export type PageType = (typeof PAGES)[keyof typeof PAGES];

@@ -30,7 +30,7 @@
 		"prettier": "^3.3.2",
 		"prettier-plugin-svelte": "^3.2.6",
 		"prettier-plugin-tailwindcss": "^0.6.5",
-		"svelte": "^5.0.0",
+		"svelte": "^5.11.0",
 		"svelte-check": "^4.0.0",
 		"svelte-sonner": "^0.3.28",
 		"tailwind-merge": "^2.5.5",
@@ -43,6 +43,8 @@
 		"vitest": "^2.0.4"
 	},
 	"dependencies": {
+		"@ffmpeg/ffmpeg": "^0.12.15",
+		"@ffmpeg/util": "^0.12.2",
 		"@tailwindcss/typography": "^0.5.15",
 		"amplify-adapter": "^0.2.0",
 		"jszip": "^3.10.1"
