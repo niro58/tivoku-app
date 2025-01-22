@@ -6,18 +6,18 @@
 </script>
 
 <Seo
-	title="Free Online Developer Toolkit - Simplify Your Everyday Tasks"
-	description="Explore a free online toolkit featuring powerful tools for developers and creators. From image editing to text utilities, streamline your tasks with ease—no sign-ups required."
-	keywords="free online developer tools, image editing tools, text utilities, developer productivity, online toolkit, no sign-ups tools, file conversion tools, free tools for creators"
-	canonical="https://www.tivoku.com"
+	title="Free Online Toolkit - Edit Images, Videos, and Text"
+	description="Explore Tivoku, a free online toolkit packed with powerful tools for image editing, video editing, and text utilities. Simplify your tasks with no sign-ups required."
+	keywords="free online tools, Tivoku, image editing tools, video editing tools, text editing tools, online productivity tools, no sign-up tools, free utilities, everyday editing tools, multi-purpose online toolkit, simple online tools, file conversion tools, free image editor, free video editor, text utilities online, creative tools for everyone"
+	canonical="https://www.tivoku.com/"
 	themeColor="#D21E48"
 	jsonLd={{
 		'@context': 'https://schema.org',
 		'@type': 'WebSite',
 		name: 'Tivoku',
-		url: 'https://www.tivoku.com',
+		url: 'https://www.tivoku.com/',
 		description:
-			'Explore a free online toolkit featuring tools for developers and creators. Streamline your workflow with image editing, text utilities, and more—no sign-ups required.',
+			'Explore Tivoku, a free online toolkit packed with powerful tools for image editing, video editing, and text utilities. Simplify your tasks with no sign-ups required.',
 		author: {
 			'@type': 'Person',
 			name: 'Niro58'
