@@ -7,10 +7,10 @@ export const PAGES = Object.freeze({
 		title: 'Image Resizer',
 		link: '/image-resizer'
 	},
-	// VIDEO_TRIMMER: {
-	// 	title: 'Video Trimmer',
-	// 	link: '/video-trimmer'
-	// }
+	VIDEO_TRIMMER: {
+		title: 'Video Trimmer',
+		link: '/video-trimmer'
+	}
 } as const);
 
 export type PageType = (typeof PAGES)[keyof typeof PAGES];

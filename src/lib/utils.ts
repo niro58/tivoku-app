@@ -40,3 +40,9 @@ export function keyToAspectRatio(key: string): Vector2 {
 	const [x, y] = key.split(':').map(Number);
 	return { x, y };
 }
+export function numberToTime(time: number) {
+	const hours = Math.floor(time / 3600);
+	const minutes = Math.floor(time / 60);
+	const seconds = Math.floor(time % 60);
+	return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}

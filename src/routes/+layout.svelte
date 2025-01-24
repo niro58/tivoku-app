@@ -6,6 +6,7 @@
 	import { Toaster } from '$lib/components/ui/sonner';
 	let { children } = $props();
 </script>
+
 <ModeWatcher />
 <Toaster />
 <Navbar />
