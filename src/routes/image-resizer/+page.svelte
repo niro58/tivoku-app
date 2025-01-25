@@ -18,19 +18,19 @@
 	title="Free Bulk Image Resizer Without Losing Quality"
 	description="Resize images online in bulk for free with our user-friendly tool. Adjust dimensions and maintain quality for photos, PNGs, and more, up to 20 MB."
 	keywords="resize image, resize image online, bulk resize images, resize photo, image resize, resize picture, resize PNG, resize images without losing quality, how to resize an image, resize images in bulk, resize image on iPhone"
-	canonical="https://www.tivoku.com/resize-image/"
+	canonical="https://www.tivoku.com/image-resizer/"
 	themeColor="#D21E48"
 	jsonLd={{
 		'@context': 'https://schema.org',
 		'@type': 'WebPage',
 		name: 'Resize Image Online – Free Bulk Image Resizer Without Losing Quality',
-		url: 'https://www.tivoku.com/resize-image/',
+		url: 'https://www.tivoku.com/image-resizer/',
 		description:
 			'Resize images online in bulk for free with our easy-to-use tool. Adjust dimensions, resize photos, PNGs, or any images up to 20 MB without losing quality. No sign-ups required!',
 		mainEntity: {
 			'@type': 'WebApplication',
 			name: 'Bulk Image Resizer Tool',
-			url: 'https://www.tivoku.com/resize-image/',
+			url: 'https://www.tivoku.com/image-resizer/',
 			description:
 				'Free online bulk image resizer tool to resize photos, PNGs, and other images up to 20 MB. Resize images without losing quality quickly and easily.',
 			applicationCategory: 'MultimediaTool',

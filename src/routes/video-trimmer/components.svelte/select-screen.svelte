@@ -4,23 +4,27 @@
 	import * as Card from '$lib/components/ui/card/index.js';
 	import * as Accordion from '$lib/components/ui/accordion/index.js';
 
-	import { ArrowRight, Check, ImageIcon, Upload } from 'lucide-svelte';
+	import { ArrowRight, Check, Video, Upload } from 'lucide-svelte';
 	import type { VideoEditor } from '$lib/models/video-editor.svelte';
-	let { videoEditor = $bindable(), changeMode }: { videoEditor: VideoEditor; changeMode: () => void } = $props();
+	let {
+		videoEditor = $bindable(),
+		changeMode
+	}: { videoEditor: VideoEditor; changeMode: () => void } = $props();
 	let fileDropperRef: HTMLInputElement | null = $state(null);
 </script>
 
-<div class="container">
+<div class="container pb-16 pt-16">
 	<section class="mb-8 flex flex-col items-center space-y-4 text-center">
 		<div class="space-y-2">
 			<h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-				Free Online Bulk Image Resizer – Resize Images Without Losing Quality
+				Free Video Editor
 			</h1>
 			<p class="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-				Resize images online in bulk with our free image resizer tool. Whether you’re resizing a
-				single PNG, JPG, or an entire folder of photos, our app ensures that your images remain
-				sharp and maintain their quality. Perfect for social media, websites, or personal projects,
-				our bulk resizing tool is fast, efficient, and hassle-free.
+				Effortlessly edit your videos with this free online tool. Using the cutting-edge ffmpeg.wasm
+				engine, all video processing happens locally on your device—ensuring complete privacy and
+				lightning-fast performance. Trim videos, resize them, change aspect ratios, and export in
+				popular formats like MP4, MOV, and MKV. Perfect for content creators, social media managers,
+				or personal projects.
 			</p>
 		</div>
 	</section>
@@ -33,7 +37,7 @@
 					bind:fileInputRef={fileDropperRef}
 					accept="video/mp4,video/x-m4v,video/*"
 					startsWith="video/"
-					maxSize={CONSTANTS.MAX_IMAGE_SIZE}
+					maxSize={CONSTANTS.MAX_VIDEO_SIZE}
 					onfileaccept={(files) => {
 						if (files.length > 0) {
 							changeMode();
@@ -49,9 +53,9 @@
 							<Upload class="h-8 w-8 text-primary" />
 						</div>
 						<div class="space-y-2 text-center">
-							<h3 class="text-lg font-semibold">Drag and drop your image here</h3>
+							<h3 class="text-lg font-semibold">Upload Your Video</h3>
 							<p class="text-sm text-muted-foreground">
-								Supports PNG, JPG, and WebP formats up to 20MB
+								Supports MP4, MOV, MKV, AVI, and other popular formats.
 							</p>
 						</div>
 					</div>
@@ -61,27 +65,27 @@
 
 		<div class="space-y-8">
 			<div class="space-y-4">
-				<h2 class="text-2xl font-bold">How to Resize an Image</h2>
+				<h2 class="text-2xl font-bold">How It Works</h2>
 				<div class="grid gap-4">
 					<div class="flex items-start space-x-4">
 						<div class="rounded-full bg-primary/10 p-2">
 							<Upload class="h-4 w-4 text-primary" />
 						</div>
 						<div>
-							<h3 class="font-semibold">1. Upload Your Image:</h3>
+							<h3 class="font-semibold">1. Upload Your Video:</h3>
 							<p class="text-sm text-muted-foreground">
-								Drag and drop your image or select it from your device.
+								Drag and drop your video file or select it from your device.
 							</p>
 						</div>
 					</div>
 					<div class="flex items-start space-x-4">
 						<div class="rounded-full bg-primary/10 p-2">
-							<ImageIcon class="h-4 w-4 text-primary" />
+							<Video class="h-4 w-4 text-primary" />
 						</div>
 						<div>
-							<h3 class="font-semibold">2. Set New Dimensions:</h3>
+							<h3 class="font-semibold">2. Edit Your Video:</h3>
 							<p class="text-sm text-muted-foreground">
-								Enter the desired width and height for your image.
+								Trim unwanted sections, resize, or adjust the aspect ratio effortlessly.
 							</p>
 						</div>
 					</div>
@@ -90,9 +94,9 @@
 							<ArrowRight class="h-4 w-4 text-primary" />
 						</div>
 						<div>
-							<h3 class="font-semibold">3. Resize and Download:</h3>
+							<h3 class="font-semibold">3. Export and Save:</h3>
 							<p class="text-sm text-muted-foreground">
-								Resize the images using available options and download the resized images.
+								Save the final video directly to your device with no loss in quality.
 							</p>
 						</div>
 					</div>
@@ -100,10 +104,11 @@
 			</div>
 		</div>
 	</section>
+
 	<section class="mt-16">
-		<h2 class="mb-8 text-2xl font-semibold">Why Use Our Bulk Image Resizer?</h2>
+		<h2 class="mb-8 text-2xl font-semibold">Why Choose This Video Editor?</h2>
 		<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-			{#each ['Process, large images up to 20MB with fast results', 'Work with up to 50 images simultaneously', 'Multiple output formats: PNG, JPG, and WebP', 'Preserve aspect ratio or set custom aspect ratio for resizing', 'High-Quality Results: Resize images without losing quality', 'Free and Accessible: No sign-ups or hidden fees'] as feature}
+			{#each ['Completely local: All video processing happens in your browser for unmatched privacy.', 'Supports popular video formats: MP4, MOV, MKV, AVI, and more.', 'No limitations: Edit videos of any length or size.', 'Trim, resize, and adjust aspect ratios with ease.', 'Powered by ffmpeg.wasm for fast, efficient performance.', 'Totally free: No subscriptions, sign-ups, or hidden fees.'] as feature}
 				<div class="flex items-start gap-3">
 					<Check class="mt-1 h-5 w-5 text-rose-500" />
 					<span>{feature}</span>
@@ -111,46 +116,36 @@
 			{/each}
 		</div>
 	</section>
+
 	<section class="mt-16 rounded-lg bg-accent p-8">
 		<h2 class="mb-4 text-2xl font-semibold text-accent-foreground">Privacy & Security</h2>
 		<p class="text-accent-foreground">
-			Your images are processed entirely in your browser. We never store or transmit your files to
-			any server. Your privacy is our top priority, ensuring your images remain completely secure
-			and private throughout the resizing process.
+			Your videos are processed entirely in your browser using ffmpeg.wasm. No data is uploaded to a
+			server, ensuring complete security and confidentiality for your files.
 		</p>
 	</section>
 
 	<section class="mt-16">
 		<h2 class="mb-8 text-2xl font-semibold">Frequently Asked Questions</h2>
 		<Accordion.Root type="single" class="w-full">
-			<Accordion.Item value="faq-image-formats">
-				<Accordion.Trigger>What image formats are supported?</Accordion.Trigger>
+			<Accordion.Item value="faq-video-formats">
+				<Accordion.Trigger>What video formats are supported?</Accordion.Trigger>
 				<Accordion.Content>
-					Our image resizer supports PNG, JPG (JPEG), and WebP formats.
+					This editor supports MP4, MOV, MKV, AVI, and other popular video file types.
 				</Accordion.Content>
 			</Accordion.Item>
-			<Accordion.Item value="faq-image-quality">
-				<Accordion.Trigger>Will I lose image quality after resizing?</Accordion.Trigger>
+			<Accordion.Item value="faq-privacy">
+				<Accordion.Trigger>Is my video data secure?</Accordion.Trigger>
 				<Accordion.Content>
-					No, the quality of the image will stay the same, no compression is applied. However, when
-					significantly reducing image size, some quality loss is inevitable due to the reduction in
-					total pixels.
+					Yes, all video editing is done locally on your device. No files are sent to external
+					servers.
 				</Accordion.Content>
 			</Accordion.Item>
-			<Accordion.Item value="faq-bulk-resizing">
-				<Accordion.Trigger>Can I resize multiple images at once?</Accordion.Trigger>
+			<Accordion.Item value="faq-performance">
+				<Accordion.Trigger>What affects the processing speed?</Accordion.Trigger>
 				<Accordion.Content>
-					Yes, our app supports bulk resizing, allowing you to process multiple images or an entire
-					folder simultaneously.
-				</Accordion.Content>
-			</Accordion.Item>
-			<Accordion.Item value="faq-max-file-size">
-				<Accordion.Trigger
-					>What is the maximum file size for uploading and number of simultaneous uploads?</Accordion.Trigger
-				>
-				<Accordion.Content>
-					You can upload individual images up to 20 MB each and edit 50 images at the same time.
-					This ensures compatibility with high-resolution photos and professional-quality files.
+					The speed of video editing depends entirely on your device’s hardware, as all processes
+					are local.
 				</Accordion.Content>
 			</Accordion.Item>
 		</Accordion.Root>

@@ -33,8 +33,9 @@
 	<section
 		class={`flex flex-1 flex-col p-4 transition-all duration-300 ease-in-out ${isRightPanelOpen ? 'mr-80' : ''}`}
 	>
-		<div class="relative mb-4 aspect-video max-h-[75vh] rounded-lg bg-black shadow-lg">
+		<div class="relative mb-4 aspect-video max-h-[75vh] rounded-lg bg-black/50 shadow-lg">
 			<video
+				src="test.webm"
 				bind:this={videoEditor.videoEl}
 				bind:paused={videoEditor.isPaused}
 				bind:currentTime={videoEditor.currTime}
@@ -65,7 +66,15 @@
 					</button>
 				{/if}
 			</div>
-			<div class="absolute bottom-4 right-4">
+			<div class="absolute bottom-4 right-4 space-x-2">
+				<Button
+					variant="ghost"
+					size="icon"
+					onclick={() => (isRightPanelOpen = true)}
+					class={isRightPanelOpen === false ? 'border border-primary' : ''}
+				>
+					<Settings class="h-4 w-4" />
+				</Button>
 				<Button variant="ghost" size="icon" class="text-white">
 					<Maximize class="h-6 w-6" />
 				</Button>
