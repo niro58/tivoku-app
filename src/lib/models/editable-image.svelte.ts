@@ -1,6 +1,6 @@
 import { browser } from '$app/environment';
 import type { ImageSettingsCrop, ImageSettings, Vector2 } from '$lib/models';
-import { randomString, hexToRgb } from '$lib/utils';
+import { randomString, hexToRgb, round } from '$lib/utils';
 export class EditableImage {
 	id = $state(randomString());
 	src = $state('');
@@ -46,20 +46,19 @@ export class EditableImage {
 			x: this.width,
 			y: this.height
 		};
-		if (cropType === 'inside') {
-			if (aspectRatio.x > aspectRatio.y) {
-				cSize.y = Math.round((cSize.x / aspectRatio.x) * aspectRatio.y);
-			} else if (aspectRatio.x < aspectRatio.y) {
-				cSize.x = Math.round((cSize.y / aspectRatio.y) * aspectRatio.x);
-			}
-		} else if (cropType === 'outside') {
-			if (aspectRatio.x > aspectRatio.y) {
-				cSize.x = Math.round((cSize.y / aspectRatio.y) * aspectRatio.x);
-			} else if (aspectRatio.x < aspectRatio.y) {
-				cSize.y = Math.round((cSize.x / aspectRatio.x) * aspectRatio.y);
-			}
-		}
-		return cSize;
+
+		const isOutside = cropType === 'outside';
+		const longest = isOutside ? Math.max(cSize.x, cSize.y) : Math.min(cSize.x, cSize.y);
+		const [primaryAxis, secondaryAxis]: ['x', 'y'] | ['y', 'x'] =
+			cSize.x > cSize.y ? ['x', 'y'] : ['y', 'x'];
+		const newLength = isOutside
+			? round((longest * aspectRatio[primaryAxis]) / aspectRatio[secondaryAxis], 2)
+			: round((longest * aspectRatio[secondaryAxis]) / aspectRatio[primaryAxis], 2);
+
+		return {
+			x: primaryAxis === 'x' ? longest : newLength,
+			y: primaryAxis === 'y' ? longest : newLength
+		};
 	}
 	async export(settings: ImageSettings): Promise<{ name: string; dataUrl: string } | undefined> {
 		if (!browser) return;

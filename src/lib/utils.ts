@@ -46,3 +46,7 @@ export function numberToTime(time: number) {
 	const seconds = Math.floor(time % 60);
 	return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
+export function round(value: number, decimals: number = 0) {
+	const factor = 10 ** decimals;
+	return Math.round(value * factor) / factor;
+}

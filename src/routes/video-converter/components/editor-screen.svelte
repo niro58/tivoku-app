@@ -39,8 +39,7 @@
 	import ScrollArea from '$lib/components/ui/scroll-area/scroll-area.svelte';
 	import * as Select from '$lib/components/ui/select';
 	import * as Table from '$lib/components/ui/table/index.js';
-	import { getImageEditor } from '$lib/models/image-editor.svelte';
-	import { Check, Crop, Loader, Maximize2, Pencil, Plus, Trash2, X } from 'lucide-svelte';
+	import { Check, Loader, Pencil, Plus, Trash2, X } from 'lucide-svelte';
 
 	import * as RadioGroup from '$lib/components/ui/radio-group/index.js';
 	import FileDropper from '$lib/components/file-dropper.svelte';
@@ -49,14 +48,19 @@
 	import { ImageExportFormats, ResultExportFormats } from '$lib/models';
 	import { CONSTANTS } from '$data/constants';
 	import { EditableImage } from '$lib/models/editable-image.svelte';
+	import type { VideoEditor } from '$lib/models/video-editor.svelte';
 
 	let fileDropperRef: HTMLInputElement | null = $state(null);
 
-	const imageEditor = getImageEditor();
+	let {
+		videoEditor = $bindable(),
+		changeMode
+	}: { videoEditor: VideoEditor; changeMode: () => void } = $props();
+	let isRightPanelOpen = $state(true);
 	let exportState = $state(false);
 </script>
 
-<div class="grid h-full grid-rows-1 gap-8 md:grid-cols-2 lg:gap-12">
+<!-- <div class="grid h-full grid-rows-1 gap-8 md:grid-cols-2 lg:gap-12">
 	<FileDropper
 		class="max-h-[75vh] cursor-default bg-card lg:h-full"
 		bind:fileInputRef={fileDropperRef}
@@ -159,20 +163,18 @@
 						<RadioGroup.Item value="inside" id="inside" class="peer sr-only" />
 						<Label
 							for="inside"
-							class="flex cursor-pointer flex-row items-center justify-center  gap-3 rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+							class="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
 						>
-							<Crop class="h-4 w-4" />
-							<span>Crop to Shortest Side</span>
+							<span>Crop Inside</span>
 						</Label>
 					</div>
 					<div>
 						<RadioGroup.Item value="outside" id="outside" class="peer sr-only" />
 						<Label
 							for="outside"
-							class="flex cursor-pointer flex-row items-center justify-center gap-3 rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+							class="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
 						>
-							<Maximize2 class="h-4 w-4" />
-							<span>Crop to Longest Side</span>
+							<span>Crop Out</span>
 						</Label>
 					</div>
 				</RadioGroup.Root>
@@ -325,4 +327,4 @@
 </div>
 <div class="text-start text-muted-foreground">
 	* Images can also be dragged into the image square
-</div>
+</div> -->

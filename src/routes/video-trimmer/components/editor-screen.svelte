@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '$lib/components/ui/button/button.svelte';
+	import Button, { buttonVariants } from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card/index.js';
 	import Input from '$lib/components/ui/input/input.svelte';
 	import { Label } from '$lib/components/ui/label';
@@ -11,6 +11,8 @@
 	import {
 		ChevronRight,
 		Crop,
+		Gauge,
+		Logs,
 		Maximize,
 		Pause,
 		Play,
@@ -27,6 +29,8 @@
 		changeMode
 	}: { videoEditor: VideoEditor; changeMode: () => void } = $props();
 	let isRightPanelOpen = $state(true);
+	import * as Popover from '$lib/components/ui/popover/index.js';
+	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
 </script>
 
 <main class="flex flex-1 overflow-hidden">
@@ -172,16 +176,17 @@
 				<ChevronRight class="h-4 w-4" />
 			</Button>
 			<Tabs.Root value="edit" class="w-full">
-				<Tabs.List class="mb-4 grid w-full grid-cols-2">
+				<Tabs.List class="mb-4 grid w-full grid-cols-3">
 					<Tabs.Trigger value="edit">Edit</Tabs.Trigger>
 					<Tabs.Trigger value="export">Export</Tabs.Trigger>
+					<Tabs.Trigger value="logs">Logs</Tabs.Trigger>
 				</Tabs.List>
 				<Tabs.Content value="edit">
 					<div class="space-y-4">
 						<div>
 							<h3 class="text-s mb-2 font-medium">Crop</h3>
 							<div class="flex items-center space-x-2">
-								<Crop className="h-4 w-4 text-gray-500" />
+								<Crop class="h-4 w-4 text-gray-500" />
 								<Button variant="outline" size="sm">16:9</Button>
 								<Button variant="outline" size="sm">4:3</Button>
 								<Button variant="outline" size="sm">1:1</Button>
@@ -189,33 +194,22 @@
 							</div>
 						</div>
 						<div>
-							<Label for="volume" class="mb-1 text-xs font-medium">Volume</Label>
+							<h3 class="text-s mb-2 font-medium">Volume</h3>
 							<div class="flex items-center space-x-2">
 								<Volume2 class="h-4 w-4 text-gray-500" />
 								<Slider type="single" id="volume" value={75} max={100} step={1} class="w-full" />
 							</div>
 						</div>
-
 						<div>
-							<Label for="speed" class="mb-1 text-xs font-medium ">Playback Speed</Label>
-							<Slider
-								type="single"
-								id="speed"
-								value={100}
-								max={200}
-								min={50}
-								step={10}
-								class="w-full"
-							/>
-						</div>
-
-						<div>
-							<Label for="opacity" class="mb-1 text-xs font-medium">Opacity</Label>
-							<Slider type="single" id="opacity" value={100} max={100} step={1} class="w-full" />
+							<h3 class="text-s mb-2 font-medium">Playback Speed</h3>
+							<div class="flex items-center space-x-2">
+								<Gauge class="h-4 w-4 text-gray-500" />
+								<Slider type="single" id="playback" value={75} max={100} step={1} class="w-full" />
+							</div>
 						</div>
 					</div>
 
-					<div>Zooming and moving can be done inside the video player</div>
+					<div class="pt-16">Zooming and moving can be done inside the video player</div>
 				</Tabs.Content>
 
 				<Tabs.Content value="export">
@@ -243,6 +237,9 @@
 							Advanced Effects
 						</Button>
 					</div>
+				</Tabs.Content>
+				<Tabs.Content value="logs">
+					<Textarea class="w-full" placeholder="Logs" disabled value={videoEditor.logs} />
 				</Tabs.Content>
 			</Tabs.Root>
 		</div>

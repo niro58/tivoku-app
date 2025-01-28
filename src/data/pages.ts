@@ -7,6 +7,10 @@ export const PAGES = Object.freeze({
 		title: 'Image Resizer',
 		link: '/image-resizer'
 	}
+	// VIDEO_CONVERTER: {
+	// 	title: 'Video Converter',
+	// 	link: '/video-converter'
+	// },
 	// VIDEO_TRIMMER: {
 	// 	title: 'Video Trimmer',
 	// 	link: '/video-trimmer'
