@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import type { Vector2 } from './models';
+import { browser } from '$app/environment';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -49,4 +50,16 @@ export function numberToTime(time: number) {
 export function round(value: number, decimals: number = 0) {
 	const factor = 10 ** decimals;
 	return Math.round(value * factor) / factor;
+}
+
+export function moveToSection(e: Event, id: string) {
+	if (browser) {
+		const element = document.getElementById(id);
+		if (element) {
+			e.preventDefault();
+			//move into view, but y - 100px
+			const yPos = element.getBoundingClientRect().top + window.scrollY - 100;
+			window.scrollTo({ top: yPos, behavior: 'smooth' });
+		}
+	}
 }

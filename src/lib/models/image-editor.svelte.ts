@@ -1,4 +1,4 @@
-import { ImageExportFormats, ResultExportFormats, type ImageSettings } from '$lib/models';
+import { ImageExportFormats, ResultFileFormat, type ImageSettings } from '$lib/models';
 import JSZip from 'jszip';
 import { getContext, setContext } from 'svelte';
 import { toast } from 'svelte-sonner';
@@ -15,7 +15,7 @@ class ImageEditor {
 		opacity: 0,
 		format: ImageExportFormats.PNG,
 		cropType: 'outside',
-		exportType: ResultExportFormats.SINGLE
+		exportType: ResultFileFormat.ZIP
 	});
 
 	constructor() {
@@ -34,13 +34,14 @@ class ImageEditor {
 
 		for (let i = 0; i < this.images.length; i++) {
 			const image = this.images[i];
+			console.log(this.settings.format);
 			const dataUrl = await image.export(this.settings);
 			if (dataUrl) {
 				dataUrls.push(dataUrl);
 			}
 		}
 
-		if (this.settings.exportType === ResultExportFormats.ZIP) {
+		if (this.settings.exportType === ResultFileFormat.ZIP) {
 			const zip = new JSZip();
 			for (let i = 0; i < dataUrls.length; i++) {
 				zip.file(dataUrls[i].name, dataUrls[i].dataUrl.split('base64,')[1], { base64: true });
@@ -50,8 +51,7 @@ class ImageEditor {
 			a.href = URL.createObjectURL(blob);
 			a.download = 'images.zip';
 			a.click();
-		}
-		if (this.settings.exportType === ResultExportFormats.SINGLE) {
+		} else if (this.settings.exportType === ResultFileFormat.SINGLE) {
 			for (let i = 0; i < dataUrls.length; i++) {
 				const a = document.createElement('a');
 				a.href = dataUrls[i].dataUrl;
@@ -59,7 +59,7 @@ class ImageEditor {
 				a.click();
 			}
 		}
-		
+
 		if (dataUrls.length !== this.images.length) {
 			toast.error(
 				`Some images could not be exported. Exported ${dataUrls.length} out of ${this.images.length}.`

@@ -19,7 +19,7 @@
 		bind:this={colorRef}
 		bind:value={backgroundColor}
 		oninput={() => (opacity = colorRef?.value ? 1 : 0)}
-		class="w-full rounded-lg border border-white/40 bg-transparent"
+		class="w-full rounded-lg border border-foreground/40 bg-transparent"
 	/>
 	<button
 		aria-label="Color Picker"
@@ -49,7 +49,7 @@
 			<rect width="100%" height="100%" fill="url(#transparentPattern)" />
 		</svg>
 		<div
-			class="absolute inset-0 rounded-lg border border-white/40"
+			class="absolute inset-0 rounded-lg border border-foreground/40"
 			style="pointer-events: none; background-color: {backgroundColor === ''
 				? '#ffffff'
 				: backgroundColor}; opacity: {opacity};"

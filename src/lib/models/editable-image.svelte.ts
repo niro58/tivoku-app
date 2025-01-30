@@ -94,9 +94,10 @@ export class EditableImage {
 							};
 
 				ctx.drawImage(img, offset.x, offset.y, this.width, this.height);
-				const dataUrl = canvas.toDataURL(`image/${format}`);
+
+				const dataUrl = canvas.toDataURL(`image/${format.toLowerCase()}`);
 				resolve({
-					name: `${this.filename}.${format}`,
+					name: `${this.filename}.${format.toLowerCase()}`,
 					dataUrl
 				});
 			};

@@ -1,14 +1,80 @@
+<script module>
+	const features = [
+		{
+			title: 'Developer Tools',
+			description:
+				'Essential tools for developers: code formatting, validation, and transformation—all in one place.',
+			icon: Code
+		},
+		{
+			title: 'Design Resources',
+			description:
+				'Tools for designers: streamline your workflow with image editing, color palettes, and more.',
+			icon: Palette
+		},
+		{
+			title: 'Lightning Fast',
+			description:
+				'Lightning-fast tools with instant results and real-time previews—no waiting, no lag.',
+			icon: Zap
+		}
+	];
+	const features2 = [
+		{
+			title: 'Explore Our Ever-Growing Tool Library',
+			description:
+				'Discover a growing library of tools for image editing, file conversion, and more. Perfect for developers, designers, and everyday users. New tools added regularly!',
+			icon: Library
+		},
+		{
+			title: '100% Free, No Sign-Ups, No Hassle',
+			description:
+				'All tools are 100% free—no sign-ups, no restrictions, and no hidden fees. Everything runs directly in your browser for fast performance and total privacy.',
+			icon: Lock
+		},
+		{
+			title: 'Tools That Save You Time and Effort',
+			description:
+				'Save time with tools designed to simplify everyday tasks. From quick fixes to advanced utilities, we’ve got you covered. New tools added regularly!',
+			icon: Zap
+		}
+	];
+	const faqs = [
+		{
+			key: 'new-tool-creation',
+			question: 'Can you build a custom tool for me?',
+			answer:
+				'Absolutely! We love building custom tools. Share your idea with us, and we’ll work together to make it happen.'
+		},
+		{
+			key: 'no-sign-up',
+			question: 'Do I need to sign in or are there any limitations to using Tivoku?',
+			answer:
+				'Nope! No sign-ins, no limits. All tools are free and ready to use right in your browser.'
+		},
+		{
+			key: 'data-safety',
+			question: "Is my data safe when using Tivoku's tools?",
+			answer:
+				'Your data stays safe—everything runs in your browser. We never store or share your files, so your privacy is always protected.'
+		}
+	];
+</script>
+
 <script>
 	import Seo from '$lib/components/seo.svelte';
 	import ToolShowcase from '$lib/components/tool-showcase.svelte';
 	import * as Accordion from '$lib/components/ui/accordion';
 	import LogoIcon from '$lib/components/ui/svg/logo-icon.svelte';
+	import { moveToSection } from '$lib/utils';
+	import { ChevronRight, Code, Library, Lock, Palette, Zap } from 'lucide-svelte';
+	import { fade, fly, slide } from 'svelte/transition';
 </script>
 
 <Seo
-	title="Free Online Toolkit - Edit Images, Videos, and Text"
-	description="Explore Tivoku, a free online toolkit packed with powerful tools for image editing, video editing, and text utilities. Simplify your tasks with no sign-ups required."
-	keywords="free online tools, Tivoku, image editing tools, video editing tools, text editing tools, online productivity tools, no sign-up tools, free utilities, everyday editing tools, multi-purpose online toolkit, simple online tools, file conversion tools, free image editor, free video editor, text utilities online, creative tools for everyone"
+	title="Free Online Tools for Developers, Designers, and Creators—Fast, Secure, and No Sign-Up"
+	description="Discover Tivoku: A free, fast, and secure online toolkit for developers, designers, and creators. Edit images, convert files, and process text—no sign-ups, no data storage, just tools that work."
+	keywords="free online tools, developer tools, designer tools, image converter, video converter, text utilities, file conversion tools, secure online tools, no sign-up tools, fast browser tools, free image editor, free video editor, client-side tools, privacy-focused tools"
 	canonical="https://www.tivoku.com/"
 	themeColor="#D21E48"
 	jsonLd={{
@@ -17,7 +83,7 @@
 		name: 'Tivoku',
 		url: 'https://www.tivoku.com/',
 		description:
-			'Explore Tivoku, a free online toolkit packed with powerful tools for image editing, video editing, and text utilities. Simplify your tasks with no sign-ups required.',
+			'Discover Tivoku: A free, fast, and secure online toolkit for developers, designers, and creators. Edit images, convert files, and process text—no sign-ups, no data storage, just tools that work.',
 		author: {
 			'@type': 'Person',
 			name: 'Niro58'
@@ -35,10 +101,10 @@
 		mainEntity: [
 			{
 				'@type': 'Question',
-				name: 'I would like to have a specific online tool—can you create it?',
+				name: 'Can you build a custom tool for me?',
 				acceptedAnswer: {
 					'@type': 'Answer',
-					text: "Yes! If you need a specific online tool, feel free to contact me via email or Discord. I'm happy to consider your request and add it to Tivoku."
+					text: 'Absolutely! We love building custom tools. Share your idea with us, and we’ll work together to make it happen.'
 				}
 			},
 			{
@@ -46,7 +112,7 @@
 				name: 'Do I need to sign in or are there any limitations to using Tivoku?',
 				acceptedAnswer: {
 					'@type': 'Answer',
-					text: 'No, you don’t need to sign in to use Tivoku, and there are no limitations. All tools are fully accessible, free, and available without any sign-ups or restrictions.'
+					text: 'Nope! No sign-ins, no limits. All tools are free and ready to use right in your browser.'
 				}
 			},
 			{
@@ -54,107 +120,148 @@
 				name: "Is my data safe when using Tivoku's tools?",
 				acceptedAnswer: {
 					'@type': 'Answer',
-					text: 'Yes, your data is completely safe. Tivoku doesn’t collect, process, or store your data on external servers. All tools run directly on your device.'
+					text: 'Your data stays safe—everything runs in your browser. We never store or share your files, so your privacy is always protected.'
 				}
 			}
 		]
 	}}
 />
+
 <div class="flex min-h-screen flex-col">
 	<main class="flex-grow">
-		<section class="bg-gradient-to-b from-background to-card py-16 md:py-24 lg:py-32">
-			<div class="container px-4 md:px-6">
-				<div class="flex flex-col items-center space-y-4 text-center">
-					<div class="flex flex-col items-center space-y-2">
-						<LogoIcon />
-						<h1
-							class="text-3xl font-bold tracking-tighter text-primary sm:text-4xl md:text-5xl lg:text-6xl/none"
+		<section
+			id="home"
+			class="relative overflow-hidden bg-gradient-to-b from-card to-background py-12 lg:py-32"
+		>
+			<div class="absolute inset-0 overflow-hidden">
+				<div
+					class="absolute -left-1/4 top-1/4 h-[500px] w-[500px] rounded-full bg-primary/10 blur-3xl"
+				></div>
+			</div>
+
+			<div class="container relative mx-auto px-4 py-16">
+				<div class="grid gap-12 lg:grid-cols-2 lg:gap-8">
+					<div in:fly={{ y: -20, duration: 600 }} class="flex flex-col justify-center">
+						<div
+							in:fade={{ delay: 200, duration: 600 }}
+							class="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm text-primary"
 						>
-							<span>Free Online Developer Tools</span><br />
-							<span>Simple Solutions for Everyday Tasks</span>
+							<Zap size={14} class="animate-pulse" />
+							Welcome to the future of development tools
+						</div>
+
+						<h1 in:fade={{ delay: 300, duration: 600 }} class="mb-6 text-5xl md:text-7xl">
+							<LogoIcon />
 						</h1>
 
-						<p class="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-							Welcome to my free online toolkit—a collection of practical tools for developers,
-							creators, and anyone who wants to simplify everyday tasks. From image editing to text
-							utilities, these tools are fast, accessible, and always free—without collecting or
-							storing any of your data.
+						<h2
+							in:fade={{ delay: 400, duration: 600 }}
+							class="/90 mb-6 text-2xl font-medium md:text-3xl"
+						>
+							Free Online Tools for <br />
+							<span class="text-primary">Developers, Designers, and Creators</span>
+						</h2>
+
+						<p
+							in:fade={{ delay: 500, duration: 600 }}
+							class="mb-8 max-w-lg text-base text-muted-foreground md:text-lg"
+						>
+							Your all-in-one toolkit for free, fast, and secure online tools. No sign-ups, no data
+							storage—just powerful tools that work right in your browser.
 						</p>
+
+						<div in:fade={{ delay: 400, duration: 600 }} class="flex flex-wrap gap-4">
+							<button
+								onclick={(e) => {
+									e.preventDefault();
+									moveToSection(e, 'tools');
+								}}
+								class="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium transition-all hover:bg-primary/90"
+							>
+								Explore Tools
+								<ChevronRight size={16} class="transition-transform group-hover:translate-x-0.5" />
+							</button>
+							<button
+								onclick={(e) => {
+									e.preventDefault();
+									moveToSection(e, 'about');
+								}}
+								class="inline-flex items-center gap-2 rounded-full border border-foreground/10 bg-foreground/5 px-6 py-3 text-sm font-medium backdrop-blur-sm transition-all hover:bg-foreground/10"
+							>
+								Learn More
+							</button>
+						</div>
+					</div>
+
+					<div in:fade={{ delay: 400, duration: 800 }} class="relative grid gap-4 lg:grid-cols-2">
+						{#each features as feature, index}
+							<div
+								in:fly={{ y: 20, delay: 500 + index * 100, duration: 600 }}
+								class="group relative overflow-hidden rounded-2xl border border-foreground/10 bg-foreground/5 p-6 backdrop-blur-sm transition-all hover:bg-foreground/10"
+							>
+								<div class="mb-3 inline-flex rounded-full bg-primary/10 p-3 text-primary">
+									<feature.icon />
+								</div>
+								<h3 class="mb-2 text-lg font-semibold">{feature.title}</h3>
+								<p class="text-sm text-muted-foreground">{feature.description}</p>
+							</div>
+						{/each}
 					</div>
 				</div>
 			</div>
 		</section>
 
-		<section class="border-y border-border bg-card py-16">
-			<div class="container px-4 md:px-6">
-				<div class="grid gap-6 lg:grid-cols-3">
-					<div class="space-y-2">
-						<h2 class="text-2xl font-bold text-primary">A Growing Collection of Tools</h2>
-						<p class="text-muted-foreground">
-							Whether you're editing images, processing text, or converting files, this toolkit has
-							you covered. Designed for developers and everyday users, it's an ever-expanding
-							collection of free and practical utilities.
-						</p>
-					</div>
-					<div class="space-y-2">
-						<h2 class="text-2xl font-bold text-primary">Free and Easy to Use</h2>
-						<p class="text-muted-foreground">
-							All tools are completely free with no sign-ups, no restrictions, and no hidden fees.
-							They run directly on your device, ensuring fast performance without relying on
-							external servers or storing your data.
-						</p>
-					</div>
-					<div class="space-y-2">
-						<h2 class="text-2xl font-bold text-primary">Designed to Save Time</h2>
-						<p class="text-muted-foreground">
-							Streamline your workflow with tools that tackle everyday tasks quickly and
-							efficiently. From small fixes to essential utilities, this toolkit is designed to make
-							your work easier. New tools are added regularly, so check back often!
-						</p>
-					</div>
+		<section class="relative py-16 md:py-24" id="about">
+			<div class="absolute inset-0 overflow-hidden">
+				<div
+					class="absolute right-0 top-1/4 h-[250px] w-[250px] rounded-full bg-primary/10 blur-3xl"
+				></div>
+			</div>
+
+			<div class="container relative mx-auto px-4">
+				<div class="grid gap-8 md:grid-cols-3">
+					{#each features2 as feature, index}
+						<div
+							class="group relative overflow-hidden rounded-xl border border-foreground/10 bg-background/20 p-8 backdrop-blur-sm transition-all duration-300 hover:border-primary/20 hover:bg-background/30"
+						>
+							<div class="mb-4 inline-flex rounded-lg bg-primary/10 p-3 text-primary">
+								<feature.icon class="h-6 w-6" />
+							</div>
+
+							<h2 class="mb-4 text-xl font-semibold text-primary md:text-2xl">{feature.title}</h2>
+
+							<p class="text-base leading-relaxed text-muted-foreground">{feature.description}</p>
+						</div>
+					{/each}
 				</div>
 			</div>
 		</section>
-
 		<ToolShowcase />
-		<section class="py-16 md:py-24 lg:py-16">
+		<section class="relative py-16 md:py-24 lg:pb-32 lg:pt-16" id="faq">
+			<div class="pointer-events-none absolute inset-0 overflow-hidden lg:overflow-clip">
+				<div class="absolute top-1/4 h-[250px] w-[250px] rounded-full bg-primary/10 blur-3xl"></div>
+				<div
+					class="absolute left-1/2 h-[250px] w-[250px] rounded-full bg-primary/10 blur-3xl"
+				></div>
+			</div>
 			<div class="container px-4 md:px-6">
-				<div class="relative">
-					<div class="absolute inset-0 flex items-center" aria-hidden="true">
-						<div class="w-full border-t border-border"></div>
-					</div>
-					<div class="relative flex justify-center">
-						<span class="bg-background px-3 text-2xl font-bold text-primary">
-							Frequently Asked Questions
-						</span>
-					</div>
-				</div>
-				<Accordion.Root type="single">
-					<Accordion.Item value="new-tool-creation">
-						<Accordion.Trigger
-							>I would like to have an online tool—can you create it?</Accordion.Trigger
+				<h2 class="mb-12 text-center text-3xl font-bold text-primary md:text-4xl">
+					Frequently Asked Questions
+				</h2>
+				<Accordion.Root type="single" class="mx-auto max-w-3xl space-y-4">
+					{#each faqs as { question, answer, key }}
+						<Accordion.Item
+							value={key}
+							class="group rounded-xl border border-foreground/10 bg-background/20 transition-all hover:border-primary/20"
 						>
-						<Accordion.Content
-							>Yes! If you need a specific online tool, feel free to contact me via email or
-							Discord. I'm happy to consider your request and add it to Tivoku.</Accordion.Content
-						>
-					</Accordion.Item>
-					<Accordion.Item value="limitations">
-						<Accordion.Trigger
-							>Do I need to sign in or are there any limitations to using Tivoku?</Accordion.Trigger
-						>
-						<Accordion.Content
-							>No, you don’t need to sign in to use Tivoku, and there are no limitations. All tools
-							are fully accessible, free, and available without any sign-ups or restrictions.</Accordion.Content
-						>
-					</Accordion.Item>
-					<Accordion.Item value="privacy">
-						<Accordion.Trigger>Is my data safe when using Tivoku's tools?</Accordion.Trigger>
-						<Accordion.Content
-							>Yes, your data is completely safe. Tivoku doesn’t collect, process, or store your
-							data on external servers. All tools run directly on your device.</Accordion.Content
-						>
-					</Accordion.Item>
+							<Accordion.Trigger class="flex items-center justify-between p-6 text-lg font-medium"
+								>{question}</Accordion.Trigger
+							>
+							<Accordion.Content class="px-6 text-sm leading-relaxed text-muted-foreground">
+								{answer}
+							</Accordion.Content>
+						</Accordion.Item>
+					{/each}
 				</Accordion.Root>
 			</div>
 		</section>

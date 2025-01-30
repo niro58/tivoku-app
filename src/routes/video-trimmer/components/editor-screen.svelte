@@ -37,7 +37,7 @@
 	<section
 		class={`flex flex-1 flex-col p-4 transition-all duration-300 ease-in-out ${isRightPanelOpen ? 'mr-80' : ''}`}
 	>
-		<div class="relative mb-4 aspect-video max-h-[75vh] rounded-lg bg-black/50 shadow-lg">
+		<div class="relative mb-4 aspect-video max-h-[75vh] rounded-lg bg-background/50 shadow-lg">
 			<video
 				src="test.webm"
 				bind:this={videoEditor.videoEl}
@@ -47,28 +47,12 @@
 			>
 				<track kind="captions" />
 			</video>
-			<div class="absolute inset-0 flex items-center justify-center">
-				{#if videoEditor.currProgress < 100}
+			<div>
+				<div class="absolute inset-0 flex items-center justify-center">
 					<div class="absolute inset-0 flex items-center justify-center">
 						<Progress value={videoEditor.currProgress} class="w-1/2" />
 					</div>
-				{:else}
-					<button
-						class={cn(
-							'flex h-full w-full items-center justify-center p-2 text-white transition-all duration-300 hover:bg-gray-400/20',
-							!videoEditor.isPaused && 'opacity-0 hover:opacity-100'
-						)}
-						onclick={() => {
-							videoEditor.isPaused = !videoEditor.isPaused;
-						}}
-					>
-						{#if videoEditor.isPaused}
-							<Play class="h-12 w-12" />
-						{:else}
-							<Pause class="h-12 w-12" />
-						{/if}
-					</button>
-				{/if}
+				</div>
 			</div>
 			<div class="absolute bottom-4 right-4 space-x-2">
 				<Button
@@ -79,7 +63,7 @@
 				>
 					<Settings class="h-4 w-4" />
 				</Button>
-				<Button variant="ghost" size="icon" class="text-white">
+				<Button variant="ghost" size="icon" class="">
 					<Maximize class="h-6 w-6" />
 				</Button>
 			</div>

@@ -24,8 +24,8 @@
 			label: 'Transparent',
 			class: 'bg-transparent border-2 border-dashed border-gray-400'
 		},
-		{ hex: '#000000', opacity: 1, label: 'Black', class: 'bg-black' },
-		{ hex: '#ffffff', opacity: 1, label: 'White', class: 'bg-white border border-gray-200' }
+		{ hex: '#000000', opacity: 1, label: 'Black', class: 'bg-background' },
+		{ hex: '#ffffff', opacity: 1, label: 'White', class: 'bg-foreground border border-gray-200' }
 	];
 </script>
 
@@ -46,7 +46,7 @@
 	import FileDropper from '$lib/components/file-dropper.svelte';
 	import { Checkbox } from '$lib/components/ui/checkbox';
 	import { aspectRatioToKey, keyToAspectRatio } from '$lib/utils';
-	import { ImageExportFormats, ResultExportFormats } from '$lib/models';
+	import { ImageExportFormats, ResultFileFormat } from '$lib/models';
 	import { CONSTANTS } from '$data/constants';
 	import { EditableImage } from '$lib/models/editable-image.svelte';
 
@@ -195,7 +195,7 @@
 							title={color.label}
 						>
 							{#if isActive}
-								<Check class={`mx-auto ${color.hex === '#ffffff' ? 'text-black' : 'text-white'}`} />
+								<Check class={`mx-auto ${color.hex === '#ffffff' ? 'text-black' : ''}`} />
 							{/if}
 						</button>
 					{/each}
@@ -282,8 +282,8 @@
 					<Checkbox
 						id="zip-export"
 						aria-labelledby="zip-export"
-						bind:checked={() => imageEditor.settings.exportType === ResultExportFormats.ZIP,
-						() => (imageEditor.settings.exportType = ResultExportFormats.ZIP)}
+						bind:checked={() => imageEditor.settings.exportType === ResultFileFormat.ZIP,
+						() => (imageEditor.settings.exportType = ResultFileFormat.ZIP)}
 					/>
 					<Label
 						id="zip-export"
@@ -297,8 +297,8 @@
 					<Checkbox
 						id="single-files-export"
 						aria-labelledby="single-files-export"
-						bind:checked={() => imageEditor.settings.exportType === ResultExportFormats.SINGLE,
-						() => (imageEditor.settings.exportType = ResultExportFormats.SINGLE)}
+						bind:checked={() => imageEditor.settings.exportType === ResultFileFormat.SINGLE,
+						() => (imageEditor.settings.exportType = ResultFileFormat.SINGLE)}
 					/>
 					<Label
 						id="single-files-export"

@@ -6,7 +6,7 @@ export const PAGES = Object.freeze({
 	IMAGE_RESIZER: {
 		title: 'Image Resizer',
 		link: '/image-resizer'
-	}
+	},
 	// VIDEO_CONVERTER: {
 	// 	title: 'Video Converter',
 	// 	link: '/video-converter'

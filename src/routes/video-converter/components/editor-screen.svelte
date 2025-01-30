@@ -1,330 +1,301 @@
-<script module lang="ts">
-	const aspectRatios: {
-		key: string;
-		title: string;
-	}[] = [
-		{ key: aspectRatioToKey({ x: 1, y: 1 }), title: '1 : 1 - Square (Versatile for Posts)' },
-		{
-			key: aspectRatioToKey({ x: 16, y: 9 }),
-			title: '16 : 9 - Widescreen'
-		},
-		{
-			key: aspectRatioToKey({ x: 4, y: 5 }),
-			title: '4 : 5 - Portrait (Instagram Posts)'
-		},
-		{
-			key: aspectRatioToKey({ x: 9, y: 16 }),
-			title: '9 : 16 - Vertical (Stories and Reels)'
-		}
-	];
-	const colorPrefabs = [
-		{
-			hex: '#000000',
-			opacity: 0,
-			label: 'Transparent',
-			class: 'bg-transparent border-2 border-dashed border-gray-400'
-		},
-		{ hex: '#000000', opacity: 1, label: 'Black', class: 'bg-black' },
-		{ hex: '#ffffff', opacity: 1, label: 'White', class: 'bg-white border border-gray-200' }
-	];
-</script>
-
 <script lang="ts">
-	import Button from '$lib/components/ui/button/button.svelte';
-
-	import ColorInput from '$lib/components/ui/color-input.svelte';
-	import * as Card from '$lib/components/ui/card/index.js';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
-	import ScrollArea from '$lib/components/ui/scroll-area/scroll-area.svelte';
-	import * as Select from '$lib/components/ui/select';
-	import * as Table from '$lib/components/ui/table/index.js';
-	import { Check, Loader, Pencil, Plus, Trash2, X } from 'lucide-svelte';
-
-	import * as RadioGroup from '$lib/components/ui/radio-group/index.js';
-	import FileDropper from '$lib/components/file-dropper.svelte';
-	import { Checkbox } from '$lib/components/ui/checkbox';
-	import { aspectRatioToKey, keyToAspectRatio } from '$lib/utils';
-	import { ImageExportFormats, ResultExportFormats } from '$lib/models';
-	import { CONSTANTS } from '$data/constants';
-	import { EditableImage } from '$lib/models/editable-image.svelte';
 	import type { VideoEditor } from '$lib/models/video-editor.svelte';
+	import Check from 'lucide-svelte/icons/check';
+	import ChevronsUpDown from 'lucide-svelte/icons/chevrons-up-down';
+	import { tick } from 'svelte';
+	import * as Command from '$lib/components/ui/command/index.js';
+	import * as Popover from '$lib/components/ui/popover/index.js';
+	import { Button } from '$lib/components/ui/button/index.js';
+	import { cn } from '$lib/utils.js';
+	import { ResultAudioFormat, ResultVideoFormat } from '$lib/models';
+	import * as Card from '$lib/components/ui/card/index.js';
+	import { ScrollArea } from '$lib/components/ui/scroll-area';
+	import { CheckCircle2, X } from 'lucide-svelte';
+	import { fade, slide } from 'svelte/transition';
+	import { Label } from '$lib/components/ui/label';
+	import { Progress } from '$lib/components/ui/progress';
+	import Input from '$lib/components/ui/input/input.svelte';
 
-	let fileDropperRef: HTMLInputElement | null = $state(null);
+	let { videoEditor = $bindable() }: { videoEditor: VideoEditor } = $props();
 
-	let {
-		videoEditor = $bindable(),
-		changeMode
-	}: { videoEditor: VideoEditor; changeMode: () => void } = $props();
-	let isRightPanelOpen = $state(true);
-	let exportState = $state(false);
+	let formatOpen = $state(false);
+	let formatTriggerRef: HTMLButtonElement | null = $state(null);
+	function closeAndFocusTrigger(type: 'audio' | 'video') {
+		tick().then(() => {
+			formatOpen = false;
+			formatTriggerRef?.focus();
+		});
+	}
 </script>
 
-<!-- <div class="grid h-full grid-rows-1 gap-8 md:grid-cols-2 lg:gap-12">
-	<FileDropper
-		class="max-h-[75vh] cursor-default bg-card lg:h-full"
-		bind:fileInputRef={fileDropperRef}
-		accept="image/*"
-		startsWith="image/"
-		maxSize={CONSTANTS.MAX_IMAGE_SIZE}
-		onfileaccept={(files) => {
-			const editableImages = Array.from(files).map((file) => new EditableImage(file));
-			imageEditor.images.push(...editableImages);
-		}}
-	>
-		<Card.Root class="grid h-full grid-cols-1 grid-rows-8 bg-transparent">
-			<Card.Content class="relative row-span-7 p-6">
-				<ScrollArea class="h-full rounded-md border p-4">
-					<Table.Root>
-						<Table.Header>
-							<Table.Row>
-								<Table.Head class="w-24">Image</Table.Head>
-								<Table.Head>Filename</Table.Head>
-								<Table.Head class="w-32">Width</Table.Head>
-								<Table.Head class="w-32">Height</Table.Head>
-							</Table.Row>
-						</Table.Header>
-						<Table.Body>
-							{#each imageEditor.images as image, index}
-								{@const size = image.getCanvasSize(
-									imageEditor.settings.aspectRatio,
-									imageEditor.settings.cropType
-								)}
-								<Table.Row>
-									<Table.Cell>
-										{#if image.src}
-											<img
-												src={image.src}
-												class="flex aspect-square h-16 w-16 items-center justify-center rounded-xl border-2 object-contain p-1"
-												alt={'User image ' + index}
-											/>
-										{:else}
-											<div class="flex h-16 w-16 items-center justify-center">
-												<Loader class="mx-auto h-8 w-8 animate-spin text-muted-foreground" />
-											</div>
-										{/if}
-									</Table.Cell>
-									<Table.Cell>
-										<Input bind:value={image.filename} />
-									</Table.Cell>
-									<Table.Cell class="text-center text-lg">{size.x}</Table.Cell>
-									<Table.Cell class="text-center text-lg">{size.y}</Table.Cell>
-									<Table.Cell>
+<div class="grid grid-cols-2 gap-5" in:slide={{ duration: 500 }} out:slide={{ duration: 500 }}>
+	<Card.Root class="mb-8 h-full">
+		<Card.Content class="p-6">
+			<h2 class="mb-4 text-xl font-semibold">Imported Videos</h2>
+			<ScrollArea class="h-[300px] w-full rounded-md border p-4">
+				{#each videoEditor.videos as video, index (index)}
+					<div
+						class="flex h-16 flex-col items-center justify-between border-b px-2 py-2 last:border-b-0"
+						in:fade
+						out:fade
+					>
+						<div class="flex w-full items-center">
+							<div class="mr-4 h-9 w-16 rounded bg-gray-200/50"></div>
+							<Input bind:value={video.filename} class="" />
+							{#key video.currState}
+								<div class="flex h-full w-16 items-center justify-center" in:fade out:fade>
+									{#if video.currState === 'none'}
 										<Button
+											variant="ghost"
 											size="icon"
 											onclick={() => {
-												imageEditor.images = imageEditor.images.filter((_, i) => i !== index);
+												videoEditor.videos = videoEditor.videos.filter((_, i) => i !== index);
 											}}
 										>
-											<X />
+											<X class="h-4 w-4" />
 										</Button>
-									</Table.Cell>
-								</Table.Row>
-							{/each}
-						</Table.Body>
-					</Table.Root>
-				</ScrollArea>
-			</Card.Content>
-			<Card.Footer>
-				<div class="flex w-full flex-col">
-					<div class="flex flex-row gap-5">
-						<Button class="mt-5 h-12 w-full text-xl" onclick={() => fileDropperRef?.click()}>
-							<Plus />
-						</Button>
-						<Button
-							class="mt-5 h-12 w-12 text-xl"
-							disabled={imageEditor.images.length === 0}
-							onclick={() => (imageEditor.images = [])}
-						>
-							<Trash2 />
-						</Button>
+									{:else if video.currState === 'exporting'}
+										<span>{Math.round(video.currProgress.current)}%</span>
+									{:else if video.currState === 'done'}
+										<CheckCircle2 class="mr-2 h-6 w-6 text-green-500" />
+									{/if}
+								</div>
+							{/key}
+						</div>
+						{#if video.currState === 'exporting'}
+							<div in:fade out:fade class="flex w-full flex-row items-center justify-center gap-3">
+								<Progress class="w-full" value={video.currProgress.current} />
+							</div>
+						{/if}
 					</div>
-				</div></Card.Footer
-			>
-		</Card.Root>
-	</FileDropper>
-	<Card.Root class="mx-auto grid max-h-[75vh] w-full max-w-3xl grid-rows-12">
-		<Card.Header class="row-span-1">
-			<Card.Title class="text-2xl font-bold">Image Editor</Card.Title>
-		</Card.Header>
-		<Card.Content class="row-span-9 flex flex-col gap-6">
-			<div class="space-y-2">
-				<Label>Resizing Type</Label>
-				<RadioGroup.Root
-					bind:value={() => imageEditor.settings.cropType,
-					(v) => {
-						if (v === 'inside' || v === 'outside') {
-							imageEditor.settings.cropType = v;
-						}
-					}}
-					class="grid grid-cols-2 gap-4"
-				>
-					<div>
-						<RadioGroup.Item value="inside" id="inside" class="peer sr-only" />
-						<Label
-							for="inside"
-							class="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-						>
-							<span>Crop Inside</span>
-						</Label>
-					</div>
-					<div>
-						<RadioGroup.Item value="outside" id="outside" class="peer sr-only" />
-						<Label
-							for="outside"
-							class="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-						>
-							<span>Crop Out</span>
-						</Label>
-					</div>
-				</RadioGroup.Root>
-			</div>
-			<div class="space-y-2">
-				<Label>Background Color</Label>
-				<div class="grid grid-cols-4 gap-2">
-					{#each colorPrefabs as color}
-						{@const isActive =
-							imageEditor.settings.backgroundColor === color.hex &&
-							imageEditor.settings.opacity === color.opacity}
-						<button
-							onclick={() => {
-								imageEditor.settings.backgroundColor = color.hex;
-								imageEditor.settings.opacity = color.opacity;
-							}}
-							class={`h-10 rounded-md transition-all ${color.class} ${
-								isActive ? 'ring-2 ring-primary ring-offset-2' : ''
-							}`}
-							title={color.label}
-						>
-							{#if isActive}
-								<Check class={`mx-auto ${color.hex === '#ffffff' ? 'text-black' : 'text-white'}`} />
-							{/if}
-						</button>
-					{/each}
-					<ColorInput
-						bind:backgroundColor={imageEditor.settings.backgroundColor}
-						bind:opacity={imageEditor.settings.opacity}
-					>
-						<Pencil class="text-primary" />
-					</ColorInput>
-				</div>
-			</div>
-			<div class="grid grid-cols-2 gap-4">
-				<div class="space-y-2">
-					<Label for="format">Format</Label>
-					<Select.Root
-						type="single"
-						bind:value={() => imageEditor.settings.format,
-						(v) => {
-							if (v in ImageExportFormats) {
-								imageEditor.settings.format = v;
-							}
-						}}
-					>
-						<Select.Trigger id="format">{imageEditor.settings.format.toUpperCase()}</Select.Trigger>
-						<Select.Content>
-							{#each Object.entries(ImageExportFormats) as [key, value]}
-								<Select.Item value={key}>{value.toUpperCase()}</Select.Item>
-							{/each}
-						</Select.Content>
-					</Select.Root>
-				</div>
-				<div class="space-y-2">
-					<Label for="aspect-ratio">Aspect Ratio</Label>
-					<Select.Root
-						type="single"
-						bind:value={() => aspectRatioToKey(imageEditor.settings.aspectRatio),
-						(v) => {
-							imageEditor.settings.aspectRatio = keyToAspectRatio(v);
-						}}
-					>
-						<Select.Trigger id="aspect-ratio"
-							>{aspectRatioToKey(imageEditor.settings.aspectRatio)}</Select.Trigger
-						>
-						<Select.Content>
-							{#each aspectRatios as ratio}
-								<Select.Item value={ratio.key}>{ratio.title}</Select.Item>
-							{/each}
-						</Select.Content>
-					</Select.Root>
+				{/each}
+			</ScrollArea>
+		</Card.Content>
+	</Card.Root>
+	<Card.Root>
+		<Card.Content class="p-6">
+			<h2 class="mb-4 text-xl font-semibold">Conversion Options</h2>
+			<div class="flex space-x-4">
+				<div class="w-1/2">
+					<Label class="mb-2 block text-sm font-medium" for="video-format">Convert to:</Label>
+					<Popover.Root bind:open={formatOpen}>
+						<Popover.Trigger id="video-format">
+							{#snippet child({ props })}
+								<Button
+									variant="outline"
+									class="w-[200px] justify-between"
+									{...props}
+									role="combobox"
+									aria-expanded={formatOpen}
+								>
+									{#if Object.values(ResultVideoFormat).includes(videoEditor.exportSettings.exportFormat as ResultVideoFormat)}
+										{videoEditor.exportSettings.exportFormat?.toUpperCase()}
+									{:else}
+										Select Video Format
+									{/if}
+									<ChevronsUpDown class="ml-2 size-4 shrink-0 opacity-50" />
+								</Button>
+							{/snippet}
+						</Popover.Trigger>
+						<Popover.Content class="w-[200px] p-0">
+							<Command.Root>
+								<Command.Input placeholder="Search format..." />
+								<Command.List>
+									<Command.Empty>No framework found.</Command.Empty>
+									<Command.Group heading="Video Formats">
+										{#each Object.entries(ResultVideoFormat) as [k, v]}
+											<Command.Item
+												value={v}
+												onSelect={() => {
+													videoEditor.exportSettings.exportFormat = v;
+													closeAndFocusTrigger('video');
+												}}
+											>
+												<Check
+													class={cn(
+														'mr-2 size-4',
+														v !== videoEditor.exportSettings.exportFormat && 'text-transparent'
+													)}
+												/>
+												{v.toUpperCase()}
+											</Command.Item>
+										{/each}
+									</Command.Group>
+									<Command.Group heading="Audio Formats">
+										{#each Object.entries(ResultAudioFormat) as [k, v]}
+											<Command.Item
+												value={v}
+												onSelect={() => {
+													videoEditor.exportSettings.exportFormat = v;
+													closeAndFocusTrigger('audio');
+												}}
+											>
+												<Check
+													class={cn(
+														'mr-2 size-4',
+														v !== videoEditor.exportSettings.exportFormat && 'text-transparent'
+													)}
+												/>
+												{v.toUpperCase()}
+											</Command.Item>
+										{/each}
+									</Command.Group>
+								</Command.List>
+							</Command.Root>
+						</Popover.Content>
+					</Popover.Root>
 				</div>
 			</div>
-			<div class="grid grid-cols-2 gap-4">
-				<div class="space-y-2">
-					<Label for="x">X</Label>
-					<Input
-						id="x"
-						type="number"
-						bind:value={() => imageEditor.settings.aspectRatio.x,
-						(v) => {
-							if (isNaN(v) || v <= 0 || v > 10000) return;
-							imageEditor.settings.aspectRatio.x = v;
-						}}
-						min="1"
-					/>
-				</div>
-				<div class="space-y-2">
-					<Label for="y">Y</Label>
-					<Input
-						id="y"
-						type="number"
-						bind:value={() => imageEditor.settings.aspectRatio.y,
-						(v) => {
-							if (isNaN(v) || v <= 0 || v > 10000) return;
-							imageEditor.settings.aspectRatio.y = v;
-						}}
-						min="1"
-					/>
-				</div>
+			<div class="mt-6">
+				<Button class="w-full" onclick={() => videoEditor.export()}>Convert Files</Button>
 			</div>
 		</Card.Content>
-		<Card.Footer class="row-span-2 flex flex-col items-start justify-end gap-5">
-			<div class="flex items-center gap-2 space-x-2">
-				<div class="space-x-1">
-					<Checkbox
-						id="zip-export"
-						aria-labelledby="zip-export"
-						bind:checked={() => imageEditor.settings.exportType === ResultExportFormats.ZIP,
-						() => (imageEditor.settings.exportType = ResultExportFormats.ZIP)}
-					/>
-					<Label
-						id="zip-export"
-						for="zip-export"
-						class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-					>
-						ZIP
-					</Label>
-				</div>
-				<div class="space-x-1">
-					<Checkbox
-						id="single-files-export"
-						aria-labelledby="single-files-export"
-						bind:checked={() => imageEditor.settings.exportType === ResultExportFormats.SINGLE,
-						() => (imageEditor.settings.exportType = ResultExportFormats.SINGLE)}
-					/>
-					<Label
-						id="single-files-export"
-						for="single-files-export"
-						class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-					>
-						Single Files
-					</Label>
-				</div>
-			</div>
-			<Button
-				class="h-12 w-full"
-				disabled={imageEditor.images.length === 0 || exportState}
-				onclick={async () => {
-					exportState = true;
-					await imageEditor.export();
-					exportState = false;
-				}}
-			>
-				Export
-			</Button>
-		</Card.Footer>
 	</Card.Root>
 </div>
-<div class="text-start text-muted-foreground">
-	* Images can also be dragged into the image square
-</div> -->
+<!-- 
+<Card.Root class="mx-auto grid max-h-[75vh] w-full max-w-3xl grid-rows-12">
+	<Card.Header class="row-span-1">
+		<Card.Title class="text-2xl font-bold">Image Editor</Card.Title>
+	</Card.Header>
+	<Card.Content class="row-span-9 flex flex-col gap-6">
+		<Popover.Root bind:open={formatOpen}>
+			<Popover.Trigger>
+				{#snippet child({ props })}
+					<Button
+						variant="outline"
+						class="w-[200px] justify-between"
+						{...props}
+						role="combobox"
+						aria-expanded={formatOpen}
+					>
+						{#if Object.values(ResultVideoFormat).includes(videoEditor.exportSettings.exportFormat as ResultVideoFormat)}
+							{videoEditor.exportSettings.exportFormat?.toUpperCase()}
+						{:else}
+							Select Video Format
+						{/if}
+						<ChevronsUpDown class="ml-2 size-4 shrink-0 opacity-50" />
+					</Button>
+				{/snippet}
+			</Popover.Trigger>
+			<Popover.Content class="w-[200px] p-0">
+				<Command.Root>
+					<Command.Input placeholder="Search framework..." />
+					<Command.List>
+						<Command.Empty>No framework found.</Command.Empty>
+						<Command.Group>
+							{#each Object.entries(ResultVideoFormat) as [k, v]}
+								<Command.Item
+									value={v}
+									onSelect={() => {
+										videoEditor.exportSettings.exportFormat = v;
+										closeAndFocusTrigger('video');
+									}}
+								>
+									<Check
+										class={cn(
+											'mr-2 size-4',
+											v !== videoEditor.exportSettings.exportFormat && 'text-transparent'
+										)}
+									/>
+									{v.toUpperCase()}
+								</Command.Item>
+							{/each}
+						</Command.Group>
+					</Command.List>
+				</Command.Root>
+			</Popover.Content>
+		</Popover.Root>
+
+		<Popover.Root bind:open={audioFormatOpen}>
+			<Popover.Trigger>
+				{#snippet child({ props })}
+					<Button
+						variant="outline"
+						class="w-[200px] justify-between"
+						{...props}
+						role="combobox"
+						aria-expanded={audioFormatOpen}
+					>
+						{#if Object.values(ResultAudioFormat).includes(videoEditor.exportSettings.exportFormat as ResultAudioFormat)}
+							{videoEditor.exportSettings.exportFormat?.toUpperCase()}
+						{:else}
+							Select Audio Format
+						{/if}
+						<ChevronsUpDown class="ml-2 size-4 shrink-0 opacity-50" />
+					</Button>
+				{/snippet}
+			</Popover.Trigger>
+			<Popover.Content class="w-[200px] p-0">
+				<Command.Root>
+					<Command.Input placeholder="Search framework..." />
+					<Command.List>
+						<Command.Empty>No framework found.</Command.Empty>
+						<Command.Group>
+							{#each Object.entries(ResultAudioFormat) as [k, v]}
+								<Command.Item
+									value={v}
+									onSelect={() => {
+										videoEditor.exportSettings.exportFormat = v;
+										closeAndFocusTrigger('audio');
+									}}
+								>
+									<Check
+										class={cn(
+											'mr-2 size-4',
+											v !== videoEditor.exportSettings.exportFormat && 'text-transparent'
+										)}
+									/>
+									{v.toUpperCase()}
+								</Command.Item>
+							{/each}
+						</Command.Group>
+					</Command.List>
+				</Command.Root>
+			</Popover.Content>
+		</Popover.Root>
+	</Card.Content>
+	<Card.Footer class="row-span-2 flex flex-col items-start justify-end gap-5">
+		<div class="flex items-center gap-2 space-x-2">
+			<div class="space-x-1">
+				<Checkbox
+					id="zip-export"
+					aria-labelledby="zip-export"
+					bind:checked={() => imageEditor.settings.exportType === ResultFileFormat.ZIP,
+					() => (imageEditor.settings.exportType = ResultFileFormat.ZIP)}
+				/>
+				<Label
+					id="zip-export"
+					for="zip-export"
+					class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+				>
+					ZIP
+				</Label>
+			</div>
+			<div class="space-x-1">
+				<Checkbox
+					id="single-files-export"
+					aria-labelledby="single-files-export"
+					bind:checked={() => imageEditor.settings.exportType === ResultFileFormat.SINGLE,
+					() => (imageEditor.settings.exportType = ResultFileFormat.SINGLE)}
+				/>
+				<Label
+					id="single-files-export"
+					for="single-files-export"
+					class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+				>
+					Single Files
+				</Label>
+			</div>
+		</div>
+		<Button
+			class="h-12 w-full"
+			onclick={async () => {
+				exportState = true;
+				await videoEditor.export();
+				exportState = false;
+			}}
+		>
+			Export
+		</Button>
+	</Card.Footer>
+</Card.Root> -->

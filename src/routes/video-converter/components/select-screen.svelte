@@ -6,14 +6,10 @@
 	import { Upload } from 'lucide-svelte';
 
 	let fileDropperRef: HTMLInputElement | null = $state(null);
-	let {
-		videoEditor = $bindable(),
-		changeMode
-	}: { videoEditor: VideoEditor; changeMode: () => void } = $props();
-	let isRightPanelOpen = $state(true);
+	let { videoEditor = $bindable() }: { videoEditor: VideoEditor } = $props();
 </script>
 
-<Card.Root class="grid grid-cols-1 grid-rows-1 border-2 border-dashed border-muted">
+<Card.Root class="col-span-2 grid grid-cols-1  grid-rows-1 border-2 border-dashed border-muted">
 	<Card.Content class="p-6">
 		<FileDropper
 			class="rounded-lg border-2 border-dashed border-muted-foreground/25 transition-colors hover:border-primary/50 hover:bg-primary/10"
@@ -23,8 +19,7 @@
 			maxSize={CONSTANTS.MAX_VIDEO_SIZE}
 			onfileaccept={(files) => {
 				if (files.length > 0) {
-					changeMode();
-					videoEditor.load(files[0]);
+					videoEditor.load(files);
 				}
 			}}
 			onclick={() => {

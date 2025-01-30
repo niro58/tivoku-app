@@ -7,58 +7,129 @@
 	import { Home, Menu } from 'lucide-svelte';
 	import ThemeToggle from './theme-toggle.svelte';
 	import { PAGES } from '$data/pages';
+	import * as Card from './ui/card/index';
+	import { fade, fly, slide } from 'svelte/transition';
 	let isOpen = $state(false);
+
+	let hoveredIndex = $state<number | null>(null);
+	let activeIndex = $state(0);
+	let hoverStyle: {
+		left?: string;
+		width?: string;
+	} = $state({});
+	let activeStyle: {
+		left: string;
+		width: string;
+	} = $state({ left: '0px', width: '0px' });
+	let isDarkMode = $state(false);
+	let tabRefs = $state<HTMLAnchorElement[]>([]);
+
+	$effect(() => {
+		if (hoveredIndex !== null) {
+			const hoveredElement = tabRefs[hoveredIndex];
+			if (hoveredElement) {
+				const { offsetLeft, offsetWidth } = hoveredElement;
+				hoverStyle = {
+					left: `${offsetLeft}px`,
+					width: `${offsetWidth}px`
+				};
+			}
+		}
+	});
+
+	$effect(() => {
+		const activeElement = tabRefs[activeIndex];
+		if (activeElement) {
+			const { offsetLeft, offsetWidth } = activeElement;
+			activeStyle = {
+				left: `${offsetLeft}px`,
+				width: `${offsetWidth}px`
+			};
+		}
+	});
+
+	$effect(() => {
+		requestAnimationFrame(() => {
+			const overviewElement = tabRefs[0];
+			if (overviewElement) {
+				const { offsetLeft, offsetWidth } = overviewElement;
+				activeStyle = {
+					left: `${offsetLeft}px`,
+					width: `${offsetWidth}px`
+				};
+			}
+		});
+	});
 </script>
 
 {#snippet pageLinks()}
-	{#each Object.values(PAGES) as item}
-		{#if item.link != '/'}
+	<div in:fade={{ duration: 300, delay: 200 }} class="gap-5 sm:flex sm:flex-row">
+		{#each Object.values(PAGES) as item, index}
 			<a
+				bind:this={tabRefs[index]}
+				class={`h-[30px] cursor-pointer px-3 py-2 transition-colors duration-300 ${
+					index === activeIndex ? 'text-foreground' : 'text-foreground/50'
+				}`}
+				onmouseenter={() => (hoveredIndex = index)}
+				onmouseleave={() => (hoveredIndex = null)}
+				onclick={() => (activeIndex = index)}
 				href={item.link}
-				class={cn(
-					'inline-flex items-center px-1 pt-1 text-sm font-medium text-foreground hover:text-primary',
-					$page.url.pathname === item.link && 'text-primary'
-				)}
 			>
-				{item.title}
-			</a>
-		{/if}
-	{/each}
-{/snippet}
-<nav
-	class="sticky top-0 z-40 w-full border-b border-border/40 bg-background backdrop-blur supports-[backdrop-filter]:bg-background/60"
->
-	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
-		<div class="flex h-16 justify-center">
-			<div class="relative hidden w-full items-center justify-center sm:flex">
-				<div class="absolute left-0">
-					<Button variant="outline" size="icon" href="/">
-						<Home class="h-[1.2rem] w-[1.2rem]" />
-					</Button>
+				<div
+					transition:fade={{ duration: 300, delay: 10000 + 100 * index }}
+					class="flex h-full items-center justify-center whitespace-nowrap text-sm font-[var(--www-mattmannucci-me-geist-regular-font-family)] leading-5"
+				>
+					{item.title}
 				</div>
-				{@render pageLinks()}
+			</a>
+		{/each}
+	</div>
+{/snippet}
+<nav class="sticky top-0 z-40 w-full">
+	<div class="flex h-16 justify-center">
+		<Card.Root
+			class="relative hidden h-[75px] w-full items-center justify-center border-none shadow-none sm:flex"
+		>
+			<Card.Content class="p-0">
+				<div class="relative">
+					<div
+						class="absolute flex h-[30px] items-center rounded-[6px] bg-foreground/10 transition-all duration-300 ease-out"
+						style:left={hoverStyle.left ? hoverStyle.left : ''}
+						style:width={hoverStyle.width ? hoverStyle.width : ''}
+						style:opacity={hoveredIndex !== null ? 1 : 0}
+					></div>
 
-				<div class="absolute right-0">
+					<div
+						class="absolute bottom-[-6px] h-[2px] bg-foreground transition-all duration-300 ease-out"
+						style:left={activeStyle.left}
+						style:width={activeStyle.width}
+					></div>
+
+					<div class="relative flex items-center space-x-[6px]">
+						{@render pageLinks()}
+					</div>
+				</div>
+				<div class="absolute bottom-0 right-8 top-0 flex items-center">
 					<ThemeToggle />
 				</div>
-			</div>
-			<div class="flex items-center sm:hidden">
-				<Sheet.Root open={isOpen} onOpenChange={(e) => (isOpen = e)}>
-					<Sheet.Trigger>
-						{#snippet child({ props })}
-							<Button variant="ghost" size="icon" {...props}>
-								<Menu class="h-6 w-6" />
-								<span class="sr-only">Open main menu</span>
-							</Button>
-						{/snippet}
-					</Sheet.Trigger>
-					<Sheet.Content side="right" class="flex items-center">
-						<div class="flex flex-col space-y-4">
-							{@render pageLinks()}
-						</div>
-					</Sheet.Content>
-				</Sheet.Root>
-			</div>
+			</Card.Content>
+		</Card.Root>
+		<div class="relative flex w-full items-center justify-between px-4 sm:hidden">
+			<ThemeToggle />
+			<Button variant="ghost" size="icon" onclick={() => (isOpen = !isOpen)}>
+				<Menu class="h-6 w-6" />
+				<span class="sr-only">Open main menu</span>
+			</Button>
+			<div class="h-10 w-10"></div>
+			{#if isOpen}
+				<div
+					class="absolute left-0 top-16 w-full rounded-b-lg bg-background shadow-lg"
+					in:slide={{ duration: 300 }}
+					out:slide={{ duration: 300 }}
+				>
+					{@render pageLinks()}
+				</div>
+			{/if}
 		</div>
 	</div>
 </nav>
