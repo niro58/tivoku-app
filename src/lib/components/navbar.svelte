@@ -2,13 +2,13 @@
 	import { page } from '$app/stores';
 
 	import Button from '$lib/components/ui/button/button.svelte';
-	import * as Sheet from '$lib/components/ui/sheet';
-	import { cn } from '$lib/utils';
-	import { Home, Menu } from 'lucide-svelte';
+	import { Menu } from 'lucide-svelte';
 	import ThemeToggle from './theme-toggle.svelte';
 	import { PAGES } from '$data/pages';
 	import * as Card from './ui/card/index';
-	import { fade, fly, slide } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
+	import { onMount } from 'svelte';
+
 	let isOpen = $state(false);
 
 	let hoveredIndex = $state<number | null>(null);
@@ -21,7 +21,7 @@
 		left: string;
 		width: string;
 	} = $state({ left: '0px', width: '0px' });
-	let isDarkMode = $state(false);
+
 	let tabRefs = $state<HTMLAnchorElement[]>([]);
 
 	$effect(() => {
@@ -36,7 +36,6 @@
 			}
 		}
 	});
-
 	$effect(() => {
 		const activeElement = tabRefs[activeIndex];
 		if (activeElement) {
@@ -50,7 +49,7 @@
 
 	$effect(() => {
 		requestAnimationFrame(() => {
-			const overviewElement = tabRefs[0];
+			const overviewElement = tabRefs[activeIndex];
 			if (overviewElement) {
 				const { offsetLeft, offsetWidth } = overviewElement;
 				activeStyle = {
@@ -59,6 +58,20 @@
 				};
 			}
 		});
+	});
+	$effect(() => {
+		const currentPage = Object.values(PAGES).find((item) => item.link === $page.route.id);
+		if (currentPage) {
+			activeIndex = Object.values(PAGES).indexOf(currentPage);
+			const activeElement = tabRefs[activeIndex];
+			if (activeElement) {
+				const { offsetLeft, offsetWidth } = activeElement;
+				activeStyle = {
+					left: `${offsetLeft}px`,
+					width: `${offsetWidth}px`
+				};
+			}
+		}
 	});
 </script>
 
@@ -103,6 +116,7 @@
 						class="absolute bottom-[-6px] h-[2px] bg-foreground transition-all duration-300 ease-out"
 						style:left={activeStyle.left}
 						style:width={activeStyle.width}
+						in:fade={{ delay: 300, duration: 300 }}
 					></div>
 
 					<div class="relative flex items-center space-x-[6px]">

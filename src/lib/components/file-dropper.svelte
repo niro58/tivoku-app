@@ -6,7 +6,7 @@
 	import type { HTMLButtonAttributes } from 'svelte/elements';
 
 	type FileDropProps = {
-		fileInputRef?: HTMLInputElement | null;
+		fileInputEl?: HTMLInputElement | undefined;
 		children: Snippet;
 		accept?: string;
 		startsWith?: string;
@@ -14,7 +14,7 @@
 		onfileaccept: (files: FileList) => void;
 	} & WithElementRef<HTMLButtonAttributes>;
 	let {
-		fileInputRef = $bindable(null),
+		fileInputEl = $bindable(),
 		class: className,
 		onfileaccept,
 		children,
@@ -25,9 +25,12 @@
 	}: FileDropProps = $props();
 
 	let isDragging = $state(false);
+	let dragCounter = $state(0);
+
 	function onError(message: string) {
 		toast.warning(message);
 	}
+
 	function handleDrop(files: FileList) {
 		if (files.length > 50) {
 			onError('Maximum 50 files allowed');
@@ -65,6 +68,7 @@
 	ondrop={(e) => {
 		e.preventDefault();
 		isDragging = false;
+		dragCounter = 0;
 
 		const dt = e.dataTransfer;
 		if (!dt) return;
@@ -76,10 +80,14 @@
 		isDragging = true;
 	}}
 	ondragenter={() => {
+		dragCounter++;
 		isDragging = true;
 	}}
 	ondragleave={() => {
-		isDragging = false;
+		dragCounter--;
+		if (dragCounter === 0) {
+			isDragging = false;
+		}
 	}}
 	{...restProps}
 >
@@ -88,7 +96,7 @@
 		type="file"
 		accept={accept || ''}
 		class="hidden"
-		bind:this={fileInputRef}
+		bind:this={fileInputEl}
 		multiple
 		onchange={(e) => {
 			const target = e.target;

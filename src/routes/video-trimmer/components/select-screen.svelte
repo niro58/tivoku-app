@@ -5,12 +5,12 @@
 	import * as Accordion from '$lib/components/ui/accordion/index.js';
 
 	import { ArrowRight, Check, Video, Upload } from 'lucide-svelte';
-	import type { VideoEditor } from '$lib/models/video-editor.svelte';
+	import type { VideoTrimmer } from '$lib/models/video-trimmer.svelte';
 	let {
 		videoEditor = $bindable(),
 		changeMode
-	}: { videoEditor: VideoEditor; changeMode: () => void } = $props();
-	let fileDropperRef: HTMLInputElement | null = $state(null);
+	}: { videoEditor: VideoTrimmer; changeMode: () => void } = $props();
+	let fileInputEl: HTMLInputElement | undefined = $state();
 </script>
 
 <div class="container pb-16 pt-16">
@@ -34,7 +34,7 @@
 			<Card.Content class="p-6">
 				<FileDropper
 					class="rounded-lg border-2 border-dashed border-muted-foreground/25 transition-colors hover:border-primary/50 hover:bg-primary/10"
-					bind:fileInputRef={fileDropperRef}
+					bind:fileInputEl
 					accept="video/mp4,video/x-m4v,video/*"
 					startsWith="video/"
 					maxSize={CONSTANTS.MAX_VIDEO_SIZE}
@@ -45,7 +45,7 @@
 						}
 					}}
 					onclick={() => {
-						fileDropperRef?.click();
+						fileInputEl?.click();
 					}}
 				>
 					<div class="flex h-full flex-col items-center justify-center space-y-4 p-8">

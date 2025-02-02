@@ -27,10 +27,11 @@
 	let {
 		videoEditor = $bindable(),
 		changeMode
-	}: { videoEditor: VideoEditor; changeMode: () => void } = $props();
+	}: { videoEditor: VideoTrimmer; changeMode: () => void } = $props();
 	let isRightPanelOpen = $state(true);
 	import * as Popover from '$lib/components/ui/popover/index.js';
 	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
+	import type { VideoTrimmer } from '$lib/models/video-trimmer.svelte';
 </script>
 
 <main class="flex flex-1 overflow-hidden">
@@ -50,7 +51,7 @@
 			<div>
 				<div class="absolute inset-0 flex items-center justify-center">
 					<div class="absolute inset-0 flex items-center justify-center">
-						<Progress value={videoEditor.currProgress} class="w-1/2" />
+						<Progress value={videoEditor.videos[0].currProgress.current} class="w-1/2" />
 					</div>
 				</div>
 			</div>
@@ -223,7 +224,12 @@
 					</div>
 				</Tabs.Content>
 				<Tabs.Content value="logs">
-					<Textarea class="w-full" placeholder="Logs" disabled value={videoEditor.logs} />
+					<Textarea
+						class="w-full"
+						placeholder="Logs"
+						disabled
+						value={JSON.stringify(videoEditor.logs)}
+					/>
 				</Tabs.Content>
 			</Tabs.Root>
 		</div>

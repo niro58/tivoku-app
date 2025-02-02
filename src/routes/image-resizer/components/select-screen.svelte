@@ -1,100 +1,108 @@
+<script module>
+	const steps = [
+		{
+			icon: Upload,
+			title: 'Upload Your Image:',
+			description: 'Drag and drop your image or select it from your device.'
+		},
+		{
+			icon: ImageIcon,
+			title: 'Set New Dimensions:',
+			description: 'Enter the desired width and height for your image.'
+		},
+		{
+			icon: ArrowRight,
+			title: 'Resize and Download:',
+			description: 'Resize the images using available options and download the resized images.'
+		}
+	];
+</script>
+
 <script lang="ts">
 	import { CONSTANTS } from '$data/constants';
 	import FileDropper from '$lib/components/file-dropper.svelte';
-	import * as Accordion from '$lib/components/ui/accordion/index.js';
-	import * as Card from '$lib/components/ui/card/index.js';
 	import { EditableImage } from '$lib/models/editable-image.svelte';
 	import { getImageEditor } from '$lib/models/image-editor.svelte';
-	import { ArrowRight, Check, ImageIcon, Upload } from 'lucide-svelte';
-	let fileDropperRef: HTMLInputElement | null = $state(null);
+	import { ArrowRight, ArrowUpFromLine, ImageIcon, Upload, Zap } from 'lucide-svelte';
+	import { fade, fly, scale } from 'svelte/transition';
+	let fileInputEl: HTMLInputElement | undefined = $state();
 
 	const imageEditor = getImageEditor();
 </script>
 
-<section class="mb-8 flex flex-col items-center space-y-4 text-center">
-	<div class="space-y-2">
-		<h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-			Free Online Bulk Image Resizer – Resize Images Without Losing Quality
+<div transition:fly={{ duration: 600, y: 20 }} class="mx-auto max-w-4xl">
+	<div class="mb-16 space-y-6 text-center">
+		<h1 class="text-4xl font-bold text-foreground md:text-5xl lg:text-6xl">
+			Free Online Bulk Image Resizer
 		</h1>
-		<p class="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-			Resize images online in bulk with our free image resizer tool. Whether you’re resizing a
-			single PNG, JPG, or an entire folder of photos, our app ensures that your images remain sharp
-			and maintain their quality. Perfect for social media, websites, or personal projects, our bulk
-			resizing tool is fast, efficient, and hassle-free.
+		<p class="text-2xl font-medium text-primary md:text-3xl">
+			Resize Images Without Losing Quality
 		</p>
-	</div>
-</section>
-
-<section class="grid min-h-[50vh] gap-8 md:grid-cols-2 lg:gap-12">
-	<Card.Root class="grid grid-cols-1 grid-rows-1 border-2 border-dashed border-muted">
-		<Card.Content class="p-6">
-			<FileDropper
-				class="rounded-lg border-2 border-dashed border-muted-foreground/25 transition-colors hover:border-primary/50 hover:bg-primary/10"
-				bind:fileInputRef={fileDropperRef}
-				accept="image/*"
-				startsWith="image/"
-				maxSize={CONSTANTS.MAX_IMAGE_SIZE}
-				onfileaccept={(files) => {
-					const editableImages = Array.from(files).map((file) => new EditableImage(file));
-					imageEditor.images.push(...editableImages);
-				}}
-				onclick={() => {
-					fileDropperRef?.click();
-				}}
-			>
-				<div class="flex h-full flex-col items-center justify-center space-y-4 p-8">
-					<div class="rounded-full bg-primary/10 p-4">
-						<Upload class="h-8 w-8 text-primary" />
-					</div>
-					<div class="space-y-2 text-center">
-						<h3 class="text-lg font-semibold">Drag and drop your image here</h3>
-						<p class="text-sm text-muted-foreground">
-							Supports PNG, JPG, and WebP formats up to 20MB
-						</p>
-					</div>
-				</div>
-			</FileDropper>
-		</Card.Content>
-	</Card.Root>
-
-	<div class="space-y-8">
-		<div class="space-y-4">
-			<h2 class="text-2xl font-bold">How to Resize an Image</h2>
-			<div class="grid gap-4">
-				<div class="flex items-start space-x-4">
-					<div class="rounded-full bg-primary/10 p-2">
-						<Upload class="h-4 w-4 text-primary" />
-					</div>
-					<div>
-						<h3 class="font-semibold">1. Upload Your Image:</h3>
-						<p class="text-sm text-muted-foreground">
-							Drag and drop your image or select it from your device.
-						</p>
-					</div>
-				</div>
-				<div class="flex items-start space-x-4">
-					<div class="rounded-full bg-primary/10 p-2">
-						<ImageIcon class="h-4 w-4 text-primary" />
-					</div>
-					<div>
-						<h3 class="font-semibold">2. Set New Dimensions:</h3>
-						<p class="text-sm text-muted-foreground">
-							Enter the desired width and height for your image.
-						</p>
-					</div>
-				</div>
-				<div class="flex items-start space-x-4">
-					<div class="rounded-full bg-primary/10 p-2">
-						<ArrowRight class="h-4 w-4 text-primary" />
-					</div>
-					<div>
-						<h3 class="font-semibold">3. Resize and Download:</h3>
-						<p class="text-sm text-muted-foreground">
-							Resize the images using available options and download the resized images.
-						</p>
-					</div>
-				</div>
+		<div
+			class="text-neutral-background mx-auto grid max-w-3xl gap-4 text-base md:grid-cols-3 md:gap-8 md:text-lg"
+		>
+			<div class="rounded-lg border border-foreground/10 bg-foreground/5 p-4 backdrop-blur-sm">
+				Bulk resize multiple images at once
+			</div>
+			<div class="rounded-lg border border-foreground/10 bg-foreground/5 p-4 backdrop-blur-sm">
+				Maintain original image quality
+			</div>
+			<div class="rounded-lg border border-foreground/10 bg-foreground/5 p-4 backdrop-blur-sm">
+				Perfect for social media & web
 			</div>
 		</div>
 	</div>
-</section>
+</div>
+
+<div class="grid gap-12 md:grid-cols-2">
+	<FileDropper
+		bind:fileInputEl
+		accept="image/*"
+		startsWith="image/"
+		maxSize={CONSTANTS.MAX_IMAGE_SIZE}
+		onfileaccept={(files) => {
+			const editableImages = Array.from(files).map((file) => new EditableImage(file));
+			imageEditor.images.push(...editableImages);
+		}}
+		onclick={() => {
+			fileInputEl?.click();
+		}}
+	>
+		<div
+			transition:scale={{ duration: 600, start: 0.95 }}
+			class="in-colors group relative h-full rounded-2xl border-2 border-dashed border-foreground/20 bg-background/20 p-12 text-center backdrop-blur-sm hover:border-primary/40"
+		>
+			<div
+				class="in-opacity absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 duration-300 group-hover:opacity-100"
+			></div>
+			<div class="mb-6 flex justify-center">
+				<div class="rounded-full bg-foreground/5 p-4 text-primary">
+					<ArrowUpFromLine class="h-8 w-8" />
+				</div>
+			</div>
+			<h3 class="mb-2 text-xl font-semibold text-foreground">Drag and drop your image here</h3>
+			<p class="text-neutral-background text-sm">Supports PNG, JPG, and WebP formats up to 20MB</p>
+		</div>
+	</FileDropper>
+
+	<div
+		in:fly={{ duration: 600, y: 20, delay: 400 }}
+		out:fly={{ duration: 600, y: 20 }}
+		class="space-y-8"
+	>
+		<h2 class="text-2xl font-bold text-foreground">How to Resize an Image</h2>
+		<div class="space-y-6">
+			{#each steps as step, index}
+				<div class="flex items-start gap-4">
+					<div class="rounded-full bg-primary/10 p-3 text-primary"><step.icon /></div>
+					<div>
+						<h3 class="mb-1 font-semibold text-foreground">
+							{index + 1}. {step.title}
+						</h3>
+						<p class="text-neutral-background text-sm">{step.description}</p>
+					</div>
+				</div>
+			{/each}
+		</div>
+	</div>
+</div>

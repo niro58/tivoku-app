@@ -1,10 +1,10 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { VideoEditor } from '$lib/models/video-editor.svelte';
+	import { VideoTrimmer } from '$lib/models/video-trimmer.svelte';
 	import EditorScreen from './components/editor-screen.svelte';
 	import SelectScreen from './components/select-screen.svelte';
 
-	let videoEditor = $state(new VideoEditor());
+	let videoEditor = $state(new VideoTrimmer());
 	let mode: 'select' | 'edit' = $state('edit');
 	function changeMode() {
 		mode = mode === 'select' ? 'edit' : 'select';

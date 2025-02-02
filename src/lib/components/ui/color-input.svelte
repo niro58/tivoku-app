@@ -10,7 +10,7 @@
 		opacity?: number;
 		children?: Snippet;
 	} = $props();
-	let colorRef: HTMLInputElement | null = $state(null);
+	let colorRef: HTMLInputElement | undefined = $state();
 </script>
 
 <div class="relative w-full">

@@ -46,20 +46,24 @@
 	import FileDropper from '$lib/components/file-dropper.svelte';
 	import { Checkbox } from '$lib/components/ui/checkbox';
 	import { aspectRatioToKey, keyToAspectRatio } from '$lib/utils';
-	import { ImageExportFormats, ResultFileFormat } from '$lib/models';
+	import { ImageExportFormats, ExportFileFormat } from '$lib/models';
 	import { CONSTANTS } from '$data/constants';
 	import { EditableImage } from '$lib/models/editable-image.svelte';
+	import { fly } from 'svelte/transition';
 
-	let fileDropperRef: HTMLInputElement | null = $state(null);
+	let fileInputEl: HTMLInputElement | undefined = $state();
 
 	const imageEditor = getImageEditor();
 	let exportState = $state(false);
 </script>
 
-<div class="grid h-full grid-rows-1 gap-8 md:grid-cols-2 lg:gap-12">
+<div
+	class="grid h-full grid-rows-1 gap-8 md:grid-cols-2 lg:gap-12"
+	in:fly={{ duration: 600, delay: 600, y: 20 }}
+>
 	<FileDropper
 		class="max-h-[75vh] cursor-default bg-card lg:h-full"
-		bind:fileInputRef={fileDropperRef}
+		bind:fileInputEl
 		accept="image/*"
 		startsWith="image/"
 		maxSize={CONSTANTS.MAX_IMAGE_SIZE}
@@ -67,6 +71,7 @@
 			const editableImages = Array.from(files).map((file) => new EditableImage(file));
 			imageEditor.images.push(...editableImages);
 		}}
+		onclick={() => {}}
 	>
 		<Card.Root class="grid h-full grid-cols-1 grid-rows-8 bg-transparent">
 			<Card.Content class="relative row-span-7 p-6">
@@ -124,7 +129,7 @@
 			<Card.Footer>
 				<div class="flex w-full flex-col">
 					<div class="flex flex-row gap-5">
-						<Button class="mt-5 h-12 w-full text-xl" onclick={() => fileDropperRef?.click()}>
+						<Button class="mt-5 h-12 w-full text-xl" onclick={() => fileInputEl?.click()}>
 							<Plus />
 						</Button>
 						<Button
@@ -282,8 +287,8 @@
 					<Checkbox
 						id="zip-export"
 						aria-labelledby="zip-export"
-						bind:checked={() => imageEditor.settings.exportType === ResultFileFormat.ZIP,
-						() => (imageEditor.settings.exportType = ResultFileFormat.ZIP)}
+						bind:checked={() => imageEditor.settings.exportFileFormat === ExportFileFormat.ZIP,
+						() => (imageEditor.settings.exportFileFormat = ExportFileFormat.ZIP)}
 					/>
 					<Label
 						id="zip-export"
@@ -297,8 +302,8 @@
 					<Checkbox
 						id="single-files-export"
 						aria-labelledby="single-files-export"
-						bind:checked={() => imageEditor.settings.exportType === ResultFileFormat.SINGLE,
-						() => (imageEditor.settings.exportType = ResultFileFormat.SINGLE)}
+						bind:checked={() => imageEditor.settings.exportFileFormat === ExportFileFormat.SINGLE,
+						() => (imageEditor.settings.exportFileFormat = ExportFileFormat.SINGLE)}
 					/>
 					<Label
 						id="single-files-export"

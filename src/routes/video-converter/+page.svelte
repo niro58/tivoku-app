@@ -1,25 +1,26 @@
 <script module>
 	const faqs = [
 		{
-			question: 'What image formats are supported?',
-			answer: 'We support PNG, JPG (JPEG), and WebP formats for resizing.',
-			key: 'image-formats'
-		},
-		{
-			question: 'Will I lose image quality after resizing?',
+			question: 'What video formats are supported?',
 			answer:
-				'No, the quality stays the same—no compression is applied. However, reducing size significantly may cause minor quality loss due to fewer pixels.',
-			key: 'image-quality'
+				'We support MP4, AVI, MKV, MOV, FLV, WebM, and more. You can also convert videos to audio formats like MP3, WAV, and AAC.',
+			key: 'video-formats'
 		},
 		{
-			question: 'Can I resize multiple images at once?',
-			answer: 'Yes! You can resize up to 100 images at once—perfect for bulk processing.',
-			key: 'multiple-images'
-		},
-		{
-			question: 'What is the maximum file size and number of images I can resize?',
+			question: 'Will I lose video quality after converting?',
 			answer:
-				'You can upload images up to 25 MB each and resize up to 100 images at the same time.',
+				'No, the quality stays the same—no compression is applied. However, converting to certain formats may result in minor quality loss due to codec differences.',
+			key: 'video-quality'
+		},
+		{
+			question: 'Can I convert multiple videos at once?',
+			answer: 'Yes! You can convert up to 10 videos at once—perfect for bulk processing.',
+			key: 'multiple-videos'
+		},
+		{
+			question: 'What is the maximum file size and number of videos I can convert?',
+			answer:
+				'You can upload videos up to 100 MB each and convert up to 10 videos at the same time.',
 			key: 'file-size'
 		},
 		{
@@ -31,68 +32,62 @@
 	];
 	const features = [
 		{
-			title: 'Resize up to 100 images at once',
-			icon: Image
+			title: 'Convert up to 10 videos at once',
+			icon: Video
 		},
 		{
-			title: 'Supports PNG, JPG, and WebP formats',
-			icon: Image
+			title: 'Supports MP4, AVI, MKV, MOV, and more',
+			icon: Video
 		},
 		{
-			title: 'Preserve or customize aspect ratios',
-			icon: Image
+			title: 'Export as single files or ZIP',
+			icon: Download
 		},
 		{
 			title: 'No quality loss—high-quality results',
-			icon: Image
+			icon: Video
 		},
 		{
 			title: '100% free—no sign-ups, no hidden fees',
 			icon: Lock
 		},
 		{
-			title: 'Process images up to 25 MB each',
-			icon: Image
+			title: 'Process videos up to 100 MB each',
+			icon: Video
 		}
 	];
 </script>
 
 <script lang="ts">
+	import Seo from '$lib/components/seo.svelte';
+	import * as Accordion from '$lib/components/ui/accordion/index';
+	import { VideoEditor } from '$lib/models/video-editor.svelte';
+	import { Download, Video, Lock, Check } from 'lucide-svelte';
 	import EditorScreen from './components/editor-screen.svelte';
 	import SelectScreen from './components/select-screen.svelte';
-	import { getImageEditor } from '$lib/models/image-editor.svelte';
-	import Seo from '$lib/components/seo.svelte';
-	import { Check, Image, Lock } from 'lucide-svelte';
-	import * as Accordion from '$lib/components/ui/accordion/index.js';
 
-	const imageEditor = getImageEditor();
-	let editorMode = $state(false);
-	$effect(() => {
-		if (imageEditor.images.length > 0) {
-			editorMode = true;
-		}
-	});
+	let videoEditor = $state(new VideoEditor());
 </script>
 
 <Seo
-	title="Free Bulk Image Resizer – Resize Images Fast & Securely in Your Browser"
-	description="Resize images in bulk for free—fast, secure, and entirely in your browser. No sign-ups, no uploads, just quick results for up to 100 images at once."
-	keywords="resize images in browser, bulk image resizer, free image resizer, resize PNG, resize JPG, resize WebP, fast image resizer, secure image resizer, no upload image resizer"
-	canonical="https://www.tivoku.com/image-resizer/"
+	title="Free Video Converter – Convert Videos Fast & Securely in Your Browser"
+	description="Convert videos in bulk for free—fast, secure, and entirely in your browser. No sign-ups, no uploads, just quick results for up to 10 videos at once. Export as single files or ZIP."
+	keywords="video converter online, free video converter, convert videos in browser, bulk video converter, secure video converter, no upload video converter, MP4 converter, AVI converter, MKV converter, WebM converter"
+	canonical="https://www.tivoku.com/video-converter/"
 	themeColor="#D21E48"
 	jsonLd={{
 		'@context': 'https://schema.org',
 		'@type': 'WebPage',
-		name: 'Free Bulk Image Resizer – Resize Images Fast & Securely in Your Browser',
-		url: 'https://www.tivoku.com/image-resizer/',
+		name: 'Free Video Converter – Convert Videos Fast & Securely in Your Browser',
+		url: 'https://www.tivoku.com/video-converter/',
 		description:
-			'Resize images in bulk for free—fast, secure, and entirely in your browser. No sign-ups, no uploads, just quick results for up to 100 images at once.',
+			'Convert videos in bulk for free—fast, secure, and entirely in your browser. No sign-ups, no uploads, just quick results for up to 10 videos at once. Export as single files or ZIP.',
 		mainEntity: {
 			'@type': 'WebApplication',
-			name: 'Bulk Image Resizer Tool',
-			url: 'https://www.tivoku.com/image-resizer/',
+			name: 'Bulk Video Converter Tool',
+			url: 'https://www.tivoku.com/video-converter/',
 			description:
-				'Free online bulk image resizer tool to resize photos, PNGs, and other images up to 25 MB. Resize images without losing quality quickly and easily.',
+				'Free online bulk video converter tool to convert videos to MP4, AVI, MKV, and more. Convert videos without losing quality quickly and easily.',
 			applicationCategory: 'MultimediaTool',
 			operatingSystem: 'All',
 			offers: {
@@ -122,34 +117,34 @@
 				mainEntity: [
 					{
 						'@type': 'Question',
-						name: 'What image formats are supported?',
+						name: 'What video formats are supported?',
 						acceptedAnswer: {
 							'@type': 'Answer',
-							text: 'We support PNG, JPG (JPEG), and WebP formats for resizing.'
+							text: 'We support MP4, AVI, MKV, MOV, FLV, WebM, and more. You can also convert videos to audio formats like MP3, WAV, and AAC.'
 						}
 					},
 					{
 						'@type': 'Question',
-						name: 'Will I lose image quality after resizing?',
+						name: 'Will I lose video quality after converting?',
 						acceptedAnswer: {
 							'@type': 'Answer',
-							text: 'No, the quality stays the same—no compression is applied. However, reducing size significantly may cause minor quality loss due to fewer pixels.'
+							text: 'No, the quality stays the same—no compression is applied. However, converting to certain formats may result in minor quality loss due to codec differences.'
 						}
 					},
 					{
 						'@type': 'Question',
-						name: 'Can I resize multiple images at once?',
+						name: 'Can I convert multiple videos at once?',
 						acceptedAnswer: {
 							'@type': 'Answer',
-							text: 'Yes! You can resize up to 100 images at once—perfect for bulk processing.'
+							text: 'Yes! You can convert up to 10 videos at once—perfect for bulk processing.'
 						}
 					},
 					{
 						'@type': 'Question',
-						name: 'What is the maximum file size and number of images I can resize?',
+						name: 'What is the maximum file size and number of videos I can convert?',
 						acceptedAnswer: {
 							'@type': 'Answer',
-							text: 'You can upload images up to 25 MB each and resize up to 100 images at the same time.'
+							text: 'You can upload videos up to 100 MB each and convert up to 10 videos at the same time.'
 						}
 					},
 					{
@@ -167,10 +162,10 @@
 />
 <div class="container mx-auto bg-gradient-to-b from-background to-background/80 px-4 py-12 pb-16">
 	<section class="min-h-screen pt-12">
-		{#if !editorMode}
-			<SelectScreen />
+		{#if videoEditor.videos.length === 0}
+			<SelectScreen bind:videoEditor />
 		{:else}
-			<EditorScreen />
+			<EditorScreen bind:videoEditor />
 		{/if}
 	</section>
 	<section class="relative px-4 py-24">
@@ -188,18 +183,18 @@
 				<div class="grid gap-12 md:grid-cols-2">
 					<div class="space-y-8">
 						<h2 class="text-3xl font-bold text-white md:text-4xl">
-							Resize Images Fast & Securely—No Uploads, No Hassle
+							Convert Videos Fast & Securely—No Uploads, No Hassle
 						</h2>
 
 						<p class="text-lg leading-relaxed text-gray-400">
-							Our bulk image resizer works entirely in your browser, so your files never leave your
-							device. Resize up to 100 images at once, with no sign-ups or hidden fees. It’s fast,
+							Our video converter works entirely in your browser, so your files never leave your
+							device. Convert up to 10 videos at once, with no sign-ups or hidden fees. It’s fast,
 							simple, and secure.
 						</p>
 					</div>
 
 					<div class="grid gap-6">
-						{#each [{ title: 'Resize in Your Browser', description: 'All processing happens locally—no uploads, no waiting.', icon: Lock }, { title: 'Bulk Resize Up to 100 Images', description: 'Save time by resizing multiple images at once.', icon: Image }, { title: 'No Quality Loss', description: 'Resize images without losing clarity or sharpness.', icon: Image }] as feature}
+						{#each [{ title: 'Convert in Your Browser', description: 'All processing happens locally—no uploads, no waiting.', icon: Lock }, { title: 'Bulk Convert Up to 10 Videos', description: 'Save time by converting multiple videos at once.', icon: Video }, { title: 'Export as Single Files or ZIP', description: 'Download your converted videos in one convenient package.', icon: Download }] as feature}
 							<div
 								class="flex gap-6 rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
 							>
@@ -230,7 +225,7 @@
 		<div class="container relative mx-auto">
 			<div class="mx-auto max-w-4xl">
 				<h2 class="mb-12 text-center text-3xl font-bold md:text-4xl">
-					Why Choose Our Image Resizer?
+					Why Choose Our Video Converter?
 				</h2>
 
 				<div class="mb-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -263,7 +258,7 @@
 						<div>
 							<h3 class="mb-2 text-xl font-semibold md:text-2xl">Your Privacy Matters</h3>
 							<p class="text-white/90">
-								All image processing happens in your browser—no uploads, no servers, no risk. Your
+								All video processing happens in your browser—no uploads, no servers, no risk. Your
 								files stay private and secure.
 							</p>
 						</div>

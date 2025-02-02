@@ -62,6 +62,7 @@
 </script>
 
 <script>
+	import FeatureCards from '$lib/components/feature-cards.svelte';
 	import Seo from '$lib/components/seo.svelte';
 	import ToolShowcase from '$lib/components/tool-showcase.svelte';
 	import * as Accordion from '$lib/components/ui/accordion';
@@ -218,26 +219,10 @@
 				></div>
 			</div>
 
-			<div class="container relative mx-auto px-4">
-				<div class="grid gap-8 md:grid-cols-3">
-					{#each features2 as feature, index}
-						<div
-							class="group relative overflow-hidden rounded-xl border border-foreground/10 bg-background/20 p-8 backdrop-blur-sm transition-all duration-300 hover:border-primary/20 hover:bg-background/30"
-						>
-							<div class="mb-4 inline-flex rounded-lg bg-primary/10 p-3 text-primary">
-								<feature.icon class="h-6 w-6" />
-							</div>
-
-							<h2 class="mb-4 text-xl font-semibold text-primary md:text-2xl">{feature.title}</h2>
-
-							<p class="text-base leading-relaxed text-muted-foreground">{feature.description}</p>
-						</div>
-					{/each}
-				</div>
-			</div>
+			<FeatureCards features={features2} />
 		</section>
 		<ToolShowcase />
-		<section class="relative py-16 md:py-24 lg:pb-32 lg:pt-16" id="faq">
+		<section class="relative h-[50vh] min-h-[75vh] py-16 md:py-24 lg:pb-32 lg:pt-16" id="faq">
 			<div class="pointer-events-none absolute inset-0 overflow-hidden lg:overflow-clip">
 				<div class="absolute top-1/4 h-[250px] w-[250px] rounded-full bg-primary/10 blur-3xl"></div>
 				<div
@@ -249,15 +234,10 @@
 					Frequently Asked Questions
 				</h2>
 				<Accordion.Root type="single" class="mx-auto max-w-3xl space-y-4">
-					{#each faqs as { question, answer, key }}
-						<Accordion.Item
-							value={key}
-							class="group rounded-xl border border-foreground/10 bg-background/20 transition-all hover:border-primary/20"
-						>
-							<Accordion.Trigger class="flex items-center justify-between p-6 text-lg font-medium"
-								>{question}</Accordion.Trigger
-							>
-							<Accordion.Content class="px-6 text-sm leading-relaxed text-muted-foreground">
+					{#each faqs as { question, answer }}
+						<Accordion.Item>
+							<Accordion.Trigger>{question}</Accordion.Trigger>
+							<Accordion.Content>
 								{answer}
 							</Accordion.Content>
 						</Accordion.Item>

@@ -9,7 +9,7 @@ export type ImageSettings = {
 	opacity: number;
 	format: ImageExportFormats;
 	cropType: ImageSettingsCrop;
-	exportType: ResultFileFormat;
+	exportFileFormat: ExportFileFormat;
 };
 
 export const ImageExportFormats = Object.freeze({
@@ -19,11 +19,11 @@ export const ImageExportFormats = Object.freeze({
 } as const);
 export type ImageExportFormats = (typeof ImageExportFormats)[keyof typeof ImageExportFormats];
 
-export const ResultFileFormat = Object.freeze({
+export const ExportFileFormat = Object.freeze({
 	ZIP: 'zip',
 	SINGLE: 'single'
 } as const);
-export type ResultFileFormat = (typeof ResultFileFormat)[keyof typeof ResultFileFormat];
+export type ExportFileFormat = (typeof ExportFileFormat)[keyof typeof ExportFileFormat];
 
 export const ResultVideoFormat = Object.freeze({
 	THREEGP: '3gp',
@@ -51,7 +51,10 @@ export const ResultAudioFormat = Object.freeze({
 	WMA: 'wma'
 } as const);
 export type ResultAudioFormat = (typeof ResultAudioFormat)[keyof typeof ResultAudioFormat];
-export type VideoExportSettings = {
+export type BasicVideoSettings = {
+	exportFileFormat: ResultVideoFormat | ResultAudioFormat;
+};
+export type VideoTrimmerSettings = {
 	resolution?: number;
 	fps?: number;
 	width?: number;
@@ -62,5 +65,4 @@ export type VideoExportSettings = {
 	zoom?: number;
 	volume?: number;
 	opacity?: number;
-	exportFormat: ResultVideoFormat | ResultAudioFormat;
 };
