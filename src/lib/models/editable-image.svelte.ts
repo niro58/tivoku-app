@@ -1,6 +1,7 @@
 import { browser } from '$app/environment';
 import type { ImageSettingsCrop, ImageSettings, Vector2 } from '$lib/models';
-import { randomString, hexToRgb, round } from '$lib/utils';
+import { randomString, round } from '$lib/utils';
+import { colord } from 'colord';
 export class EditableImage {
 	id = $state(randomString());
 	src = $state('');
@@ -48,16 +49,13 @@ export class EditableImage {
 		};
 
 		const isOutside = cropType === 'outside';
-		const longest = isOutside ? Math.max(cSize.x, cSize.y) : Math.min(cSize.x, cSize.y);
-		const [primaryAxis, secondaryAxis]: ['x', 'y'] | ['y', 'x'] =
-			cSize.x > cSize.y ? ['x', 'y'] : ['y', 'x'];
-		const newLength = isOutside
-			? round((longest * aspectRatio[primaryAxis]) / aspectRatio[secondaryAxis], 2)
-			: round((longest * aspectRatio[secondaryAxis]) / aspectRatio[primaryAxis], 2);
+		const scale = isOutside
+			? Math.max(cSize.x / aspectRatio.x, cSize.y / aspectRatio.y)
+			: Math.min(cSize.x / aspectRatio.x, cSize.y / aspectRatio.y);
 
 		return {
-			x: primaryAxis === 'x' ? longest : newLength,
-			y: primaryAxis === 'y' ? longest : newLength
+			x: round(aspectRatio.x * scale, 2),
+			y: round(aspectRatio.y * scale, 2)
 		};
 	}
 	async export(settings: ImageSettings): Promise<{ name: string; dataUrl: string } | undefined> {
@@ -73,7 +71,7 @@ export class EditableImage {
 		canvas.width = cSize.x;
 		canvas.height = cSize.y;
 
-		const rgb = hexToRgb(backgroundColor);
+		const rgb = colord(backgroundColor).toRgb();
 		if (!rgb) return;
 
 		ctx.fillStyle = `rgba(${rgb.r},${rgb.g},${rgb.b},${opacity})`;

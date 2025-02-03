@@ -14,6 +14,18 @@ const config = {
 		adapter: adapter(),
 		alias: {
 			$data: 'src/data'
+		},
+		csp: {
+			mode: 'auto',
+			directives: {
+				'default-src': ['self'],
+				'script-src': ['self'],
+				'style-src': ['self'],
+				'img-src': ['self', 'data:', 'blob:'],
+				'font-src': ['self'],
+				'connect-src': ['self'],
+				'frame-src': ['self']
+			}
 		}
 	}
 };

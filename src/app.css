@@ -24,6 +24,12 @@
 		--input: 0 0% 80%;
 		--primary: 346 75% 47%;
 		--radius: 0.5rem;
+
+		--cp-bg-color: hsl(var(--background));
+		--cp-border-color: hsl(var(--border));
+		--cp-text-color: hsl(var(--foreground));
+		--cp-input-color: hsl(var(--input));
+		--cp-button-hover-color: hsl(var(--primary));
 	}
 
 	.dark {
@@ -46,6 +52,12 @@
 		--border: 20 40% 30%;
 		--input: 20 40% 30%;
 		--ring: 346 75% 47%;
+
+		--cp-bg-color: hsl(var(--background));
+		--cp-border-color: hsl(var(--border));
+		--cp-text-color: hsl(var(--foreground));
+		--cp-input-color: hsl(var(--input));
+		--cp-button-hover-color: hsl(var(--primary));
 	}
 }
 

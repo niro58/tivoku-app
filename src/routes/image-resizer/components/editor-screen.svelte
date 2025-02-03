@@ -24,7 +24,7 @@
 			label: 'Transparent',
 			class: 'bg-transparent border-2 border-dashed border-gray-400'
 		},
-		{ hex: '#000000', opacity: 1, label: 'Black', class: 'bg-background' },
+		{ hex: '#000000', opacity: 1, label: 'Black', class: 'bg-black' },
 		{ hex: '#ffffff', opacity: 1, label: 'White', class: 'bg-foreground border border-gray-200' }
 	];
 </script>
@@ -32,7 +32,6 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
 
-	import ColorInput from '$lib/components/ui/color-input.svelte';
 	import * as Card from '$lib/components/ui/card/index.js';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
@@ -50,11 +49,15 @@
 	import { CONSTANTS } from '$data/constants';
 	import { EditableImage } from '$lib/models/editable-image.svelte';
 	import { fly } from 'svelte/transition';
-
+	import ColorInput from '$lib/components/ui/color-input.svelte';
 	let fileInputEl: HTMLInputElement | undefined = $state();
 
 	const imageEditor = getImageEditor();
 	let exportState = $state(false);
+	let cd: any = $state();
+	$effect(() => {
+		$state.snapshot(cd);
+	});
 </script>
 
 <div
