@@ -62,6 +62,8 @@
 </script>
 
 <script>
+	import CircleDesignElement from '$lib/components/circle-design-element.svelte';
+
 	import FeatureCards from '$lib/components/feature-cards.svelte';
 	import Seo from '$lib/components/seo.svelte';
 	import ToolShowcase from '$lib/components/tool-showcase.svelte';
@@ -73,18 +75,18 @@
 </script>
 
 <Seo
-	title="Free Online Tools for Developers, Designers, and Creators—Fast, Secure, and No Sign-Up"
-	description="Discover Tivoku: A free, fast, and secure online toolkit for developers, designers, and creators. Edit images, convert files, and process text—no sign-ups, no data storage, just tools that work."
+	title="Free Online Tools for Devs & Creators—Fast, Secure, No Sign-Up"
+	description="Tivoku: Free, fast, secure online toolkit for developers. Edit images, convert files, process text—no sign-ups needed."
 	keywords="free online tools, developer tools, designer tools, image converter, video converter, text utilities, file conversion tools, secure online tools, no sign-up tools, fast browser tools, free image editor, free video editor, client-side tools, privacy-focused tools"
-	canonical="https://www.tivoku.com/"
+	canonical="https://www.tivoku.com"
 	themeColor="#D21E48"
 	jsonLd={{
 		'@context': 'https://schema.org',
 		'@type': 'WebSite',
 		name: 'Tivoku',
-		url: 'https://www.tivoku.com/',
+		url: 'https://www.tivoku.com',
 		description:
-			'Discover Tivoku: A free, fast, and secure online toolkit for developers, designers, and creators. Edit images, convert files, and process text—no sign-ups, no data storage, just tools that work.',
+			'Tivoku: Free, fast, secure online toolkit for developers. Edit images, convert files, process text—no sign-ups needed.',
 		author: {
 			'@type': 'Person',
 			name: 'Niro58'
@@ -134,13 +136,9 @@
 			id="home"
 			class="relative overflow-hidden bg-gradient-to-b from-card to-background py-12 lg:py-32"
 		>
-			<div class="absolute inset-0 overflow-hidden">
-				<div
-					class="absolute -left-1/4 top-1/4 h-[500px] w-[500px] rounded-full bg-primary/10 blur-3xl"
-				></div>
-			</div>
+			<CircleDesignElement variation="2" />
 
-			<div class="container relative mx-auto px-4 py-16">
+			<div class="container relative mx-auto py-16">
 				<div class="grid gap-12 lg:grid-cols-2 lg:gap-8">
 					<div in:fly={{ y: -20, duration: 600 }} class="flex flex-col justify-center">
 						<div
@@ -212,23 +210,14 @@
 			</div>
 		</section>
 
-		<section class="relative py-16 md:py-24" id="about">
-			<div class="absolute inset-0 overflow-hidden">
-				<div
-					class="absolute right-0 top-1/4 h-[250px] w-[250px] rounded-full bg-primary/10 blur-3xl"
-				></div>
-			</div>
+		<section class="container relative py-16 md:py-24" id="about">
+			<CircleDesignElement variation="3" />
 
 			<FeatureCards features={features2} />
 		</section>
 		<ToolShowcase />
 		<section class="relative h-[50vh] min-h-[75vh] py-16 md:py-24 lg:pb-32 lg:pt-16" id="faq">
-			<div class="pointer-events-none absolute inset-0 overflow-hidden lg:overflow-clip">
-				<div class="absolute top-1/4 h-[250px] w-[250px] rounded-full bg-primary/10 blur-3xl"></div>
-				<div
-					class="absolute left-1/2 h-[250px] w-[250px] rounded-full bg-primary/10 blur-3xl"
-				></div>
-			</div>
+			<CircleDesignElement variation="2" />
 			<div class="container px-4 md:px-6">
 				<h2 class="mb-12 text-center text-3xl font-bold text-primary md:text-4xl">
 					Frequently Asked Questions

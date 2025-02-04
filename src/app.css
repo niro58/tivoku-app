@@ -118,14 +118,7 @@
 	font-weight: 950;
 	font-style: normal;
 }
-@layer base {
-	* {
-		@apply border-border;
-	}
-	body {
-		@apply bg-background text-foreground;
-	}
-}
+
 ::selection {
 	color: hsl(var(--accent-foreground));
 	background: hsl(var(--accent));

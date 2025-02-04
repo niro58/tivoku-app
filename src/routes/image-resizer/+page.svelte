@@ -64,6 +64,7 @@
 	import Seo from '$lib/components/seo.svelte';
 	import { Check, Image, Lock } from 'lucide-svelte';
 	import * as Accordion from '$lib/components/ui/accordion/index.js';
+	import CircleDesignElement from '$lib/components/circle-design-element.svelte';
 
 	const imageEditor = getImageEditor();
 	let editorMode = $state(false);
@@ -75,22 +76,22 @@
 </script>
 
 <Seo
-	title="Free Bulk Image Resizer – Resize Images Fast & Securely in Your Browser"
-	description="Resize images in bulk for free—fast, secure, and entirely in your browser. No sign-ups, no uploads, just quick results for up to 100 images at once."
+	title="Bulk Image Resizer – Fast, Secure, Browser-Based"
+	description="Resize 100+ images in bulk for free—fast, secure, and entirely in your browser. No sign-ups, no uploads. Start resizing now!"
 	keywords="resize images in browser, bulk image resizer, free image resizer, resize PNG, resize JPG, resize WebP, fast image resizer, secure image resizer, no upload image resizer"
-	canonical="https://www.tivoku.com/image-resizer/"
+	canonical="https://www.tivoku.com/image-resizer"
 	themeColor="#D21E48"
 	jsonLd={{
 		'@context': 'https://schema.org',
 		'@type': 'WebPage',
-		name: 'Free Bulk Image Resizer – Resize Images Fast & Securely in Your Browser',
-		url: 'https://www.tivoku.com/image-resizer/',
+		name: 'Bulk Image Resizer – Fast, Secure, Browser-Based',
+		url: 'https://www.tivoku.com/image-resizer',
 		description:
-			'Resize images in bulk for free—fast, secure, and entirely in your browser. No sign-ups, no uploads, just quick results for up to 100 images at once.',
+			'Resize 100+ images in bulk for free—fast, secure, and entirely in your browser. No sign-ups, no uploads. Start resizing now!',
 		mainEntity: {
 			'@type': 'WebApplication',
 			name: 'Bulk Image Resizer Tool',
-			url: 'https://www.tivoku.com/image-resizer/',
+			url: 'https://www.tivoku.com/image-resizer',
 			description:
 				'Free online bulk image resizer tool to resize photos, PNGs, and other images up to 25 MB. Resize images without losing quality quickly and easily.',
 			applicationCategory: 'MultimediaTool',
@@ -165,7 +166,13 @@
 		]
 	}}
 />
-<div class="container mx-auto bg-gradient-to-b from-background to-background/80 px-4 py-12 pb-16">
+<div
+	class="container relative mx-auto bg-gradient-to-b from-background to-background/80 px-4 py-12 pb-16"
+>
+	<CircleDesignElement variation="1" />
+	<CircleDesignElement variation="2" />
+	<CircleDesignElement variation="3" />
+
 	<section class="min-h-screen pt-12">
 		{#if !editorMode}
 			<SelectScreen />
@@ -173,17 +180,8 @@
 			<EditorScreen />
 		{/if}
 	</section>
-	<section class="relative px-4 py-24">
-		<div class="absolute inset-0 overflow-hidden">
-			<div
-				class="absolute left-1/3 top-1/3 h-[400px] w-[400px] rounded-full bg-primary/5 blur-3xl"
-			></div>
-			<div
-				class="absolute bottom-1/3 right-1/3 h-[300px] w-[300px] rounded-full bg-primary/5 blur-3xl"
-			></div>
-		</div>
-
-		<div class="container relative mx-auto">
+	<section class="relative py-16">
+		<div class="relative mx-auto">
 			<div class="mx-auto max-w-6xl">
 				<div class="grid gap-12 md:grid-cols-2">
 					<div class="space-y-8">
@@ -217,17 +215,8 @@
 			</div>
 		</div>
 	</section>
-	<section class="relative px-4 py-24">
-		<div class="absolute inset-0 overflow-hidden">
-			<div
-				class="absolute left-1/4 top-1/4 h-[300px] w-[300px] rounded-full bg-primary/5 blur-3xl"
-			></div>
-			<div
-				class="absolute bottom-1/4 right-1/4 h-[200px] w-[200px] rounded-full bg-primary/5 blur-3xl"
-			></div>
-		</div>
-
-		<div class="container relative mx-auto">
+	<section class="relative py-16">
+		<div class="relative mx-auto">
 			<div class="mx-auto max-w-4xl">
 				<h2 class="mb-12 text-center text-3xl font-bold md:text-4xl">
 					Why Choose Our Image Resizer?

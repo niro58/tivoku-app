@@ -10,6 +10,10 @@ export const PAGES = Object.freeze({
 	VIDEO_CONVERTER: {
 		title: 'Video Converter',
 		link: '/video-converter'
+	},
+	WEBSITE_BLOCKER: {
+		title: 'Website Blocker Extension',
+		link: '/website-blocker'
 	}
 	// VIDEO_TRIMMER: {
 	// 	title: 'Video Trimmer',

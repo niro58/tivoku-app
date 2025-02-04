@@ -2,7 +2,7 @@
 	const { features }: { features: { title: string; description: string; icon: any }[] } = $props();
 </script>
 
-<div class="container relative mx-auto px-4">
+<div class="relative mx-auto">
 	<div class="grid gap-8 md:grid-cols-3">
 		{#each features as feature}
 			<div

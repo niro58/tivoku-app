@@ -82,7 +82,7 @@
 						>
 							<div class="flex w-full items-center md:gap-5">
 								<div
-									class="relative hidden h-10 w-10 shrink-0 overflow-hidden rounded-lg bg-black/40 md:block"
+									class="relative hidden h-10 w-10 shrink-0 overflow-hidden rounded-lg bg-background/40 md:block"
 								>
 									<Film
 										class="absolute left-1/2 top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 text-foreground/60"

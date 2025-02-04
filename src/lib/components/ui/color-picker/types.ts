@@ -1,10 +1,10 @@
-import type TextInput from './variant/default/TextInput.svelte';
+import type TextInput from './variant/default/text-input.svelte';
 import type A11yNotice from './variant/accessibility/A11yNotice.svelte';
 import type A11ySingleNotice from './variant/accessibility/A11ySingleNotice.svelte';
-import type Input from './variant/default/Input.svelte';
-import type Wrapper from './variant/default/Wrapper.svelte';
-import type PickerIndicator from './variant/default/PickerIndicator.svelte';
-import type NullabilityCheckbox from './variant/default/NullabilityCheckbox.svelte';
+import type Input from './variant/default/input.svelte';
+import type Wrapper from './variant/default/wrapper.svelte';
+import type PickerIndicator from './variant/default/picker-indicator.svelte';
+import type NullabilityCheckbox from './variant/default/nullability-checkbox.svelte';
 
 export type Components = {
 	pickerIndicator: typeof PickerIndicator;

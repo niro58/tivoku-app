@@ -8,9 +8,9 @@
 			icon: ImageIcon
 		},
 		{
-			title: 'Video Type Changer',
+			title: 'Video Converter',
 			description: 'Change the type of your video file to another type',
-			link: '',
+			link: PAGES.VIDEO_CONVERTER.link,
 			icon: Video
 		},
 		{
@@ -26,23 +26,20 @@
 	import { ArrowRight, Clock, ImageIcon, Video } from 'lucide-svelte';
 	import { PAGES } from '../../data/pages';
 	import Button from './ui/button/button.svelte';
+	import CircleDesignElement from './circle-design-element.svelte';
 </script>
 
-<section class="relative px-4 py-24" id="tools">
-	<div class="container mx-auto">
-		<div class="absolute inset-0 overflow-hidden lg:overflow-clip">
-			<div
-				class="absolute left-1/4 top-1/4 h-[250px] w-[250px] rounded-full bg-primary/10 blur-3xl"
-			></div>
-		</div>
+<section class="container relative py-16" id="tools">
+	<div class="mx-auto">
+		<CircleDesignElement variation="1" />
 		<h2 class="mb-12 text-center text-3xl font-bold text-primary md:text-4xl">
 			Completed and Upcoming Tools
 		</h2>
 
 		<div class="grid gap-6 md:grid-cols-3">
-			{#each tools as tool, index}
+			{#each tools as tool}
 				<div
-					class="group flex flex-col justify-between rounded-xl border border-foreground/10 bg-black/20 p-8 backdrop-blur-sm transition-all hover:border-primary/20 hover:bg-black/30"
+					class="group flex flex-col justify-between rounded-xl border border-foreground/10 bg-background/20 p-8 backdrop-blur-sm transition-all hover:border-primary/20 hover:bg-background/30"
 				>
 					<div>
 						<div class="mb-4 inline-flex rounded-lg bg-primary/10 p-3 text-primary">

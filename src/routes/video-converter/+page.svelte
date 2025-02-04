@@ -65,27 +65,28 @@
 	import { Download, Video, Lock, Check } from 'lucide-svelte';
 	import EditorScreen from './components/editor-screen.svelte';
 	import SelectScreen from './components/select-screen.svelte';
+	import CircleDesignElement from '$lib/components/circle-design-element.svelte';
 
 	let videoEditor = $state(new VideoEditor());
 </script>
 
 <Seo
 	title="Free Video Converter – Convert Videos Fast & Securely in Your Browser"
-	description="Convert videos in bulk for free—fast, secure, and entirely in your browser. No sign-ups, no uploads, just quick results for up to 10 videos at once. Export as single files or ZIP."
+	description="Convert videos in bulk for free—fast, secure, and browser-based. No sign-ups or uploads. Process up to 10 videos, export as single files or ZIP."
 	keywords="video converter online, free video converter, convert videos in browser, bulk video converter, secure video converter, no upload video converter, MP4 converter, AVI converter, MKV converter, WebM converter"
-	canonical="https://www.tivoku.com/video-converter/"
+	canonical="https://www.tivoku.com/video-converter"
 	themeColor="#D21E48"
 	jsonLd={{
 		'@context': 'https://schema.org',
 		'@type': 'WebPage',
 		name: 'Free Video Converter – Convert Videos Fast & Securely in Your Browser',
-		url: 'https://www.tivoku.com/video-converter/',
+		url: 'https://www.tivoku.com/video-converter',
 		description:
-			'Convert videos in bulk for free—fast, secure, and entirely in your browser. No sign-ups, no uploads, just quick results for up to 10 videos at once. Export as single files or ZIP.',
+			'Convert videos in bulk for free—fast, secure, and browser-based. No sign-ups or uploads. Process up to 10 videos, export as single files or ZIP.',
 		mainEntity: {
 			'@type': 'WebApplication',
 			name: 'Bulk Video Converter Tool',
-			url: 'https://www.tivoku.com/video-converter/',
+			url: 'https://www.tivoku.com/video-converter',
 			description:
 				'Free online bulk video converter tool to convert videos to MP4, AVI, MKV, and more. Convert videos without losing quality quickly and easily.',
 			applicationCategory: 'MultimediaTool',
@@ -161,6 +162,8 @@
 	}}
 />
 <div class="container mx-auto bg-gradient-to-b from-background to-background/80 px-4 py-12 pb-16">
+	<CircleDesignElement variation="3" />
+
 	<section class="min-h-screen pt-12">
 		{#if videoEditor.videos.length === 0}
 			<SelectScreen bind:videoEditor />
@@ -168,17 +171,8 @@
 			<EditorScreen bind:videoEditor />
 		{/if}
 	</section>
-	<section class="relative px-4 py-24">
-		<div class="absolute inset-0 overflow-hidden">
-			<div
-				class="absolute left-1/3 top-1/3 h-[400px] w-[400px] rounded-full bg-primary/5 blur-3xl"
-			></div>
-			<div
-				class="absolute bottom-1/3 right-1/3 h-[300px] w-[300px] rounded-full bg-primary/5 blur-3xl"
-			></div>
-		</div>
-
-		<div class="container relative mx-auto">
+	<section class="py-16">
+		<div class="mx-auto">
 			<div class="mx-auto max-w-6xl">
 				<div class="grid gap-12 md:grid-cols-2">
 					<div class="space-y-8">
@@ -212,17 +206,8 @@
 			</div>
 		</div>
 	</section>
-	<section class="relative px-4 py-24">
-		<div class="absolute inset-0 overflow-hidden">
-			<div
-				class="absolute left-1/4 top-1/4 h-[300px] w-[300px] rounded-full bg-primary/5 blur-3xl"
-			></div>
-			<div
-				class="absolute bottom-1/4 right-1/4 h-[200px] w-[200px] rounded-full bg-primary/5 blur-3xl"
-			></div>
-		</div>
-
-		<div class="container relative mx-auto">
+	<section class="relative py-16">
+		<div class="relative mx-auto">
 			<div class="mx-auto max-w-4xl">
 				<h2 class="mb-12 text-center text-3xl font-bold md:text-4xl">
 					Why Choose Our Video Converter?

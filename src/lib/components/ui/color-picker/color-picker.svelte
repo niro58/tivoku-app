@@ -4,11 +4,11 @@
 	import { createEventDispatcher, onMount, tick } from 'svelte';
 	import { type RgbaColor, type HsvaColor, type Colord, colord } from 'colord';
 
-	import PickerIndicator from './variant/default/PickerIndicator.svelte';
-	import TextInput from './variant/default/TextInput.svelte';
-	import Input from './variant/default/Input.svelte';
-	import Wrapper from './variant/default/Wrapper.svelte';
-	import NullabilityCheckbox from './variant/default/NullabilityCheckbox.svelte';
+	import PickerIndicator from './variant/default/picker-indicator.svelte';
+	import TextInput from './variant/default/text-input.svelte';
+	import Input from './variant/default/input.svelte';
+	import Wrapper from './variant/default/wrapper.svelte';
+	import NullabilityCheckbox from './variant/default/nullability-checkbox.svelte';
 	import type { A11yColor, Components } from './types';
 	import { defaultTexts, type A11yTextsPartial, type TextsPartial } from './texts';
 	import { trapFocus, type Trap } from './trapFocus';

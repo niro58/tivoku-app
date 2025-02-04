@@ -101,7 +101,7 @@
 <nav class="sticky top-0 z-40 w-full">
 	<div class="flex h-16 justify-center">
 		<Card.Root
-			class="relative hidden h-[75px] w-full items-center justify-center border-none shadow-none sm:flex"
+			class="relative hidden h-[75px] w-full items-center justify-center rounded-t-none border-none shadow-none sm:flex"
 		>
 			<Card.Content class="p-0">
 				<div class="relative">
