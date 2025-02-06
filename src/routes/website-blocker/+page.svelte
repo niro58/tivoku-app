@@ -26,7 +26,7 @@
 		{
 			question: 'Where can I download the extension?',
 			answer:
-				'You can download it from the <a href="https://github.com/your-repo" class="text-primary underline">Chrome extension repository</a>.',
+				'You can download it from the <a href="https://chromewebstore.google.com/detail/focusguard-website-blocke/cginnmmbhcfboaliincmendnddelbdbf?authuser=0&hl=en" target="_blank" class="text-primary underline">Chrome extension repository</a>.',
 			key: 'download-extension'
 		},
 		{
@@ -221,8 +221,12 @@
 				in:fly={{ y: 20, duration: 800, delay: 400 }}
 				class="flex flex-col justify-center gap-3 sm:flex-row"
 			>
-				<Button variant="default" disabled={true} class="rounded-full" size="lg"
-					>Download Extension</Button
+				<Button
+					variant="default"
+					href="https://chromewebstore.google.com/detail/focusguard-website-blocke/cginnmmbhcfboaliincmendnddelbdbf?authuser=0&hl=en"
+					target="_blank"
+					class="rounded-full"
+					size="lg">Download Extension</Button
 				>
 				<Button
 					variant="outline"
@@ -234,13 +238,6 @@
 				>
 					Learn More</Button
 				>
-			</div>
-			<div class="flex items-center justify-center">
-				<p
-					class="rounded-xl border-2 border-primary bg-primary-foreground p-2 px-5 text-sm font-bold text-primary"
-				>
-					Waiting for the extension to be published on the Chrome Web Store. Stay tuned!
-				</p>
 			</div>
 		</div>
 	</div>

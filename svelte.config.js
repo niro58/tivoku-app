@@ -19,7 +19,7 @@ const config = {
 			mode: 'auto',
 			directives: {
 				'default-src': ['self'],
-				'script-src': ['self'],
+				'script-src': ['self', 'nonce-v/gm6v9Wp9HpPg8SAe1qMQ=='],
 				'style-src': ['self'],
 				'img-src': ['self', 'data:', 'blob:'],
 				'font-src': ['self'],

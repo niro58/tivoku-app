@@ -97,7 +97,6 @@
 					(value) => {
 						if (isNaN(value) || Math.abs(videoEditor.currTime - value) < videoEditor.duration / 100)
 							return;
-						console.log(videoEditor.currTime, value);
 						videoEditor.currTime = value;
 					}}
 					max={videoEditor.duration}
