@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { Menu } from 'lucide-svelte';
+	import { Github, Menu } from 'lucide-svelte';
 	import ThemeToggle from './theme-toggle.svelte';
 	import { PAGES } from '$data/pages';
 	import * as Card from './ui/card/index';
@@ -123,7 +123,13 @@
 						{@render pageLinks()}
 					</div>
 				</div>
-				<div class="absolute bottom-0 right-8 top-0 flex items-center">
+				<div class="absolute bottom-0 right-8 top-0 flex items-center gap-2">
+					<Button
+						variant="outline"
+						target="_blank"
+						size="icon"
+						href="https://github.com/niro58/tivoku-app"><Github /></Button
+					>
 					<ThemeToggle />
 				</div>
 			</Card.Content>

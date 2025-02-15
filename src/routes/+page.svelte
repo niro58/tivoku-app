@@ -75,7 +75,7 @@
 </script>
 
 <Seo
-	title="Free Online Tools for Devs & Creators—Fast, Secure, No Sign-Up"
+	title="Toolkit - Tivoku"
 	description="Tivoku: Free, fast, secure online toolkit for developers. Edit images, convert files, process text—no sign-ups needed."
 	keywords="free online tools, developer tools, designer tools, image converter, video converter, text utilities, file conversion tools, secure online tools, no sign-up tools, fast browser tools, free image editor, free video editor, client-side tools, privacy-focused tools"
 	canonical="https://www.tivoku.com"
@@ -83,8 +83,9 @@
 	jsonLd={{
 		'@context': 'https://schema.org',
 		'@type': 'WebSite',
-		name: 'Tivoku',
+		name: 'Toolkit - Tivoku',
 		url: 'https://www.tivoku.com',
+
 		description:
 			'Tivoku: Free, fast, secure online toolkit for developers. Edit images, convert files, process text—no sign-ups needed.',
 		author: {
@@ -149,17 +150,17 @@
 							Welcome to the future of development tools
 						</div>
 
-						<h1 in:fade={{ delay: 300, duration: 600 }} class="mb-6 text-5xl md:text-7xl">
+						<div in:fade={{ delay: 300, duration: 600 }} class="mb-6 text-5xl md:text-7xl">
 							<LogoIcon />
-						</h1>
+						</div>
 
-						<h2
+						<h1
 							in:fade={{ delay: 400, duration: 600 }}
-							class="/90 mb-6 text-2xl font-medium md:text-3xl"
+							class="mb-6 text-2xl font-medium md:text-3xl"
 						>
 							Free Online Tools for <br />
 							<span class="text-primary">Developers, Designers, and Creators</span>
-						</h2>
+						</h1>
 
 						<p
 							in:fade={{ delay: 500, duration: 600 }}

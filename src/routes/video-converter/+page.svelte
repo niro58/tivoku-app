@@ -71,7 +71,7 @@
 </script>
 
 <Seo
-	title="Free Video Converter – Convert Videos Fast & Securely in Your Browser"
+	title="Video Converter - Tivoku"
 	description="Convert videos in bulk for free—fast, secure, and browser-based. No sign-ups or uploads. Process up to 10 videos, export as single files or ZIP."
 	keywords="video converter online, free video converter, convert videos in browser, bulk video converter, secure video converter, no upload video converter, MP4 converter, AVI converter, MKV converter, WebM converter"
 	canonical="https://www.tivoku.com/video-converter"

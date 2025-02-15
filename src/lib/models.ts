@@ -5,6 +5,7 @@ export type Vector2 = {
 export type ImageSettingsCrop = 'inside' | 'outside';
 export type ImageSettings = {
 	aspectRatio: Vector2;
+	fixedSize: Vector2;
 	backgroundColor: string;
 	opacity: number;
 	format: ImageExportFormats;

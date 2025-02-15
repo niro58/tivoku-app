@@ -10,7 +10,8 @@ const IMAGE_SELECTOR_KEY = Symbol('image-selector');
 class ImageEditor {
 	public images: EditableImage[] = $state([]);
 	public settings: ImageSettings = $state({
-		aspectRatio: { x: 1, y: 1 },
+		aspectRatio: { x: 0, y: 0 },
+		fixedSize: { x: 0, y: 0 },
 		backgroundColor: '#000000',
 		opacity: 0,
 		format: ImageExportFormats.PNG,

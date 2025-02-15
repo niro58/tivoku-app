@@ -3,61 +3,62 @@
 		{
 			question: 'How do I block a website?',
 			answer:
-				'You can add a domain manually or block the current page you’re on with just one click.',
+				'You can block entire domains, specific pages, or even patterns like "xyz.com/sad/*" to block everything after a specific path. You can also block the current page with one click.',
 			key: 'block-website'
 		},
 		{
 			question: 'Can I schedule blocking times?',
 			answer:
-				'Yes! You can set specific times when certain websites should be blocked, perfect for focus sessions.',
+				'Yes! BlockAid allows you to set custom schedules, like blocking during work hours (8am–5pm) or on weekends. You can also create your own custom schedules.',
 			key: 'schedule-blocking'
 		},
 		{
-			question: 'Does this extension work on all websites?',
-			answer: 'Yes, you can block any website or specific pages within a domain.',
+			question: 'Does BlockAid work on all websites?',
+			answer: 'Yes, you can block any website, domain, or specific pages within a domain.',
 			key: 'all-websites'
 		},
 		{
 			question: 'Is my data safe?',
 			answer:
-				'Absolutely! The extension works locally on your device—no data is collected or shared.',
+				'Absolutely. BlockAid is open-source and works entirely on your device. No data is collected, shared, or sent anywhere. You can verify the code yourself on <a href="https://github.com/niro58/website-blocker-extension-svelte" target="_blank" class="text-primary underline">GitHub</a>.',
 			key: 'data-safety'
 		},
 		{
-			question: 'Where can I download the extension?',
+			question: 'Where can I download BlockAid?',
 			answer:
-				'You can download it from the <a href="https://chromewebstore.google.com/detail/focusguard-website-blocke/cginnmmbhcfboaliincmendnddelbdbf?authuser=0&hl=en" target="_blank" class="text-primary underline">Chrome extension repository</a>.',
+				'You can download it from the <a href="https://chromewebstore.google.com/detail/blockaid-website-blocker/cginnmmbhcfboaliincmendnddelbdbf" target="_blank" class="text-primary underline">Chrome Web Store</a>.',
 			key: 'download-extension'
 		},
 		{
 			question: 'How do I view the source code?',
-			answer: `You can view the source code on the <a href="https://github.com/niro58/site-blocker-plugin" class="text-primary underline">Chrome extension repository</a>.`,
+			answer:
+				'BlockAid is open-source! You can view and contribute to the code on <a href="https://github.com/niro58/website-blocker-extension-svelte" target="_blank" class="text-primary underline">GitHub</a>.',
 			key: 'source-code'
 		}
 	];
 	const features = [
 		{
-			title: 'Block Specific Domains',
+			title: 'Block Specific Domains or Pages',
 			icon: Lock
 		},
 		{
-			title: 'Block Current Page',
+			title: 'Advanced URL Patterns',
 			icon: Globe
 		},
 		{
-			title: 'Schedule Blocking Times',
+			title: 'Custom Scheduling',
 			icon: Clock
 		},
 		{
-			title: 'Works Locally—No Data Shared',
+			title: 'Local & Private',
 			icon: Shield
 		},
 		{
-			title: '100% Free—No Sign-Ups',
+			title: 'Open-Source & Transparent',
 			icon: Gift
 		},
 		{
-			title: 'Easy to Use & Customize',
+			title: 'Easy to Use',
 			icon: Settings
 		}
 	];
@@ -65,7 +66,6 @@
 
 <script>
 	import CircleDesignElement from '$lib/components/circle-design-element.svelte';
-
 	import Seo from '$lib/components/seo.svelte';
 	import * as Accordion from '$lib/components/ui/accordion/index';
 	import Button from '$lib/components/ui/button/button.svelte';
@@ -75,24 +75,24 @@
 </script>
 
 <Seo
-	title="Website Blocker Chrome Extension – Block Distractions & Boost Productivity"
-	description="Block distracting websites with our Chrome extension. Add domains, block current pages, and schedule blocking times—all to help you stay focused and productive."
-	keywords="website blocker chrome extension, block distracting websites, productivity tool, block websites, focus tool, chrome extension for blocking sites, schedule website blocking"
+	title="BlockAid – Block Distractions & Stay Focused"
+	description="BlockAid is a powerful Chrome extension to block distracting websites. Block domains, specific pages, or schedule blocking times—all."
+	keywords="website blocker, block distractions, productivity tool, block websites, focus tool, chrome extension, open-source website blocker"
 	canonical="https://www.tivoku.com/website-blocker"
 	themeColor="#D21E48"
 	jsonLd={{
 		'@context': 'https://schema.org',
 		'@type': 'WebPage',
-		name: 'Website Blocker Chrome Extension – Block Distractions & Boost Focus',
+		name: 'BlockAid – Block Distractions & Stay Focused',
 		url: 'https://www.tivoku.com/website-blocker',
 		description:
-			'Block distracting websites with our Chrome extension. Add domains, block current pages, and schedule blocking times—all to help you stay focused and productive.',
+			'BlockAid is a powerful Chrome extension to block distracting websites. Block domains, specific pages, or schedule blocking times—all.',
 		mainEntity: {
 			'@type': 'WebApplication',
-			name: 'Website Blocker Chrome Extension',
+			name: 'BlockAid',
 			url: 'https://www.tivoku.com/website-blocker',
 			description:
-				'A free Chrome extension to block distracting websites and boost productivity. Add domains, block current pages, and schedule blocking times.',
+				'A free, open-source Chrome extension to block distracting websites and boost productivity. Block domains, specific pages, or schedule blocking times.',
 			applicationCategory: 'ProductivityTool',
 			operatingSystem: 'Chrome',
 			offers: {
@@ -119,61 +119,21 @@
 		'@graph': [
 			{
 				'@type': 'FAQPage',
-				mainEntity: [
-					{
-						'@type': 'Question',
-						name: 'How do I block a website?',
-						acceptedAnswer: {
-							'@type': 'Answer',
-							text: 'You can add a domain manually or block the current page you’re on with just one click.'
-						}
-					},
-					{
-						'@type': 'Question',
-						name: 'Can I schedule blocking times?',
-						acceptedAnswer: {
-							'@type': 'Answer',
-							text: 'Yes! You can set specific times when certain websites should be blocked, perfect for focus sessions.'
-						}
-					},
-					{
-						'@type': 'Question',
-						name: 'Does this extension work on all websites?',
-						acceptedAnswer: {
-							'@type': 'Answer',
-							text: 'Yes, you can block any website or specific pages within a domain.'
-						}
-					},
-					{
-						'@type': 'Question',
-						name: 'Is my data safe?',
-						acceptedAnswer: {
-							'@type': 'Answer',
-							text: 'Absolutely! The extension works locally on your device—no data is collected or shared.'
-						}
-					},
-					{
-						'@type': 'Question',
-						name: 'Where can I download the extension?',
-						acceptedAnswer: {
-							'@type': 'Answer',
-							text: 'You can download it from the <a href="#" class="text-primary underline">Chrome Web Store</a>.'
-						}
-					},
-					{
-						'@type': 'Question',
-						name: 'How do I view the source code?',
-						acceptedAnswer: {
-							'@type': 'Answer',
-							text: 'You can view the source code on the <a href="https://github.com/niro58/site-blocker-plugin" class="text-primary underline">Chrome extension repository</a>.'
-						}
+				mainEntity: faqs.map((faq) => ({
+					'@type': 'Question',
+					name: faq.question,
+					acceptedAnswer: {
+						'@type': 'Answer',
+						text: faq.answer
 					}
-				]
+				}))
 			}
 		]
 	}}
 />
-<div class="mx-auto bg-gradient-to-b from-background to-background/80 px-4 pb-16">
+<div
+	class="mx-auto flex flex-col gap-64 bg-gradient-to-b from-background to-background/80 px-4 pb-16"
+>
 	<div class="container flex min-h-screen items-center justify-center px-4 sm:px-6 lg:px-8">
 		<div class="w-full max-w-7xl space-y-8">
 			<CircleDesignElement variation="2" />
@@ -184,11 +144,11 @@
 					<div>Block<span class="text-primary">.</span></div>
 					<div>Focus<span class="text-primary">.</span></div>
 					<div>
-						Conquer<span class="text-primary">.</span>
+						Thrive<span class="text-primary">.</span>
 					</div>
 				</h1>
 				<p class="text-neutral-foreground mb-8 text-xl sm:text-2xl">
-					Unleash your productivity with our FocusGuard.
+					Take control of your online distractions with BlockAid.
 				</p>
 			</div>
 
@@ -205,7 +165,9 @@
 								<div class="h-3 w-3 rounded-full bg-yellow-500"></div>
 								<div class="h-3 w-3 rounded-full bg-green-500"></div>
 							</div>
-							<div class="text-neutral-foreground text-sm">Block.Focus.Conquer</div>
+							<div class="text-neutral-foreground text-sm font-bold">
+								Block<span class="text-primary">Aid</span>
+							</div>
 						</div>
 						<div class="space-y-4">
 							<div class="h-4 w-3/4 rounded bg-gray-700"></div>
@@ -223,11 +185,12 @@
 			>
 				<Button
 					variant="default"
-					href="https://chromewebstore.google.com/detail/focusguard-website-blocke/cginnmmbhcfboaliincmendnddelbdbf?authuser=0&hl=en"
+					href="https://chromewebstore.google.com/detail/blockaid-website-blocker/cginnmmbhcfboaliincmendnddelbdbf"
 					target="_blank"
 					class="rounded-full"
-					size="lg">Download Extension</Button
-				>
+					size="lg"
+					>Download BlockAid
+				</Button>
 				<Button
 					variant="outline"
 					onclick={(e) => {
@@ -236,8 +199,8 @@
 					size="lg"
 					class="rounded-full px-8 py-3"
 				>
-					Learn More</Button
-				>
+					Learn More
+				</Button>
 			</div>
 		</div>
 	</div>
@@ -248,17 +211,17 @@
 			<div class="mx-auto max-w-6xl">
 				<div class="grid gap-12 md:grid-cols-2">
 					<div class="space-y-8">
-						<h2 class="text-3xl font-bold md:text-4xl">Block Distractions & Boost Productivity</h2>
+						<h2 class="text-3xl font-bold md:text-4xl">Take Control of Your Focus</h2>
 
 						<p class="text-neutral-foreground text-lg leading-relaxed">
-							Our Chrome extension helps you stay focused by blocking distracting websites. Add
-							domains, block current pages, and schedule blocking times—all to help you achieve your
-							goals.
+							BlockAid helps you stay productive by blocking distracting websites. Block entire
+							domains, specific pages, or even use advanced URL patterns. Set custom schedules to
+							block sites during work hours, weekends, or anytime you need to focus.
 						</p>
 					</div>
 
 					<div class="grid gap-6">
-						{#each [{ title: 'Block Specific Domains', description: 'Add websites to your blocklist with just a few clicks.', icon: Lock }, { title: 'Block Current Page', description: 'Instantly block the page you’re on to avoid distractions.', icon: Globe }, { title: 'Schedule Blocking Times', description: 'Set specific times when websites should be blocked.', icon: Clock }] as feature}
+						{#each [{ title: 'Block Specific Domains or Pages', description: 'Block entire domains or specific pages with ease.', icon: Lock }, { title: 'Advanced URL Patterns', description: 'Use patterns like "xyz.com/sad/*" to block everything after a specific path.', icon: Globe }, { title: 'Custom Scheduling', description: 'Block sites during work hours, weekends, or any custom schedule.', icon: Clock }] as feature}
 							<div class="/10 flex gap-6 rounded-xl border bg-white/5 p-6 backdrop-blur-sm">
 								<div class="h-12 rounded-lg bg-primary/10 p-3 text-primary">
 									<feature.icon class="h-6 w-6" />
@@ -279,9 +242,7 @@
 
 		<div class="relative mx-auto" id="about">
 			<div class="mx-auto max-w-4xl">
-				<h2 class="mb-12 text-center text-3xl font-bold md:text-4xl">
-					Why Choose Our Website Blocker?
-				</h2>
+				<h2 class="mb-12 text-center text-3xl font-bold md:text-4xl">Why Choose BlockAid?</h2>
 
 				<div class="mb-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 					{#each features as feature}
@@ -311,10 +272,10 @@
 							<Shield class="h-8 w-8" />
 						</div>
 						<div>
-							<h3 class="mb-2 text-xl font-semibold md:text-2xl">Your Privacy Matters</h3>
+							<h3 class="mb-2 text-xl font-semibold md:text-2xl">Your Privacy, Guaranteed</h3>
 							<p class="/90">
-								All blocking happens locally on your device—no data is collected or shared. Your
-								browsing stays private and secure.
+								BlockAid is open-source and works entirely on your device. No data is collected,
+								shared, or stored. Your browsing stays private and secure.
 							</p>
 						</div>
 					</div>
