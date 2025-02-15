@@ -5,6 +5,7 @@
 	import Footer from '$lib/components/footer.svelte';
 	import { Toaster } from '$lib/components/ui/sonner';
 	import { onMount } from 'svelte';
+	import AnalyticsConsent from '$lib/components/analytics-consent.svelte';
 	let { children } = $props();
 </script>
 
@@ -13,3 +14,4 @@
 <Navbar />
 {@render children()}
 <Footer />
+<AnalyticsConsent />

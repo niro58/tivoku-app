@@ -42,11 +42,17 @@ export class EditableImage {
 			reader.readAsDataURL(file);
 		});
 	}
-	getCanvasSize(aspectRatio: Vector2, cropType: ImageSettingsCrop): Vector2 {
+	getCanvasSize(fixedSize: Vector2, aspectRatio: Vector2, cropType: ImageSettingsCrop): Vector2 {
+		if (fixedSize.x !== 0 && fixedSize.y !== 0) {
+			return fixedSize;
+		}
 		let cSize: Vector2 = {
-			x: this.width,
-			y: this.height
+			x: fixedSize.x === 0 ? this.width : fixedSize.x,
+			y: fixedSize.y === 0 ? this.height : fixedSize.y
 		};
+		if (aspectRatio.x === 0 || aspectRatio.y === 0) {
+			return cSize;
+		}
 
 		const isOutside = cropType === 'outside';
 		const scale = isOutside
@@ -67,7 +73,7 @@ export class EditableImage {
 
 		const { aspectRatio, backgroundColor, opacity, format } = settings;
 
-		let cSize = this.getCanvasSize(aspectRatio, settings.cropType);
+		let cSize = this.getCanvasSize(settings.fixedSize, aspectRatio, settings.cropType);
 		canvas.width = cSize.x;
 		canvas.height = cSize.y;
 

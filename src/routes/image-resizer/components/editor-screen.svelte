@@ -39,7 +39,17 @@
 	import * as Select from '$lib/components/ui/select';
 	import * as Table from '$lib/components/ui/table/index.js';
 	import { getImageEditor } from '$lib/models/image-editor.svelte';
-	import { Check, Crop, Loader, Maximize2, Pencil, Plus, Trash2, X } from 'lucide-svelte';
+	import {
+		Check,
+		Crop,
+		Loader,
+		Maximize2,
+		Pencil,
+		Plus,
+		RotateCcw,
+		Trash2,
+		X
+	} from 'lucide-svelte';
 
 	import * as RadioGroup from '$lib/components/ui/radio-group/index.js';
 	import FileDropper from '$lib/components/file-dropper.svelte';
@@ -91,6 +101,7 @@
 						<Table.Body>
 							{#each imageEditor.images as image, index}
 								{@const size = image.getCanvasSize(
+									imageEditor.settings.fixedSize,
 									imageEditor.settings.aspectRatio,
 									imageEditor.settings.cropType
 								)}
@@ -111,8 +122,20 @@
 									<Table.Cell>
 										<Input bind:value={image.filename} />
 									</Table.Cell>
-									<Table.Cell class="text-center text-lg">{size.x}</Table.Cell>
-									<Table.Cell class="text-center text-lg">{size.y}</Table.Cell>
+									<Table.Cell class="text-center text-lg">
+										{#if isNaN(size.x) || !isFinite(size.x)}
+											-
+										{:else}
+											{size.x}
+										{/if}
+									</Table.Cell>
+									<Table.Cell class="text-center text-lg">
+										{#if isNaN(size.y) || !isFinite(size.y)}
+											-
+										{:else}
+											{size.y}
+										{/if}
+									</Table.Cell>
 									<Table.Cell>
 										<Button
 											size="icon"
@@ -257,30 +280,66 @@
 			</div>
 			<div class="grid grid-cols-2 gap-4">
 				<div class="space-y-2">
-					<Label for="x">X</Label>
+					<Label for="aspect_ratio_x">Aspect Ratio X</Label>
 					<Input
-						id="x"
+						id="aspect_ratio_x"
 						type="number"
 						bind:value={() => imageEditor.settings.aspectRatio.x,
 						(v) => {
-							if (isNaN(v) || v <= 0 || v > 10000) return;
+							if (isNaN(v) || v < 0 || v > 10000) return;
 							imageEditor.settings.aspectRatio.x = v;
 						}}
 						min="1"
 					/>
 				</div>
 				<div class="space-y-2">
-					<Label for="y">Y</Label>
+					<Label for="aspect_ratio_y">Aspect Ratio Y</Label>
 					<Input
-						id="y"
+						id="aspect_ratio_y"
 						type="number"
 						bind:value={() => imageEditor.settings.aspectRatio.y,
 						(v) => {
-							if (isNaN(v) || v <= 0 || v > 10000) return;
+							if (isNaN(v) || v < 0 || v > 10000) return;
 							imageEditor.settings.aspectRatio.y = v;
 						}}
 						min="1"
 					/>
+				</div>
+			</div>
+			<div class="grid grid-cols-2 gap-4">
+				<div class="space-y-2">
+					<Label for="fixed_size_x">Fixed X</Label>
+					<Input
+						id="fixed_size_x"
+						type="number"
+						bind:value={() => imageEditor.settings.fixedSize.x,
+						(v) => {
+							if (isNaN(v) || v < 0 || v > 10000) return;
+							imageEditor.settings.fixedSize.x = v;
+						}}
+						min="1"
+					/>
+				</div>
+
+				<div class="relative space-y-2">
+					<Label for="fixed_size_y">Fixed Y</Label>
+					<Input
+						id="fixed_size_y"
+						type="number"
+						bind:value={() => imageEditor.settings.fixedSize.y,
+						(v) => {
+							if (isNaN(v) || v < 0 || v > 10000) return;
+							imageEditor.settings.fixedSize.y = v;
+						}}
+						min="1"
+					/>
+					<Button
+						size="icon"
+						class="absolute bottom-0 right-0"
+						onclick={() => (imageEditor.settings.fixedSize = { x: 0, y: 0 })}
+					>
+						<RotateCcw />
+					</Button>
 				</div>
 			</div>
 		</Card.Content>

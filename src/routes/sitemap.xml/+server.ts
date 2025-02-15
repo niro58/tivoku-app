@@ -15,7 +15,7 @@ export async function GET() {
 			${Object.values(PAGES).map(
 				(page) => `
 				<url>
-					<loc>https://www.tivoku.com${page.link}</loc>
+					<loc>https://www.tivoku.com${page.link === '/' ? '' : page.link}</loc>
 					<priority>1.0</priority>
 					<changefreq>daily</changefreq>
 				</url>

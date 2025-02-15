@@ -70,55 +70,6 @@
 	}
 }
 
-@font-face {
-	font-family: 'Geist';
-	src: url('/fonts/geist/Geist-UltraLight.otf') format('opentype');
-	font-weight: 200;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Geist';
-	src: url('/fonts/geist/Geist-Light.otf') format('opentype');
-	font-weight: 300;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Geist';
-	src: url('/fonts/geist/Geist-Regular.otf') format('opentype');
-	font-weight: 400;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Geist';
-	src: url('/fonts/geist/Geist-Medium.otf') format('opentype');
-	font-weight: 500;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Geist';
-	src: url('/fonts/geist/Geist-Bold.otf') format('opentype');
-	font-weight: 700;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Geist';
-	src: url('/fonts/geist/Geist-Black.otf') format('opentype');
-	font-weight: 900;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Geist';
-	src: url('/fonts/geist/Geist-UltraBlack.otf') format('opentype');
-	font-weight: 950;
-	font-style: normal;
-}
-
 ::selection {
 	color: hsl(var(--accent-foreground));
 	background: hsl(var(--accent));

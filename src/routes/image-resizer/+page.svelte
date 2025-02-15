@@ -76,7 +76,7 @@
 </script>
 
 <Seo
-	title="Bulk Image Resizer – Fast, Secure, Browser-Based"
+	title="Bulk Image Resizer – Tivoku"
 	description="Resize 100+ images in bulk for free—fast, secure, and entirely in your browser. No sign-ups, no uploads. Start resizing now!"
 	keywords="resize images in browser, bulk image resizer, free image resizer, resize PNG, resize JPG, resize WebP, fast image resizer, secure image resizer, no upload image resizer"
 	canonical="https://www.tivoku.com/image-resizer"
@@ -84,7 +84,7 @@
 	jsonLd={{
 		'@context': 'https://schema.org',
 		'@type': 'WebPage',
-		name: 'Bulk Image Resizer – Fast, Secure, Browser-Based',
+		name: 'Bulk Image Resizer – Tivoku',
 		url: 'https://www.tivoku.com/image-resizer',
 		description:
 			'Resize 100+ images in bulk for free—fast, secure, and entirely in your browser. No sign-ups, no uploads. Start resizing now!',
@@ -185,7 +185,7 @@
 			<div class="mx-auto max-w-6xl">
 				<div class="grid gap-12 md:grid-cols-2">
 					<div class="space-y-8">
-						<h2 class="text-3xl font-bold text-white md:text-4xl">
+						<h2 class="text-3xl font-bold text-foreground md:text-4xl">
 							Resize Images Fast & Securely—No Uploads, No Hassle
 						</h2>
 
@@ -199,13 +199,13 @@
 					<div class="grid gap-6">
 						{#each [{ title: 'Resize in Your Browser', description: 'All processing happens locally—no uploads, no waiting.', icon: Lock }, { title: 'Bulk Resize Up to 100 Images', description: 'Save time by resizing multiple images at once.', icon: Image }, { title: 'No Quality Loss', description: 'Resize images without losing clarity or sharpness.', icon: Image }] as feature}
 							<div
-								class="flex gap-6 rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
+								class="flex gap-6 rounded-xl border border-foreground/10 bg-foreground/5 p-6 backdrop-blur-sm"
 							>
 								<div class="h-12 rounded-lg bg-primary/10 p-3 text-primary">
 									<feature.icon class="h-6 w-6" />
 								</div>
 								<div>
-									<h3 class="mb-2 font-semibold text-white">{feature.title}</h3>
+									<h3 class="mb-2 font-semibold text-foreground">{feature.title}</h3>
 									<p class="text-sm text-gray-400">{feature.description}</p>
 								</div>
 							</div>
@@ -246,12 +246,12 @@
 					<div
 						class="relative flex flex-col items-center gap-6 text-center md:flex-row md:text-left"
 					>
-						<div class="rounded-full bg-white/10 p-4">
+						<div class="rounded-full bg-foreground/10 p-4">
 							<Lock class="h-8 w-8" />
 						</div>
 						<div>
 							<h3 class="mb-2 text-xl font-semibold md:text-2xl">Your Privacy Matters</h3>
-							<p class="text-white/90">
+							<p class="text-foreground/90">
 								All image processing happens in your browser—no uploads, no servers, no risk. Your
 								files stay private and secure.
 							</p>
