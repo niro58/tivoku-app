@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: tivoku-web
-          image: ghcr.io/niro58/tivoku-web:VERSION
+          image: ghcr.io/niro58/tivoku-web:480dacae645ce15272d001d0cab58c9bd75e085c
           ports:
             - containerPort: 80
           livenessProbe:
