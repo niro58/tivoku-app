@@ -13,6 +13,8 @@
 
 		if (consent === 'true') {
 			isSetup = true;
+		} else {
+			isSetup = false;
 		}
 	});
 </script>
