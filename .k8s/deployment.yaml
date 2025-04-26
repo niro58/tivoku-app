@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: tivoku-web
-          image: ghcr.io/niro58/tivoku-web:6d2acf6447a1a4d71f33a14bdfdb9c828bb64915
+          image: ghcr.io/niro58/tivoku-web:0f6e54a15cb0f19ff12872f913b655e407c5db59
           ports:
             - containerPort: 80
           livenessProbe:
@@ -32,3 +32,6 @@ spec:
             limits:
               cpu: 1000m
               memory: 2000Mi
+      env:
+        - name: PUBLIC_MODE
+          value: prod
