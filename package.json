@@ -45,6 +45,7 @@
 	"dependencies": {
 		"@ffmpeg/ffmpeg": "^0.12.15",
 		"@ffmpeg/util": "^0.12.2",
+		"@sveltejs/adapter-node": "^5.2.12",
 		"@tailwindcss/typography": "^0.5.15",
 		"amplify-adapter": "^0.2.0",
 		"colord": "^2.9.3",
