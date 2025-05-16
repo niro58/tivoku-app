@@ -2,7 +2,7 @@ export type Vector2 = {
 	x: number;
 	y: number;
 };
-export type ImageSettingsCrop = 'inside' | 'outside';
+export type ImageSettingsCrop = 'inside' | 'outside' | 'downscale';
 export type ImageSettings = {
 	aspectRatio: Vector2;
 	fixedSize: Vector2;

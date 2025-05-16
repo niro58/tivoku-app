@@ -55,7 +55,7 @@
 	import FileDropper from '$lib/components/file-dropper.svelte';
 	import { Checkbox } from '$lib/components/ui/checkbox';
 	import { aspectRatioToKey, keyToAspectRatio } from '$lib/utils';
-	import { ImageExportFormats, ExportFileFormat } from '$lib/models';
+	import { ImageExportFormats, ExportFileFormat, type ImageSettingsCrop } from '$lib/models';
 	import { CONSTANTS } from '$data/constants';
 	import { EditableImage } from '$lib/models/editable-image.svelte';
 	import { fly } from 'svelte/transition';
@@ -75,7 +75,7 @@
 	in:fly={{ duration: 600, delay: 600, y: 20 }}
 >
 	<FileDropper
-		class="max-h-[75vh] cursor-default bg-card lg:h-full"
+		class="max-h-[85vh] cursor-default bg-card lg:h-full"
 		bind:fileInputEl
 		accept="image/*"
 		startsWith="image/"
@@ -170,7 +170,7 @@
 			>
 		</Card.Root>
 	</FileDropper>
-	<Card.Root class="mx-auto grid max-h-[75vh] w-full max-w-3xl grid-rows-12">
+	<Card.Root class="mx-auto grid max-h-[85vh] w-full max-w-3xl grid-rows-12">
 		<Card.Header class="row-span-1">
 			<Card.Title class="text-2xl font-bold">Image Editor</Card.Title>
 		</Card.Header>
@@ -180,12 +180,20 @@
 				<RadioGroup.Root
 					bind:value={() => imageEditor.settings.cropType,
 					(v) => {
-						if (v === 'inside' || v === 'outside') {
-							imageEditor.settings.cropType = v;
-						}
+						imageEditor.settings.cropType = v as ImageSettingsCrop;
 					}}
 					class="grid grid-cols-2 gap-4"
 				>
+					<div>
+						<RadioGroup.Item value="outside" id="outside" class="peer sr-only" />
+						<Label
+							for="outside"
+							class="flex cursor-pointer flex-row items-center justify-center gap-3 rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+						>
+							<Maximize2 class="h-4 w-4" />
+							<span>Crop to Longest Side</span>
+						</Label>
+					</div>
 					<div>
 						<RadioGroup.Item value="inside" id="inside" class="peer sr-only" />
 						<Label
@@ -196,14 +204,15 @@
 							<span>Crop to Shortest Side</span>
 						</Label>
 					</div>
-					<div>
-						<RadioGroup.Item value="outside" id="outside" class="peer sr-only" />
+
+					<div class="col-span-2">
+						<RadioGroup.Item value="downscale" id="downscale" class="peer sr-only" />
 						<Label
-							for="outside"
+							for="downscale"
 							class="flex cursor-pointer flex-row items-center justify-center gap-3 rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
 						>
 							<Maximize2 class="h-4 w-4" />
-							<span>Crop to Longest Side</span>
+							<span>Downscale</span>
 						</Label>
 					</div>
 				</RadioGroup.Root>

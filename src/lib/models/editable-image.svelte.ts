@@ -86,18 +86,28 @@ export class EditableImage {
 		const img = new Image();
 		return new Promise((resolve, reject) => {
 			img.onload = () => {
-				const offset: Vector2 =
-					settings.cropType === 'inside'
-						? {
-								x: canvas.width !== this.width ? (canvas.width - this.width) / 2 : 0,
-								y: canvas.height !== this.height ? (canvas.height - this.height) / 2 : 0
-							}
-						: {
-								x: canvas.width !== this.width ? (canvas.width - this.width) / 2 : 0,
-								y: canvas.height !== this.height ? (canvas.height - this.height) / 2 : 0
-							};
+				if (settings.cropType === 'inside' || settings.cropType === 'outside') {
+					const offset: Vector2 =
+						settings.cropType === 'inside'
+							? {
+									x: canvas.width !== this.width ? (canvas.width - this.width) / 2 : 0,
+									y: canvas.height !== this.height ? (canvas.height - this.height) / 2 : 0
+								}
+							: {
+									x: canvas.width !== this.width ? (canvas.width - this.width) / 2 : 0,
+									y: canvas.height !== this.height ? (canvas.height - this.height) / 2 : 0
+								};
 
-				ctx.drawImage(img, offset.x, offset.y, this.width, this.height);
+					ctx.drawImage(img, offset.x, offset.y, this.width, this.height);
+				}
+				if(settings.cropType === 'downscale') {
+					const scale = Math.min(canvas.width / this.width, canvas.height / this.height);
+					const offset: Vector2 = {
+						x: (canvas.width - this.width * scale) / 2,
+						y: (canvas.height - this.height * scale) / 2
+					};
+					ctx.drawImage(img, offset.x, offset.y, this.width * scale, this.height * scale);
+				}
 
 				const dataUrl = canvas.toDataURL(`image/${format.toLowerCase()}`);
 				resolve({

@@ -173,7 +173,7 @@
 	<CircleDesignElement variation="2" />
 	<CircleDesignElement variation="3" />
 
-	<section class="min-h-screen pt-12">
+	<section class="min-h-screen">
 		{#if !editorMode}
 			<SelectScreen />
 		{:else}
