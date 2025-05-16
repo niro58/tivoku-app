@@ -5,6 +5,11 @@ metadata:
   namespace: personal
 spec:
   replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   selector:
     matchLabels:
       app: tivoku-web
@@ -15,7 +20,7 @@ spec:
     spec:
       containers:
         - name: tivoku-web
-          image: ghcr.io/niro58/tivoku-web:b22c459e4de122e46ce10d5b646bf2cdb3306cb8
+          image: ghcr.io/niro58/tivoku-web:88dbdba3bd7e54cd85f0a86827733363d4c52077
           ports:
             - containerPort: 80
           livenessProbe:
@@ -24,7 +29,15 @@ spec:
               port: 80
             initialDelaySeconds: 15
             periodSeconds: 30
-            timeoutSeconds: 60
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /api/ping
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
           resources:
             requests:
               cpu: 25m
